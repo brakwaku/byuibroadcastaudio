@@ -24,8 +24,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const PORT = process.env.PORT || 3000 // So we can run on heroku || (OR) localhost:3000
 
-// const io = require('socket.io')() // For live chat on index page
-
 const app = express();
 
 // Route setup. You can implement more in the future!
