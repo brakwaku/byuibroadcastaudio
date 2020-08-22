@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../../includes/header.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/forms.css">
+</head>
+
+<body>
+    <%- include('../../includes/nav.ejs') %>
+    <div class="loginBack"><br><br>
+        <div class="container">
+            <div class="d-flex justify-content-left h-100">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="secure-login">Secure login</h3>
+                    </div>
+                    <div class="card-body">
+                        <% if (errorMessage) { %>
+                        <div class="alert alert-warning" role="alert"><%= errorMessage %></div>
+                        <% } %>
+                        <form action="/auth/login" method="POST">
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                </div>
+                                <input
+                                    class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %> form-control"
+                                    placeholder="Email address" type="email" name="email" id="email"
+                                    value="<%= oldInput.email %>">
+                            </div>
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input
+                                    class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %> form-control"
+                                    placeholder="Password" type="password" name="password" id="password"
+                                    value="<%= oldInput.password %>">
+                            </div>
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <div class="form-group">
+                                <button class="btn float-right login_btn" type="submit">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-center links">
+                            Don't have an account?<a href="/auth/signup">Sign Up</a>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <a href="/auth/reset">Forgot Password</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../../includes/end.ejs') %>

@@ -1,0 +1,514 @@
+.index-page {
+  background-image: url('/images/1a.jpg');
+  background-attachment: fixed;
+  /* Full height */
+  height: auto;
+  /* Center and scale the image nicely */
+  width: 100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  padding-bottom: 80px;
+}
+
+.navbar {
+  font-family: Montserrat, sans-serif;
+  margin-bottom: 0;
+  background-color: #e49b15;
+  border: 0;
+  font-size: 11px !important;
+  letter-spacing: 4px;
+}
+
+.jumbotron p {
+  /* color: #d9ccee; */
+  max-width: 75%;
+  margin: 1em auto 2em;
+}
+
+.navbar+.jumbotron {
+  margin-top: -20px;
+}
+
+.jumbotron .lang-logo {
+  display: block;
+  background: #B01302;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border: 2px solid white;
+}
+
+.jumbotron .lang-logo img {
+  max-width: 100%;
+}
+
+.product-logos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pro-logs {
+  width: 115px;
+  margin: 15px;
+}
+
+.pro-logs img:hover {
+  width: 120px;
+}
+
+
+.pro-logs img {
+  width: 110px;
+}
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-color: rgb(233, 233, 233);
+}
+
+.bttn {
+  font: inherit;
+  border: 1px solid #128fa5;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: #55bacc;
+  color: #c8dde0;
+}
+
+.bttn:hover, .bttn:active {
+  background-color: #1165BD;
+  color: white;
+}
+
+.not-found {
+  text-align: center;
+  color: #1165BD;
+  font-size: 9rem;
+}
+
+.profile-image {
+  display: inline;
+  margin: 0 auto;
+  margin-left: -25%;
+  height: 100%;
+  width: auto;
+}
+
+.image-cropper {
+  width: 160px;
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.about-author {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.author-text {
+  width: 80%;
+  margin-left: 20px;
+}
+
+.main-header-user {
+  color: white;
+}
+
+#soundtag {
+  font-size: 10vw;
+  font-weight: bold;
+  text-align: center;
+}
+
+#front-quote {
+  text-align: center;
+  font-size: 1.3em;
+}
+
+#quote-author {
+  margin-top: -30px;
+  text-align: right;
+  font-size: 1em;
+}
+
+.card {
+  background-color: rgba(144, 238, 144, 0.349);
+  outline: none;
+  border-radius: 10px;
+  color: white;
+}
+
+.get-help {
+  margin-left: 68vw;
+}
+
+/******************************
+ Admin activities classes
+ ******************************/
+ .card-control {
+   width: 90%;
+   background-color: #a9e4eebb;
+   border-radius: 10px;
+   margin: auto;
+   margin-bottom: 10px;
+ }
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-actions a:hover {
+  color: rgb(110, 110, 110);
+}
+
+.card-actions form>button:hover {
+  color: rgb(110, 110, 110);
+}
+
+.card_header {
+  background-color: #86deeebb;
+  border-radius: 10px;
+}
+
+/*************************************
+Dashboard styling
+**************************************/
+.dashboard-image {
+  /* Linear-gradient to add a darken background effect to the image. This will make the text easier to read */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/lo.jpg');
+  /* Set a specific height */
+  max-height: 400px;
+  min-height: 350px;
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.dashboard-image h1 {
+  /*text-align: center;*/
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 8vw;
+  font-weight: bolder;
+  color: rgb(230, 158, 23);
+}
+
+.dashboard-image h3 {
+  margin: 0;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bolder;
+  color: orange;
+}
+
+.user-rank {
+  margin: 0;
+  position: absolute;
+  top: 85%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+}
+
+.user-rank h2 {
+  color: white;
+}
+
+.checked {
+  color: orange;
+}
+
+
+/* Place text in the middle of the image
+.dashboard-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}*/
+
+.back {
+  background-color: #959595c2;
+}
+
+.dash-m {
+  margin-top: -20px;
+}
+
+.mid-col {
+  background-color: rgba(255, 166, 0, 0.568);
+}
+
+.dashboard-image {
+  width: 100%;
+}
+
+.bucket-item-list {
+  border: solid 2px #2EA8B8;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 7px;
+}
+
+.bucket-item-list:hover {
+  background-color: #b4eaf3;
+}
+
+.col-sm {
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin-left: 15px;
+  border: solid 2px #949494;
+  max-height: 500px;
+}
+
+.col-head {
+  background-color: #eeeeee;
+  /*background-color: orange;*/
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.next-con {
+  overflow: scroll;
+  max-height: 300px;
+}
+
+.action-btn {
+  display: flex;
+}
+
+.action-btn>form>button {
+  color: #128fa5;
+}
+
+.sss {
+  color: #128fa5;
+}
+
+.toDo {
+  margin-bottom: 8px;
+}
+
+/**************************************
+Modal Styling
+****************************************/
+/* Add a dark gray background color to the modal header and center text */
+.modal-header, h4, .close {
+  background-color: rgb(38, 196, 224);
+  color: #fff !important;
+  text-align: center;
+  font-size: 30px;
+}
+
+.modal-header, .modal-body {
+  padding: 15px 25px;
+}
+
+/**************************************
+* Admin activities Styling
+****************************************/
+.bod {
+  background-image: url('/images/loginii.jpg');
+}
+
+/**************************************
+* User activities Styling
+****************************************/
+.actBack {
+  background-image: url('/images/loginii.jpg');
+  background-attachment: fixed;
+  /* Full height */
+  height: auto;
+  /* Center and scale the image nicely */
+  width: 100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  padding-bottom: 80px;
+}
+
+.activity-title {
+  font-weight: bold;
+}
+
+.add-to-bucket {
+  color: #1165BD;
+}
+
+.actDesc {
+  color: #2d2d30;
+}
+
+/**************************************
+* User Archives Styling
+****************************************/
+.archive-pic {
+  max-height: 350px;
+  min-height: 300px;
+  background-image: url('/images/arch.jpg');
+  background-size: cover;
+  position: relative;
+}
+
+.archive-pic h3 {
+  color: white;
+  font-size: 10rem;
+  font-weight: bold;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+/**************************************
+* Motivation Styling
+****************************************/
+.mo-top {
+  background-image: url('/images/you-got-this-lighted-signage.jpg');
+  max-height: 400px;
+  min-height: 350px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.moCard {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.moCard:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.moCardTxt {
+  padding: 2px 16px;
+}
+
+/* .moCard img {
+  border-radius: 5px 5px 0 0;
+  width: 250px;
+  height: 250px;
+} */
+
+/*
+* Styling for chat
+*/
+/* .chatt {
+  padding: 0;
+  margin: 0;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+#message-container {
+  width: 80%;
+  max-width: 1200px;
+}
+
+#message-container div {
+  background-color: #CCC;
+  padding: 5px;
+}
+
+#message-container div:nth-child(2n) {
+  background-color: #FFF;
+}
+
+#send-container {
+  position: relative;
+  padding-bottom: 30px;
+  bottom: 0;
+  background-color: white;
+  max-width: 1200px;
+  width: 80%;
+  display: flex;
+}
+
+#message-input {
+  flex-grow: 1;
+} */
+
+/**************************************
+* About Us Styling
+****************************************/
+.about-us {
+  background-image: url('/images/fam.jpg');
+  background-attachment: fixed;
+  /* Full height */
+  height: auto;
+  /* Center and scale the image nicely */
+  width: 100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  padding-bottom: 80px;
+}
+
+#we-are-family {
+  font-size: 10vw;
+  font-weight: bold;
+  text-align: right;
+  color: rgb(9, 175, 180);
+}
+
+.about-place {
+  background-color: #2d2d305e;
+  padding: 5px;
+  max-width: 85%;
+  margin: auto;
+  border-radius: 10px;
+}
+
+/**************************************
+* Contacts Styling
+****************************************/
+.contacts {
+  background-image: url('/images/con.jpg');
+  background-attachment: fixed;
+  /* Full height */
+  height: auto;
+  /* Center and scale the image nicely */
+  width: 100;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  padding-bottom: 80px;
+}
+
+#contacts {
+  font-size: 10vw;
+  font-weight: bold;
+  text-align: right;
+  color: rgb(9, 175, 180);
+}

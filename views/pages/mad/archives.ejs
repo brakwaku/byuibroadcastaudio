@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../../includes/header.ejs') %>
+</head>
+
+<body>
+    <%- include('../../includes/nav.ejs') %>
+    <div class="archive-pic">
+        <h3>Archives</h3>
+    </div><br>
+    <div class="container">
+        <div class="container">
+          <div class="archive-item-list">
+            <% if (archs.length <= 0) { %>
+            <h4>No items in archives yet!</h4>
+            <% } else { %>
+            <% archs.forEach(arch => { %>
+            <div class="toDo">
+              <h5><b><%= arch.archId.title %></b></h5>
+              <h6><b>Description:</b><br> <%= arch.archId.description %></h6>
+            </div>
+            <hr>
+            <% }); %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+    <%- include('../../includes/end.ejs') %>

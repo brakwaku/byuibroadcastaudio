@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../../includes/header.ejs') %>
+</head>
+
+<body>
+    <%- include('../../includes/nav.ejs') %>
+    <div class="jumbotron text-center actBack">
+        <div class="container">
+            <% if (acts.length > 0) { %>
+            <div class="grid">
+                <% for (let activity of acts) { %>
+                <article class="card-control">
+                    <header class="card_header">
+                        <h1 class="activity-title">
+                            <%= activity.title %>
+                        </h1>
+                    </header>
+                    <div>
+                        <p class="actDesc">
+                            <%= activity.description %>
+                        </p>
+                    </div>
+                    <div class="card-actions">
+                        <form action="/mad/bucket" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button class="btn add-to-bucket" type="submit">Add to Bucket</button>
+                            <input type="hidden" name="activityId" value="<%= activity._id %>">
+                        </form>
+
+                    </div>
+                </article>
+                <% } %>
+            </div>
+            <% } else { %>
+            <h1>There are no activities yet.</h1>
+            <p>Please send some activities to the admin to add them here. Thank you.</p>
+            <% } %>
+        </div>
+        <% if (user.role === 'member') { %>
+        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Submit idea</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Activity idea</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/mad/user-idea" method="POST">
+                            <div class="form-group">
+                                <label for="activityName">Name of activity</label>
+                                <input name="ideaName" type="text" class="form-control" id="activityName" placeholder="Activity name">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea name="ideaDesc" type="text" class="form-control" id="description"
+                                    placeholder="Description"></textarea>
+                            </div>
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" name="userEmail" value="<%= user.email %>">
+                            <button type="submit" class="btn btn-success">Send</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+    <%- include('../../includes/end.ejs') %>

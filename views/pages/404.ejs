@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../includes/header.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/error.css">
+</head>
+
+<body>
+    <%- include('../includes/nav.ejs') %>
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1>Oops!! Page not found</h1>
+            <h5>The page at "<%= path %>" does not exist.</h5>
+        </div>
+    </div>
+
+    <%- include('../includes/end.ejs') %>

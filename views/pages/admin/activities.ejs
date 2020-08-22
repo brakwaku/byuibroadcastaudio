@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../../includes/header.ejs') %>
+</head>
+
+<body>
+    <%- include('../../includes/nav.ejs') %>
+    <div class="bod">
+        <div class="jumbotron text-center">
+            <div class="container">
+                <% if (acts.length > 0) { %>
+                <div class="grid">
+                    <% for (let activity of acts) { %>
+                    <article class="card-control">
+                        <header class="card_header">
+                            <h3 class="activity-title">
+                                <%= activity.title %>
+                            </h3>
+                        </header>
+                        <div>
+                            <p>
+                                <%= activity.description %>
+                            </p>
+                        </div>
+                        <div class="card-actions">
+                            <a href="/admin/edit-activity/<%= activity._id %>?edit=true" class="btn">Edit</a>
+                            <form action="/admin/delete-activity" method="POST">
+                                <input type="hidden" value="<%= activity._id %>" name="activityId">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button class="btn" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </article>
+                    <% } %>
+                </div>
+                <% } else { %>
+                <h1>There are no activities yet.</h1>
+                <p>Please send some activities to the admin to add them here. Thank you.</p>
+                <% } %>
+            </div><br>
+            <a href="/admin/add-activity" class="btn btn-danger">Add Activity</a>
+        </div>
+    </div>
+    <%- include('../../includes/end.ejs') %>
