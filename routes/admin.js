@@ -11,8 +11,8 @@ const router = express.Router();
 // /admin/add-activity => GET
 router.get('/add-activity', isAuth, adminController.getAddActivity);
 
-// /admin/activities => GET
-router.get('/activities', isAuth, adminController.getActivities);
+// /admin/dashboard => GET
+router.get('/dashboard', isAuth, adminController.getDashboard);
 
 // /admin/add-activity => POST
 router.post('/add-activity',

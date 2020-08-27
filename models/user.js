@@ -33,6 +33,17 @@ const userSchema = new Schema({
     type: String,
     required: false
   },
+  myHours: {
+    hours: [
+      {
+        hourId: {
+          type: Schema.Types.ObjectId,
+          ref: 'MyTime',
+          required: true
+        }
+      }
+    ]
+  },
   bucket: {
     items: [
       {

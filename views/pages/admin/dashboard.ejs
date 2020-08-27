@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include('../../includes/header.ejs') %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/dash.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  <script src="/scripts/front.js"></script>
+</head>
+
+<body>
+  <%- include('../../includes/nav.ejs') %>
+  <div class="dashboard-image">
+    <h1>DASHBOARD</h1>
+    <h3>All sounds of the earth are like music.</h3>
+    <div class="user-rank">
+      <h2>Hours</h2>
+    </div>
+  </div>
+  <div class="jumbotron grid-container">
+    <div class="grid-item">
+      <h3>STUDENTS</h3>
+      <hr>
+      <% if (users.length > 0) { %>
+        <% users.forEach(u => { %>
+        <li class="student-list"><a href="/askas/users/<%= user._id %>"><%= u.name %></a></li>
+        <% }) %>
+  
+      <% } else { %>
+        <h5>No student signed up yet!</h5>
+        <% } %>
+      
+    </div>
+    <div class="grid-item">
+      <h3>STUDENT HOURS</h3>
+      <hr>
+      
+    </div>
+    <div class="grid-item">Coming soon!</div>
+  </div>
+  <%- include('../../includes/end.ejs') %>

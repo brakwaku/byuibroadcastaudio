@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include('../../includes/header.ejs') %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/dash.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  <script src="/scripts/front.js"></script>
+</head>
+
+<body>
+  <%- include('../../includes/nav.ejs') %>
+  <main class="centered">
+    <h2><%= user.name %></h2>
+    <p><%= user.email %></p>
+    <% if (user.myHours.hours.length > 0) { %>
+        <% user.myHours.hours.forEach(h => { %>
+        <li><%= h.hourId.dateEntered %></li>
+        <li><%= h.hourId.hours %></li>
+        <li><%= h.hourId.minutes %></li>
+        <% }) %>
+  
+        <% } else { %>
+        <h4>No hours recorded!</h4>
+        <% } %>
+</main>
+  <%- include('../../includes/end.ejs') %>

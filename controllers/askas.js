@@ -1,6 +1,9 @@
 const Activity = require('../models/activity');
 const User = require('../models/user');
-var nodemailer = require('nodemailer');
+const MyTime = require('../models/myTime');
+const nodemailer = require('nodemailer');
+const moment = require('moment');
+const { min } = require('moment');
 
 
 exports.getContact = (req, res, next) => {
@@ -119,23 +122,23 @@ exports.postToDoDeleteActivity = (req, res, next) => {
         });
 };
 
-//Using this for the to-do list and the activities
 exports.getDashboard = (req, res, next) => {
     req.user
         .populate('bucket.items.activityId')
         .populate('toDoList.toDos.toDoId')
         .populate('completed.comps.compId')
         .populate('archive.archs.archId')
+        //.populate('myHours.hours.hourId')
         .execPopulate()
         .then(user => {
-            //const activities = user.bucket.items;
             res.render('pages/askas/dashboard', {
                 path: '/dashboard',
                 title: 'ASKAS | Dashboard',
                 toDos: user.toDoList.toDos,
                 activities: user.bucket.items,
                 comps: user.completed.comps,
-                archs: user.archive.archs
+                archs: user.archive.archs,
+                hrs: user.myHours.hours
             });
             console.log('Comps:' + user.completed.comps)
             console.log('Archs:' + user.archive.archs)
@@ -258,3 +261,60 @@ exports.postUserArchives = (req, res, next) => {
             return next(error);
         });
 }
+
+exports.postHours = (req, res, next) => {
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+
+    let timeStart = new Date("01/01/2007 " + startTime);
+    let timeEnd = new Date("01/01/2007 " + endTime);
+
+    let totalMinutes = (timeEnd - timeStart) / 60000; //dividing by seconds and milliseconds
+
+    let minute = totalMinutes % 60;
+    let hour = (totalMinutes - minute) / 60;
+
+    const now = moment().format('MMM Do YYYY, h:mm:ss A');
+
+    const myHours = new MyTime({
+        totalMinutes: totalMinutes,
+        minutes: minute,
+        hours: hour,
+        dateEntered: now,
+        userId: req.user
+    });
+    myHours
+        .save()
+        .then(result => {
+            console.log('Created hour');
+            res.redirect('/askas/dashboard');
+        })
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
+
+    console.log(startTime + ' ' + endTime)
+    console.log(hour)
+    console.log(minute)
+    console.log(totalMinutes)
+    console.log(now)
+}
+
+exports.getUser = (req, res, next) => {
+    const userId = req.params.userId;
+    User.findById(userId)
+      .then(user => {
+        res.render('pages/askas/user-detail', {
+          user: user,
+          pageTitle: user.name,
+          path: '/users'
+        });
+      })
+      .catch(err => {
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+      });
+  };

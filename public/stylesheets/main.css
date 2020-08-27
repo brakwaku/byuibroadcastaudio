@@ -75,15 +75,15 @@ body {
 
 .bttn {
   font: inherit;
-  border: 1px solid #128fa5;
+  border: 1px solid #a57e12;
   border-radius: 3px;
   cursor: pointer;
-  background-color: #55bacc;
+  background-color: #eeae25;
   color: #c8dde0;
 }
 
 .bttn:hover, .bttn:active {
-  background-color: #1165BD;
+  background-color: #925f00;
   color: white;
 }
 
@@ -179,135 +179,6 @@ body {
   border-radius: 10px;
 }
 
-/*************************************
-Dashboard styling
-**************************************/
-.dashboard-image {
-  /* Linear-gradient to add a darken background effect to the image. This will make the text easier to read */
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/lo.jpg');
-  /* Set a specific height */
-  max-height: 400px;
-  min-height: 350px;
-  /* Position and center the image to scale nicely on all screens */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
-
-.dashboard-image h1 {
-  /*text-align: center;*/
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  font-size: 8vw;
-  font-weight: bolder;
-  color: rgb(230, 158, 23);
-}
-
-.dashboard-image h3 {
-  margin: 0;
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: bolder;
-  color: orange;
-}
-
-.user-rank {
-  margin: 0;
-  position: absolute;
-  top: 85%;
-  left: 80%;
-  transform: translate(-50%, -50%);
-}
-
-.user-rank h2 {
-  color: white;
-}
-
-.checked {
-  color: orange;
-}
-
-
-/* Place text in the middle of the image
-.dashboard-text {
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-}*/
-
-.back {
-  background-color: #959595c2;
-}
-
-.dash-m {
-  margin-top: -20px;
-}
-
-.mid-col {
-  background-color: rgba(255, 166, 0, 0.568);
-}
-
-.dashboard-image {
-  width: 100%;
-}
-
-.bucket-item-list {
-  border: solid 2px #2EA8B8;
-  height: auto;
-  margin-bottom: 10px;
-  border-radius: 7px;
-}
-
-.bucket-item-list:hover {
-  background-color: #b4eaf3;
-}
-
-.col-sm {
-  border-radius: 10px;
-  background-color: #ffffff;
-  margin-left: 15px;
-  border: solid 2px #949494;
-  max-height: 500px;
-}
-
-.col-head {
-  background-color: #eeeeee;
-  /*background-color: orange;*/
-  border-radius: 5px;
-  font-weight: bold;
-  padding: 5px;
-}
-
-.next-con {
-  overflow: scroll;
-  max-height: 300px;
-}
-
-.action-btn {
-  display: flex;
-}
-
-.action-btn>form>button {
-  color: #128fa5;
-}
-
-.sss {
-  color: #128fa5;
-}
-
-.toDo {
-  margin-bottom: 8px;
-}
 
 /**************************************
 Modal Styling

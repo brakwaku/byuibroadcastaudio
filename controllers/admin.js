@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const { validationResult } = require('express-validator/check');
 
 const Activity = require('../models/activity');
+const User = require('../models/user');
+const MyTime = require('../models/myTime');
 
 exports.getAddActivity = (req, res, next) => {
   res.render('../views/pages/admin/edit-activity', {
@@ -124,14 +126,14 @@ exports.postEditActivity = (req, res, next) => {
     });
 };
 
-exports.getActivities = (req, res, next) => {
-  Activity.find({ userId: req.user._id })
-    .then(activities => {
-      console.log(activities);
-      res.render('pages/admin/activities', {
-        acts: activities,
-        title: 'C9FL | Admin',
-        path: '/adminActivities'
+exports.getDashboard = (req, res, next) => {
+  User.find()
+    .then(users => {
+      console.log(users);
+      res.render('pages/admin/dashboard', {
+        users: users,
+        title: 'C9FL | Dashboard',
+        path: '/adminDashboard'
       });
     })
     .catch(err => {

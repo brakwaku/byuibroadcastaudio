@@ -2,9 +2,10 @@
   <div class="container">
     <a class="navbar-brand" href="/"><img class="logo" src="/images/aaaa.png" width="50" height="50"
         class="d-inline-block align-top" alt="ASKAS logo"></a>
-        <% if (isAuthenticated) { %>
-          <a class="main-header-user nav-link">HI, <%= user.firstName.toUpperCase() %><span style="font-size:20px"> &#128540;</span></a>
-        <% } %>
+    <% if (isAuthenticated) { %>
+    <a class="main-header-user nav-link">HI, <%= user.firstName.toUpperCase() %><span style="font-size:20px">
+        &#128540;</span></a>
+    <% } %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -14,26 +15,31 @@
         <a class="nav-item nav-link <%= path === '/' ? 'active' : ''%>" href="/">HOME <span
             class="sr-only">(current)</span></a>
         <% if (isAuthenticated) { %>
-        <a class="nav-item nav-link <%= path === '/dashboard' ? 'active' : ''%>" href="/askas/dashboard">DASHBOARD</a>
-        <a class="nav-item nav-link <%= path === '/activities' ? 'active' : ''%>" href="/askas/activities">ACTIVITIES</a>
-        <% if (user.role === 'admin') { %>
-        <a class="nav-item nav-link <%= path === '/adminActivities' ? 'active' : ''%>" href="/admin/activities">ADMIN</a>
-        <% } %>
-        <a class="nav-item nav-link <%= path === '/motivation' ? 'active' : ''%>" href="/askas/motivation">MOTIVATION</a>
+          <% if (user.role != 'admin') { %>
+            <a class="nav-item nav-link <%= path === '/dashboard' ? 'active' : ''%>" href="/askas/dashboard">DASHBOARD</a>
+          <% } %>
+          <% if (user.role === 'admin') { %>
+            <a class="nav-item nav-link <%= path === '/adminDashboard' ? 'active' : ''%>"
+            href="/admin/dashboard">DASHBOARD</a>
+          <% } %>
+          <a class="nav-item nav-link <%= path === '/activities' ? 'active' : ''%>"
+            href="/askas/activities">TASKS</a>
+          <a class="nav-item nav-link <%= path === '/motivation' ? 'active' : ''%>"
+            href="/askas/motivation">MOTIVATION</a>
         <% } %>
         <% if (!isAuthenticated) { %>
-        <a class="nav-item nav-link <%= path === '/contact' ? 'active' : ''%>" href="/askas/contact">CONTACT</a>
-        <a class="nav-item nav-link <%= path === '/login' ? 'active' : '' %>" href="/auth/login"><span
-            class="glyphicon glyphicon-log-in"></span> LOGIN</a>
-        <a class="nav-item nav-link <%= path === '/signup' ? 'active' : '' %>" href="/auth/signup"><span
-            class="glyphicon glyphicon-user"></span> SIGN UP</a>
+          <a class="nav-item nav-link <%= path === '/contact' ? 'active' : ''%>" href="/askas/contact">CONTACT</a>
+          <a class="nav-item nav-link <%= path === '/login' ? 'active' : '' %>" href="/auth/login"><span
+              class="glyphicon glyphicon-log-in"></span> LOGIN</a>
+          <a class="nav-item nav-link <%= path === '/signup' ? 'active' : '' %>" href="/auth/signup"><span
+              class="glyphicon glyphicon-user"></span> SIGN UP</a>
         <% } else { %>
-        <a class="nav-item" href="#">
-          <form action="/auth/logout" method="post">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="btn bttn btn-sm navbar-btn" type="submit">LOGOUT</button>
-          </form>
-        </a>
+          <a class="nav-item" href="#">
+            <form action="/auth/logout" method="post">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="btn bttn btn-sm navbar-btn" type="submit">LOGOUT</button>
+            </form>
+          </a>
         <% } %>
       </div>
     </div>

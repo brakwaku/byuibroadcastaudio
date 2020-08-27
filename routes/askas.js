@@ -19,5 +19,7 @@ router.post('/completed', isAuth, askasController.postCompleted)
 router.post('/archive', isAuth, askasController.postArchive)
 router.post('/archives', isAuth, askasController.postUserArchives)
 router.post('/user-idea', isAuth, askasController.postUserIdea)
+router.post('/myHours', isAuth, askasController.postHours)
+router.get('/users/:productId', askasController.getUser);
 
 module.exports = router;
