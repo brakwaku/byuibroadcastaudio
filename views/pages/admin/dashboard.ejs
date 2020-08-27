@@ -5,6 +5,7 @@
   <%- include('../../includes/header.ejs') %>
   <link rel="stylesheet" type="text/css" href="/stylesheets/dash.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="/scripts/front.js"></script>
 </head>
 
@@ -19,7 +20,7 @@
   </div>
   <div class="jumbotron grid-container">
     <div class="grid-item">
-      <h3>STUDENTS</h3>
+      <h3>USERS</h3>
       <hr>
       <% if (users.length > 0) { %>
         <% users.forEach(u => { %>

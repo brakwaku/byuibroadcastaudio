@@ -77,7 +77,7 @@ exports.postLogin = (req, res, next) => {
         return res.status(422).render('pages/auth/login', {
           path: '/login',
           title: 'ASKAS | Login',
-          errorMessage: 'Invalid email or password.',
+          errorMessage: 'No account with this email. Please sign up',
           oldInput: {
             email: email,
             password: password
