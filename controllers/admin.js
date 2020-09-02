@@ -132,7 +132,7 @@ exports.getDashboard = (req, res, next) => {
       console.log(users);
       res.render('pages/admin/dashboard', {
         users: users,
-        title: 'C9FL | Dashboard',
+        title: 'ASKAS | DASHBOARD',
         path: '/adminDashboard'
       });
     })
@@ -149,6 +149,25 @@ exports.postDeleteActivity = (req, res, next) => {
     .then(() => {
       console.log('DESTROYED ACTIVITY');
       res.redirect('/admin/activities');
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
+exports.getUser = (req, res, next) => {
+  const userId = req.params.userId;
+  User.findById(userId)
+    .then(dUser => {
+      console.log(dUser)
+      res.render('pages/admin/user-detail', {
+        user: req.user,
+        dUser: dUser,
+        title: req.user.name,
+        path: '/users'
+      });
     })
     .catch(err => {
       const error = new Error(err);

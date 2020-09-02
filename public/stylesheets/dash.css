@@ -150,3 +150,12 @@
     text-decoration: none;
     color: orange;
   }
+
+  .hour-list-time {
+    list-style: none;
+    font-weight: bold;
+  }
+
+  .hour-list {
+    list-style: none;
+  }

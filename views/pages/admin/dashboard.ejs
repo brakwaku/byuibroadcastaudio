@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="/stylesheets/dash.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="/scripts/front.js"></script>
+  <script src="/scripts/adminDash.js"></script>
 </head>
 
 <body>
@@ -24,7 +24,7 @@
       <hr>
       <% if (users.length > 0) { %>
         <% users.forEach(u => { %>
-        <li class="student-list"><a href="/askas/users/<%= user._id %>"><%= u.name %></a></li>
+        <li id="student-list" class="student-list"><a href="/admin/users/<%= u._id %>"><%= u.name %></a></li>
         <% }) %>
   
       <% } else { %>

@@ -28,10 +28,14 @@
       <hr>
       <div id="watch">Time</div><br>
       <form action="/askas/myHours" method="POST">
-        <label for="activityName">Start time</label>
+        <label for="startTime">Start time  (00:00 AM)</label>
         <input name="startTime" type="time" class="form-control" id="startTime" required><br>
-        <label for="activityName">End time</label>
+        <label for="endTime">End time  (00:00 PM)</label>
         <input name="endTime" type="time" class="form-control" id="endTime" required><br>
+        <label for="taskDescription">Task Description</label>
+        <textarea name="taskDescription" class="form-control" id="taskDescription" cols="15" rows="3" required></textarea><br>
+        <label for="comments">Comments</label>
+        <textarea name="comments" class="form-control" id="comments" cols="15" rows="5"></textarea><br>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button id="btnn" class="btn-success sss" type="submit">Submit</button>
       </form>
@@ -41,9 +45,11 @@
       <hr>
       <% if (hrs.length > 0) { %>
       <% hrs.forEach(h => { %>
-      <li><%= h.hourId.dateEntered %></li>
-      <li><%= h.hourId.hours %></li>
-      <li><%= h.hourId.minutes %></li>
+        <div class="hour-list-div">
+          <li class="hour-list-time"><%= h.hourId.dateEntered %></li>
+          <li class="hour-list">Hours: <%= h.hourId.hours %></li>
+          <li class="hour-list">Minutes: <%= h.hourId.minutes %></li>
+        </div><hr>
       <% }) %>
 
       <% } else { %>

@@ -11,17 +11,17 @@
 <body>
   <%- include('../../includes/nav.ejs') %>
   <main class="centered">
-    <h2><%= user.name %></h2>
-    <p><%= user.email %></p>
-    <% if (user.myHours.hours.length > 0) { %>
-        <% user.myHours.hours.forEach(h => { %>
+    <h2><%= dUser.name %></h2>
+    <p><%= dUser.email %></p>
+    <% if (dUser.myHours.hours.length > 0) { %>
+        <% dUser.myHours.hours.forEach(h => { %>
         <li><%= h.hourId.dateEntered %></li>
         <li><%= h.hourId.hours %></li>
         <li><%= h.hourId.minutes %></li>
-        <% }) %>
+    <% }) %>
   
-        <% } else { %>
+    <% } else { %>
         <h4>No hours recorded!</h4>
-        <% } %>
+    <% } %>
 </main>
   <%- include('../../includes/end.ejs') %>

@@ -44,6 +44,7 @@ router.post('/edit-activity',
 );
 
 router.post('/delete-activity', isAuth, adminController.postDeleteActivity);
+router.get('/users/:userId', isAuth, adminController.getUser);
 
 
 module.exports = router;

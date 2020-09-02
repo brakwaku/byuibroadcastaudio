@@ -4,6 +4,7 @@ const MyTime = require('../models/myTime');
 const nodemailer = require('nodemailer');
 const moment = require('moment');
 const { min } = require('moment');
+const { validationResult } = require('express-validator/check');
 
 
 exports.getContact = (req, res, next) => {
@@ -128,7 +129,7 @@ exports.getDashboard = (req, res, next) => {
         .populate('toDoList.toDos.toDoId')
         .populate('completed.comps.compId')
         .populate('archive.archs.archId')
-        //.populate('myHours.hours.hourId')
+        .populate('myHours.hours.hourId')
         .execPopulate()
         .then(user => {
             res.render('pages/askas/dashboard', {
@@ -140,8 +141,10 @@ exports.getDashboard = (req, res, next) => {
                 archs: user.archive.archs,
                 hrs: user.myHours.hours
             });
-            console.log('Comps:' + user.completed.comps)
-            console.log('Archs:' + user.archive.archs)
+            console.log('Hours:' + user.myHours.hours)
+            console.log('date entered:' + user.myHours.hours.dateEntered)
+            console.log('hours:' + user.myHours.hours.hours)
+            console.log('minutes:' + user.myHours.hours.minutes)
         })
         .catch(err => {
             const error = new Error(err);
@@ -265,7 +268,19 @@ exports.postUserArchives = (req, res, next) => {
 exports.postHours = (req, res, next) => {
     const startTime = req.body.startTime;
     const endTime = req.body.endTime;
+    const taskDescription = req.body.taskDescription;
+    const comments = req.body.comments;
+    const errors = validationResult(req);
 
+
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        return res.status(422).render('../views/pages/askas/dashboard', {
+            title: 'ASKAS | DASHBOARD',
+            path: '/askas/dashboard',
+            hrs: user.myHours.hours
+        });
+    }
     let timeStart = new Date("01/01/2007 " + startTime);
     let timeEnd = new Date("01/01/2007 " + endTime);
 
@@ -281,13 +296,18 @@ exports.postHours = (req, res, next) => {
         minutes: minute,
         hours: hour,
         dateEntered: now,
+        taskDescription: taskDescription,
+        comments: comments,
         userId: req.user
     });
     myHours
         .save()
         .then(result => {
-            console.log('Created hour');
+            return req.user.addToMyHours(result._id);
+        })
+        .then(result => {
             res.redirect('/askas/dashboard');
+            console.log(hourId);
         })
         .catch(err => {
             const error = new Error(err);
@@ -301,20 +321,3 @@ exports.postHours = (req, res, next) => {
     console.log(totalMinutes)
     console.log(now)
 }
-
-exports.getUser = (req, res, next) => {
-    const userId = req.params.userId;
-    User.findById(userId)
-      .then(user => {
-        res.render('pages/askas/user-detail', {
-          user: user,
-          pageTitle: user.name,
-          path: '/users'
-        });
-      })
-      .catch(err => {
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
-      });
-  };

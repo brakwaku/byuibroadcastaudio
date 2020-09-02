@@ -211,4 +211,27 @@ userSchema.methods.clearBucket = function () {
   return this.save();
 };
 
+userSchema.methods.addToMyHours = function (hour) {
+  const dailyHourIndex = this.myHours.hours.findIndex(cp => {
+    return cp.hourId.toString() === hour.toString();
+  });
+  let newQuantity = 1;
+  const updatedHourItems = [...this.myHours.hours];
+
+  if (dailyHourIndex >= 0) {
+    newQuantity = this.myHours.hours[dailyHourIndex].quantity + 1;
+    updatedHourtems[dailyHourIndex].quantity = newQuantity;
+  } else {
+    updatedHourItems.push({
+      hourId: hour,
+      quantity: newQuantity
+    });
+  }
+  const updatedHour = {
+    hours: updatedHourItems
+  };
+  this.myHours = updatedHour;
+  return this.save();
+};
+
 module.exports = mongoose.model('User', userSchema);
