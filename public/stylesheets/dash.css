@@ -34,7 +34,7 @@
     color: orange;
   }
   
-  .user-rank {
+  .user-hours {
     margin: 0;
     position: absolute;
     top: 85%;
@@ -42,7 +42,7 @@
     transform: translate(-50%, -50%);
   }
   
-  .user-rank h2 {
+  .user-hours h2, h5 {
     color: white;
   }
   
@@ -159,3 +159,12 @@
   .hour-list {
     list-style: none;
   }
+
+/******************************
+*  Digital clock styling 
+*******************************/
+#clock {
+  color: yellowgreen;
+  font-size: 1.7em;
+  text-align: center;
+}

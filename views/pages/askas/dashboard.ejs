@@ -3,9 +3,8 @@
 
 <head>
   <%- include('../../includes/header.ejs') %>
-  <link rel="stylesheet" type="text/css" href="/stylesheets/dash.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-  <script src="/scripts/front.js"></script>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/dash.css" />
 </head>
 
 <body>
@@ -13,25 +12,28 @@
   <div class="dashboard-image">
     <h1>DASHBOARD</h1>
     <h3>All sounds of the earth are like music.</h3>
-    <div class="user-rank">
-      <h2>Hours</h2>
+    <div class="user-hours">
+      <h5>Hours</h5>
+      <h2 ><%= uHrs.toFixed(3) %></h2>
+    </div>
       <!-- <span class="fa fa-star <%= comps.length >= 1 || archs.length >= 1 || (comps.length + archs.length >=1) ? 'checked' : ''%>"></span>
       <span class="fa fa-star <%= comps.length >= 4 || archs.length >= 4 || (comps.length + archs.length >= 4) ? 'checked' : ''%>"></span>
       <span class="fa fa-star <%= comps.length >= 8 || archs.length >= 8 || (comps.length + archs.length >= 8) ? 'checked' : ''%>"></span>
       <span class="fa fa-star <%= comps.length >= 12 || archs.length >= 12 || (comps.length + archs.length >= 12) ? 'checked' : ''%>"></span>
       <span class="fa fa-star <%= comps.length >= 16 || archs.length >= 16 || (comps.length + archs.length >= 16) ? 'checked' : ''%>"></span> -->
-    </div>
   </div>
   <div class="jumbotron grid-container">
     <div class="grid-item">
       <h3>ENTER HOURS</h3>
       <hr>
-      <div id="watch">Time</div><br>
+      <div id="clock">8:23PM</div><br>
       <form action="/askas/myHours" method="POST">
+        <label for="date">Date</label>
+        <input name="manDate" type="date" class="form-control" id="manDate" required placeholder="mm/dd/yyyy"><br>
         <label for="startTime">Start time  (00:00 AM)</label>
-        <input name="startTime" type="time" class="form-control" id="startTime" required><br>
+        <input name="startTime" type="time" class="form-control" id="startTime" required placeholder="hh:mm AM/PM"><br>
         <label for="endTime">End time  (00:00 PM)</label>
-        <input name="endTime" type="time" class="form-control" id="endTime" required><br>
+        <input name="endTime" type="time" class="form-control" id="endTime" required placeholder="hh:mm AM/PM"><br>
         <label for="taskDescription">Task Description</label>
         <textarea name="taskDescription" class="form-control" id="taskDescription" cols="15" rows="3" required></textarea><br>
         <label for="comments">Comments</label>
@@ -46,7 +48,7 @@
       <% if (hrs.length > 0) { %>
       <% hrs.forEach(h => { %>
         <div class="hour-list-div">
-          <li class="hour-list-time"><%= h.hourId.dateEntered %></li>
+          <li class="hour-list-time"><%= h.hourId.manualDate.toDateString() %></li>
           <li class="hour-list">Hours: <%= h.hourId.hours %></li>
           <li class="hour-list">Minutes: <%= h.hourId.minutes %></li>
         </div><hr>
@@ -58,4 +60,5 @@
     </div>
     <div class="grid-item">Coming soon!</div>
   </div>
+  <script src="/scripts/front.js"></script>
   <%- include('../../includes/end.ejs') %>

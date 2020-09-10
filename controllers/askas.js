@@ -124,6 +124,9 @@ exports.postToDoDeleteActivity = (req, res, next) => {
 };
 
 exports.getDashboard = (req, res, next) => {
+    let tMin = 0; //initialize variable for total minutes
+    let uMin = 0; //initialize variable for user minutes
+    let uHrs = 0; //initialize variable for user hours
     req.user
         .populate('bucket.items.activityId')
         .populate('toDoList.toDos.toDoId')
@@ -132,6 +135,11 @@ exports.getDashboard = (req, res, next) => {
         .populate('myHours.hours.hourId')
         .execPopulate()
         .then(user => {
+            user.myHours.hours.forEach(h => {
+                tMin += h.hourId.totalMinutes;
+            })
+            uMin = tMin % 60; //Calculate number of minutes after hours
+            uHrs = tMin / 60; //Convert total minutes to hours
             res.render('pages/askas/dashboard', {
                 path: '/dashboard',
                 title: 'ASKAS | Dashboard',
@@ -139,12 +147,10 @@ exports.getDashboard = (req, res, next) => {
                 activities: user.bucket.items,
                 comps: user.completed.comps,
                 archs: user.archive.archs,
-                hrs: user.myHours.hours
+                hrs: user.myHours.hours,
+                uHrs: uHrs
             });
-            console.log('Hours:' + user.myHours.hours)
-            console.log('date entered:' + user.myHours.hours.dateEntered)
-            console.log('hours:' + user.myHours.hours.hours)
-            console.log('minutes:' + user.myHours.hours.minutes)
+            console.log('Total mins: ' + tMin);
         })
         .catch(err => {
             const error = new Error(err);
@@ -267,10 +273,13 @@ exports.postUserArchives = (req, res, next) => {
 
 exports.postHours = (req, res, next) => {
     const startTime = req.body.startTime;
+    const manDate = req.body.manDate;
     const endTime = req.body.endTime;
     const taskDescription = req.body.taskDescription;
     const comments = req.body.comments;
     const errors = validationResult(req);
+    const startOfWeek = moment().startOf('week').toDate();
+    const endOfWeek = moment().endOf('week').toDate();
 
 
     if (!errors.isEmpty()) {
@@ -289,13 +298,16 @@ exports.postHours = (req, res, next) => {
     let minute = totalMinutes % 60;
     let hour = (totalMinutes - minute) / 60;
 
-    const now = moment().format('MMM Do YYYY, h:mm:ss A');
+    let weekTotal = 0;
+
+    const now = moment().toDate();
 
     const myHours = new MyTime({
         totalMinutes: totalMinutes,
         minutes: minute,
         hours: hour,
         dateEntered: now,
+        manualDate: manDate,
         taskDescription: taskDescription,
         comments: comments,
         userId: req.user
@@ -305,9 +317,21 @@ exports.postHours = (req, res, next) => {
         .then(result => {
             return req.user.addToMyHours(result._id);
         })
+        // .then(result => {
+        //     req.user.myHours.hours.forEach(thisHour => {
+        //         console.log('Date entered: ' + thisHour);
+
+        //         //weekTotal += thisHour._Id.totalMinutes;
+                
+        //         // if (startOfWeek.isSameOrAfter(thisHour._Id.dateEntered.toDate()) || endOfWeek.isSame(thisHour._Id.dateEntered.toDate())) {
+
+        //         // }
+        //         //console.log('Week total: ' + weekTotal);
+        //     });
+        // })
         .then(result => {
             res.redirect('/askas/dashboard');
-            console.log(hourId);
+            //console.log(hourId);
         })
         .catch(err => {
             const error = new Error(err);
@@ -316,8 +340,10 @@ exports.postHours = (req, res, next) => {
         });
 
     console.log(startTime + ' ' + endTime)
-    console.log(hour)
-    console.log(minute)
-    console.log(totalMinutes)
+    console.log('Hours: ' + hour)
+    console.log('Minutes: ' + minute)
+    console.log('Total minutes: ' + totalMinutes)
+    console.log('Start of week: ' + startOfWeek)
+    console.log('End of week: ' + endOfWeek)
     console.log(now)
 }

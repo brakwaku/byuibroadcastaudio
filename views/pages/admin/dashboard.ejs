@@ -4,7 +4,6 @@
 <head>
   <%- include('../../includes/header.ejs') %>
   <link rel="stylesheet" type="text/css" href="/stylesheets/dash.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="/scripts/adminDash.js"></script>
 </head>
@@ -14,9 +13,9 @@
   <div class="dashboard-image">
     <h1>DASHBOARD</h1>
     <h3>All sounds of the earth are like music.</h3>
-    <div class="user-rank">
+    <!-- <div class="user-rank">
       <h2>Hours</h2>
-    </div>
+    </div> -->
   </div>
   <div class="jumbotron grid-container">
     <div class="grid-item">
@@ -24,7 +23,12 @@
       <hr>
       <% if (users.length > 0) { %>
         <% users.forEach(u => { %>
-        <li id="student-list" class="student-list"><a href="/admin/users/<%= u._id %>"><%= u.name %></a></li>
+          <form action="/admin/users/<%= u._id %>" method="POST">
+            <input type="hidden" value="/admin/users/<%= u._id %>" name="studentId">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
+            <button id="student" class="btn" type="submit"><%= u.name %></button>
+          </form>
+        <!-- <li id="student-list" class="student-list"><a href="/admin/users/<%= u._id %>" id="student"><%= u.name %></a></li> -->
         <% }) %>
   
       <% } else { %>

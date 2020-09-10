@@ -16,7 +16,11 @@ const myTimeSchema = new Schema({
     required: true
   },
   dateEntered: {
-    type: String,
+    type: Date,
+    required: true
+  },
+  manualDate: {
+    type: Date,
     required: true
   },
   taskDescription: {

@@ -44,6 +44,17 @@ const userSchema = new Schema({
       }
     ]
   },
+  weeklyHours: {
+    weekHours: [
+      {
+        weekHourId: {
+          type: Schema.Types.ObjectId,
+          ref: 'WeekTime',
+          required: true
+        }
+      }
+    ]
+  },
   bucket: {
     items: [
       {
@@ -233,5 +244,28 @@ userSchema.methods.addToMyHours = function (hour) {
   this.myHours = updatedHour;
   return this.save();
 };
+
+// userSchema.methods.addToWeekly = function (aWeek) {
+//   const weeklyWeekIndex = this.weeklyHours.weekHours.findIndex(cp => {
+//     return cp.activityId.toString() === activity._id.toString();
+//   });
+//   let newQuantity = 1;
+//   const updatedBucketItems = [...this.weeklyHours.weekHours];
+
+//   if (weeklyWeekIndex >= 0) {
+//     newQuantity = this.weeklyHours.weekHours[weeklyWeekIndex].quantity + 1;
+//     updatedBucketItems[weeklyWeekIndex].quantity = newQuantity;
+//   } else {
+//     updatedBucketItems.push({
+//       activityId: activity._id,
+//       quantity: newQuantity
+//     });
+//   }
+//   const updatedBucket = {
+//     weekHours: updatedBucketItems
+//   };
+//   this.weeklyHours = updatedBucket;
+//   return this.save();
+// };
 
 module.exports = mongoose.model('User', userSchema);
