@@ -20,8 +20,9 @@ $(function () {
                 if (user.myHours.hours.length > 0) {
                     user.myHours.hours.forEach(hr => {
                         $('#student_details').html(
-                            '<p>Student Date: ' + hr.hourId.manualDate + '</p>' 
-                            + '<p>Hours: ' + hr.hourId.hours + '</p>'
+                            '<p>Date: ' + hr.hourId.manualDate + '</p>' 
+                            + '<p>Hours: ' + hr.hourId + '</p>'
+                            + '<p>Name: ' + user.name + '</p>'
                             + '<p>Minutes: ' + hr.hourId.minutes + '</p>');
                     });
                 }

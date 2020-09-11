@@ -162,9 +162,13 @@ exports.postUser = (req, res, next) => {
   const userId = req.params.userId;
   User.findById(userId)
     .then(dUser => {
-      dUser.populate('myHours.hours.hourId');
+      dUser.populate('myHours.hours.hourId')
+      .execPopulate();
       res.status(200).send(dUser);
-      console.log(dUser);
+      dUser.myHours.hours.forEach(element => {
+        console.log('Hour Id: ' + element._id.hours);
+      });
+      //console.log(dUser);
     })
     .catch(err => {
       const error = new Error(err);
