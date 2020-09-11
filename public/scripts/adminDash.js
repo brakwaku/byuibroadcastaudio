@@ -1,17 +1,32 @@
 
 $(function () {
 
-    $('#student').on('click', function(e){
-        e.preventDefault();
-        let myUrl = $('#student').val();
-        let myToken = $('#myToken');
+    $('form').on('submit', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        let myToken = $('#myToken').val();
+        let userId = $('#student').val();
+        let myUrl = "/admin/users/" + userId;
 
         $.ajax({
-            type: 'POST',
             url: myUrl,
-            csrfToken: myToken,
-            success: function(data) {
-                console.log('success', data);
+            type: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify({
+                userId: userId,
+                _csrf: myToken
+            }),
+            success: function(user) {
+                if (user.myHours.hours.length > 0) {
+                    user.myHours.hours.forEach(hr => {
+                        $('#student_details').html(
+                            '<p>Student Date: ' + hr.hourId.manualDate + '</p>' 
+                            + '<p>Hours: ' + hr.hourId.hours + '</p>'
+                            + '<p>Minutes: ' + hr.hourId.minutes + '</p>');
+                    });
+                }
+            }, error: function(err) {
+                console.log(err);
             }
         });
     });

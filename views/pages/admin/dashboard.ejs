@@ -23,10 +23,10 @@
       <hr>
       <% if (users.length > 0) { %>
         <% users.forEach(u => { %>
-          <form action="/admin/users/<%= u._id %>" method="POST">
-            <input type="hidden" value="/admin/users/<%= u._id %>" name="studentId">
+          <form id="view-user-details" data-userId="<%= u._id %>">
+            <input type="hidden" value="<%= u._id %>" name="studentId" id="student">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
-            <button id="student" class="btn" type="submit"><%= u.name %></button>
+            <button class="btn" type="submit"><%= u.name %></button>
           </form>
         <!-- <li id="student-list" class="student-list"><a href="/admin/users/<%= u._id %>" id="student"><%= u.name %></a></li> -->
         <% }) %>
@@ -39,6 +39,7 @@
     <div class="grid-item">
       <h3>STUDENT HOURS</h3>
       <hr>
+      <div class="container" id="student_details"></div>
       
     </div>
     <div class="grid-item">Coming soon!</div>

@@ -5,6 +5,7 @@ const { validationResult } = require('express-validator/check');
 const Activity = require('../models/activity');
 const User = require('../models/user');
 const MyTime = require('../models/myTime');
+const { use } = require('../routes/admin');
 
 exports.getAddActivity = (req, res, next) => {
   res.render('../views/pages/admin/edit-activity', {
@@ -157,21 +158,33 @@ exports.postDeleteActivity = (req, res, next) => {
     });
 };
 
-exports.getUser = (req, res, next) => {
+exports.postUser = (req, res, next) => {
   const userId = req.params.userId;
   User.findById(userId)
     .then(dUser => {
-      console.log(dUser)
-      res.render('pages/admin/user-detail', {
-        user: req.user,
-        dUser: dUser,
-        title: req.user.name,
-        path: '/users'
-      });
+      dUser.populate('myHours.hours.hourId');
+      res.status(200).send(dUser);
+      console.log(dUser);
     })
     .catch(err => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
     });
+  // User.findById(userId)
+  //   .then(dUser => {
+  //     console.log(dUser)
+  //     res.render('pages/admin/user-detail', {
+  //       user: req.user,
+  //       dUser: dUser,
+  //       title: req.user.name,
+  //       path: '/users'
+  //     });
+  //   })
+  //   .catch(err => {
+  //     const error = new Error(err);
+  //     error.httpStatusCode = 500;
+  //     return next(error);
+  //   });
+  console.log('User Id: ' + userId)
 };
