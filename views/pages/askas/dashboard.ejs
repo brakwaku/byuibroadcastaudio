@@ -14,9 +14,9 @@
     <h3>All sounds of the earth are like music.</h3>
     <div class="user-hours">
       <h5>Hours</h5>
-      <h2 ><%= uHrs.toFixed(3) %></h2>
+      <h2><%= uHrs.toFixed(3) %></h2>
     </div>
-      <!-- <span class="fa fa-star <%= comps.length >= 1 || archs.length >= 1 || (comps.length + archs.length >=1) ? 'checked' : ''%>"></span>
+    <!-- <span class="fa fa-star <%= comps.length >= 1 || archs.length >= 1 || (comps.length + archs.length >=1) ? 'checked' : ''%>"></span>
       <span class="fa fa-star <%= comps.length >= 4 || archs.length >= 4 || (comps.length + archs.length >= 4) ? 'checked' : ''%>"></span>
       <span class="fa fa-star <%= comps.length >= 8 || archs.length >= 8 || (comps.length + archs.length >= 8) ? 'checked' : ''%>"></span>
       <span class="fa fa-star <%= comps.length >= 12 || archs.length >= 12 || (comps.length + archs.length >= 12) ? 'checked' : ''%>"></span>
@@ -26,37 +26,43 @@
     <div class="grid-item">
       <h3>ENTER HOURS</h3>
       <hr>
-      <div id="clock">8:23PM</div><br>
-      <form action="/askas/myHours" method="POST">
-        <label for="date">Date</label>
-        <input name="manDate" type="date" class="form-control" id="manDate" required placeholder="mm/dd/yyyy"><br>
-        <label for="startTime">Start time  (00:00 AM)</label>
-        <input name="startTime" type="time" class="form-control" id="startTime" required placeholder="hh:mm AM/PM"><br>
-        <label for="endTime">End time  (00:00 PM)</label>
-        <input name="endTime" type="time" class="form-control" id="endTime" required placeholder="hh:mm AM/PM"><br>
-        <label for="taskDescription">Task Description</label>
-        <textarea name="taskDescription" class="form-control" id="taskDescription" cols="15" rows="3" required></textarea><br>
-        <label for="comments">Comments</label>
-        <textarea name="comments" class="form-control" id="comments" cols="15" rows="5"></textarea><br>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <button id="btnn" class="btn-success sss" type="submit">Submit</button>
-      </form>
+      <div class="container" id="clock">8:23PM</div><br>
+      <div class="container next-con-left">
+        <form action="/askas/myHours" method="POST">
+          <label for="date">Date</label>
+          <input name="manDate" type="date" class="form-control" id="manDate" required placeholder="mm/dd/yyyy"><br>
+          <label for="startTime">Start time (00:00 AM)</label>
+          <input name="startTime" type="time" class="form-control" id="startTime" required
+            placeholder="hh:mm AM/PM"><br>
+          <label for="endTime">End time (00:00 PM)</label>
+          <input name="endTime" type="time" class="form-control" id="endTime" required placeholder="hh:mm AM/PM"><br>
+          <label for="taskDescription">Task Description</label>
+          <textarea name="taskDescription" class="form-control" id="taskDescription" cols="15" rows="3"
+            required></textarea><br>
+          <label for="comments">Comments</label>
+          <textarea name="comments" class="form-control" id="comments" cols="15" rows="5"></textarea><br>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button id="btnn" class="btn-success sss" type="submit">Submit</button>
+        </form>
+      </div>
     </div>
     <div class="grid-item">
       <h3>HOURS WORKED</h3>
       <hr>
-      <% if (hrs.length > 0) { %>
-      <% hrs.forEach(h => { %>
-        <div class="hour-list-div">
+      <div class="container next-con-mid">
+        <% if (hrs.length > 0) { %>
+        <% hrs.forEach(h => { %>
+        <div class="container hour-list-div">
           <li class="hour-list-time"><%= h.hourId.manualDate.toDateString() %></li>
           <li class="hour-list">Hours: <%= h.hourId.hours %></li>
           <li class="hour-list">Minutes: <%= h.hourId.minutes %></li>
-        </div><hr>
-      <% }) %>
+        </div>
+        <% }) %>
 
-      <% } else { %>
-      <h4>No hours recorded!</h4>
-      <% } %>
+        <% } else { %>
+        <h4>No hours recorded!</h4>
+        <% } %>
+      </div>
     </div>
     <div class="grid-item">Coming soon!</div>
   </div>

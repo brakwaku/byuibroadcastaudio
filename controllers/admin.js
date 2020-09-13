@@ -166,7 +166,7 @@ exports.postUser = (req, res, next) => {
       .execPopulate();
       res.status(200).send(dUser);
       dUser.myHours.hours.forEach(element => {
-        console.log('Hour Id: ' + element._id.hours);
+        console.log('Hour Id: ' + element._id);
       });
       //console.log(dUser);
     })

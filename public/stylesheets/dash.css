@@ -1,57 +1,56 @@
 .dashboard-image {
-    /* Linear-gradient to add a darken background effect to the image. This will make the text easier to read */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/1ai.jpg');
-    /* Set a specific height */
-    max-height: 400px;
-    min-height: 350px;
-    /* Position and center the image to scale nicely on all screens */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-  }
-  
-  .dashboard-image h1 {
-    /*text-align: center;*/
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    font-size: 8vw;
-    font-weight: bolder;
-    color: rgb(230, 158, 23);
-  }
-  
-  .dashboard-image h3 {
-    margin: 0;
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: bolder;
-    color: orange;
-  }
-  
-  .user-hours {
-    margin: 0;
-    position: absolute;
-    top: 85%;
-    left: 80%;
-    transform: translate(-50%, -50%);
-  }
-  
-  .user-hours h2, h5 {
-    color: white;
-  }
-  
-  .checked {
-    color: orange;
-  }
-  
-  
-  /* Place text in the middle of the image
+  /* Linear-gradient to add a darken background effect to the image. This will make the text easier to read */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/1ai.jpg');
+  /* Set a specific height */
+  max-height: 400px;
+  min-height: 350px;
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.dashboard-image h1 {
+  /*text-align: center;*/
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 8vw;
+  font-weight: bolder;
+  color: rgb(230, 158, 23);
+}
+
+.dashboard-image h3 {
+  margin: 0;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bolder;
+  color: orange;
+}
+
+.user-hours {
+  margin: 0;
+  position: absolute;
+  top: 85%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+}
+
+.user-hours h2, h5 {
+  color: white;
+}
+
+.checked {
+  color: orange;
+}
+
+/* Place text in the middle of the image
   .dashboard-text {
     text-align: center;
     position: absolute;
@@ -60,111 +59,133 @@
     transform: translate(-50%, -50%);
     color: white;
   }*/
-  
-  .grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    background-color: #E9E9E9;
-    padding: 10px;
-  }
 
-  .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(70, 70, 70, 0.8);
-    padding: 20px;
-    /* font-size: 30px;
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #E9E9E9;
+  padding: 10px;
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(172, 242, 252, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  /* font-size: 30px;
     text-align: center; */
-  }
+}
 
-  .grid-item h3 {
-    font-size: 30px;
-    text-align: center;
-  }
-  
-  .dash-m {
-    margin-top: -20px;
-  }
-  
-  .mid-col {
-    background-color: rgba(255, 166, 0, 0.568);
-  }
-  
-  .dashboard-image {
-    width: 100%;
-  }
-  
-  .bucket-item-list {
-    border: solid 2px #2EA8B8;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 7px;
-  }
-  
-  .bucket-item-list:hover {
-    background-color: #b4eaf3;
-  }
-  
-  .col-sm {
-    border-radius: 10px;
-    background-color: #ffffff;
-    margin-left: 15px;
-    border: solid 2px #949494;
-    max-height: 500px;
-  }
-  
-  .col-head {
-    background-color: #eeeeee;
-    /*background-color: orange;*/
-    border-radius: 5px;
-    font-weight: bold;
-    padding: 5px;
-  }
-  
-  .next-con {
-    overflow: scroll;
-    max-height: 300px;
-  }
-  
-  .action-btn {
-    display: flex;
-  }
-  
-  .action-btn>form>button {
-    color: #128fa5;
-  }
-  
-  .sss {
-    color: #128fa5;
-  }
-  
-  .toDo {
-    margin-bottom: 8px;
-  }
+.grid-item h3 {
+  font-size: 30px;
+  text-align: center;
+}
 
-  .student-list {
-    list-style: none;
-    font-size: 1.3em;
-  }
+.dash-m {
+  margin-top: -20px;
+}
 
-  .student-list a:hover {
-    text-decoration: none;
-    color: orange;
-  }
+.mid-col {
+  background-color: rgba(255, 166, 0, 0.568);
+}
 
-  .hour-list-time {
-    list-style: none;
-    font-weight: bold;
-  }
+.dashboard-image {
+  width: 100%;
+}
 
-  .hour-list {
-    list-style: none;
-  }
+.bucket-item-list {
+  border: solid 2px #2EA8B8;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 7px;
+}
+
+.bucket-item-list:hover {
+  background-color: #b4eaf3;
+}
+
+.col-sm {
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin-left: 15px;
+  border: solid 2px #949494;
+  max-height: 500px;
+}
+
+.col-head {
+  background-color: #eeeeee;
+  /*background-color: orange;*/
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.next-con-left {
+  overflow: scroll;
+  max-height: 300px;
+}
+
+.next-con-mid {
+  overflow: scroll;
+  max-height: 400px;
+}
+
+.next-con-right {
+  overflow: scroll;
+  max-height: 300px;
+}
+
+.action-btn {
+  display: flex;
+}
+
+.action-btn>form>button {
+  color: #128fa5;
+}
+
+.sss {
+  color: #128fa5;
+}
+
+.toDo {
+  margin-bottom: 8px;
+}
+
+.student-list {
+  list-style: none;
+  font-size: 1.3em;
+}
+
+.student-list a:hover {
+  text-decoration: none;
+  color: orange;
+}
+
+.hour-list-time {
+  list-style: none;
+  font-weight: bold;
+}
+
+.hour-list {
+  list-style: none;
+}
+
+.hour-list-div {
+  background-color: #97eaf79a;
+  border-radius: 10px;
+  margin-top: 10px;
+}
 
 /******************************
 *  Digital clock styling 
 *******************************/
+
 #clock {
   color: yellowgreen;
   font-size: 1.7em;
   text-align: center;
+  background-color: black;
+  padding: 10px;
+  width: 60%;
+  border-radius: 10px;
 }

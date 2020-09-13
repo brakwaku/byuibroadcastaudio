@@ -11,22 +11,22 @@
 <body>
   <%- include('../../includes/nav.ejs') %>
   <div class="dashboard-image">
-    <h1>DASHBOARD</h1>
-    <h3>All sounds of the earth are like music.</h3>
+    <h1 class="animate__animated animate__zoomIn">DASHBOARD</h1>
+    <h3 class="animate__animated animate__zoomIn">All sounds of the earth are like music.</h3>
     <!-- <div class="user-rank">
       <h2>Hours</h2>
     </div> -->
   </div>
   <div class="jumbotron grid-container">
-    <div class="grid-item">
+    <div class="grid-item animate__animated animate__backInLeft">
       <h3>USERS</h3>
       <hr>
       <% if (users.length > 0) { %>
         <% users.forEach(u => { %>
-          <form id="view-user-details" data-userId="<%= u._id %>">
-            <input type="hidden" value="<%= u._id %>" name="studentId" id="student">
+          <form class="view-user-details">
+            <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
-            <button class="btn" type="submit"><%= u.name %></button>
+            <button class="btn" type="button" onclick="getId(event)"><%= u.name %></button>
           </form>
         <!-- <li id="student-list" class="student-list"><a href="/admin/users/<%= u._id %>" id="student"><%= u.name %></a></li> -->
         <% }) %>
@@ -36,12 +36,15 @@
         <% } %>
       
     </div>
-    <div class="grid-item">
+    <div class="grid-item animate__animated animate__bounceInDown">
       <h3>STUDENT HOURS</h3>
       <hr>
       <div class="container" id="student_details"></div>
       
     </div>
-    <div class="grid-item">Coming soon!</div>
+    <div class="grid-item animate__animated animate__backInRight">
+      <h3>COMING SOON!</h3>
+      <hr>
+    </div>
   </div>
   <%- include('../../includes/end.ejs') %>
