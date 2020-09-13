@@ -304,6 +304,8 @@ exports.postHours = (req, res, next) => {
 
     const myHours = new MyTime({
         totalMinutes: totalMinutes,
+        startTime: startTime,
+        endTime: endTime,
         minutes: minute,
         hours: hour,
         dateEntered: now,

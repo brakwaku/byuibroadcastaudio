@@ -35,12 +35,11 @@
                 <% } %>
             </div>
             <% } else { %>
-            <h1>There are no activities yet.</h1>
-            <p>Please send some activities to the admin to add them here. Thank you.</p>
+            <h1>There are no tasks yet.</h1>
             <% } %>
         </div>
         <% if (user.role === 'member') { %>
-        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Submit idea</button>
+        <!-- <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Submit idea</button> -->
 
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">

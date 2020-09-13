@@ -9,8 +9,8 @@ const User = require('../models/user');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'myc9forlife@gmail.com',
-    pass: 'CnineForLife'
+    user: process.env.MAIL_USERNAME,
+    pass: process.env.MAIL_PASSWORD
   }
 });
 
@@ -173,7 +173,7 @@ exports.postSignup = (req, res, next) => {
         subject: 'Signup succeeded!',
         html: `
             <h1>Hurray!!!</h1> <br><h2>You successfully signed up. Congratulations!</h2>
-            <p>Now go ahead and get used to the website. Have fun!!</p>
+            <p>Now go ahead and get used to the website to record your hours. Have fun!!</p>
           `
       };
       return transporter.sendMail(mailOptions, function (error, info) {
@@ -232,7 +232,7 @@ exports.postReset = (req, res, next) => {
       .then(result => {
         res.redirect('/');
         const mailOptions = {
-        from: 'myc9forlife@gmail.com',
+        from: 'byuiaudio@gmail.com',
         to: req.body.email,
         subject: 'Password Reset!',
         html: `

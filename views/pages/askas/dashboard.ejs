@@ -23,10 +23,10 @@
       <span class="fa fa-star <%= comps.length >= 16 || archs.length >= 16 || (comps.length + archs.length >= 16) ? 'checked' : ''%>"></span> -->
   </div>
   <div class="jumbotron grid-container">
-    <div class="grid-item">
+    <div class="grid-item animate__animated animate__backInLeft">
       <h3>ENTER HOURS</h3>
       <hr>
-      <div class="container" id="clock">8:23PM</div><br>
+      <div class="container" id="clock"></div><br>
       <div class="container next-con-left">
         <form action="/askas/myHours" method="POST">
           <label for="date">Date</label>
@@ -46,7 +46,7 @@
         </form>
       </div>
     </div>
-    <div class="grid-item">
+    <div class="grid-item animate__animated animate__bounceInDown">
       <h3>HOURS WORKED</h3>
       <hr>
       <div class="container next-con-mid">
@@ -64,7 +64,11 @@
         <% } %>
       </div>
     </div>
-    <div class="grid-item">Coming soon!</div>
+    <div class="grid-item animate__animated animate__backInRight">
+      <h3>COMING SOON!</h3>
+      <hr>
+      <div class="container next-con-right"></div>
+    </div>
   </div>
   <script src="/scripts/front.js"></script>
   <%- include('../../includes/end.ejs') %>

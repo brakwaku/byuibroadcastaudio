@@ -7,6 +7,14 @@ const myTimeSchema = new Schema({
     type: Number,
     required: true
   },
+  startTime: {
+    type: String,
+    required: true
+  },
+  endTime: {
+    type: String,
+    required: true
+  },
   minutes: {
     type: Number,
     required: true

@@ -21,30 +21,36 @@
     <div class="grid-item animate__animated animate__backInLeft">
       <h3>USERS</h3>
       <hr>
-      <% if (users.length > 0) { %>
+      <div class="container next-con-left">
+        <% if (users.length > 0) { %>
         <% users.forEach(u => { %>
-          <form class="view-user-details">
-            <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
-            <button class="btn" type="button" onclick="getId(event)"><%= u.name %></button>
-          </form>
+        <form class="view-user-details">
+          <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
+          <button class="btn" type="button" onclick="getId(event)"><%= u.name %></button>
+        </form>
         <!-- <li id="student-list" class="student-list"><a href="/admin/users/<%= u._id %>" id="student"><%= u.name %></a></li> -->
         <% }) %>
-  
-      <% } else { %>
+
+        <% } else { %>
         <h5>No student signed up yet!</h5>
         <% } %>
-      
+
+      </div>
+
     </div>
     <div class="grid-item animate__animated animate__bounceInDown">
       <h3>STUDENT HOURS</h3>
       <hr>
-      <div class="container" id="student_details"></div>
-      
+      <div class="container next-con-mid">
+        <div class="container" id="student_details"></div>
+      </div>
+
     </div>
     <div class="grid-item animate__animated animate__backInRight">
       <h3>COMING SOON!</h3>
       <hr>
+      <div class="container next-con-right"></div>
     </div>
   </div>
   <%- include('../../includes/end.ejs') %>
