@@ -176,6 +176,18 @@
   margin-top: 10px;
 }
 
+.hour-list-div:hover {
+  cursor: pointer;
+}
+
+.view-user-details {
+  margin-top: 15px;
+}
+
+.time-details {
+  margin-top: 100px;
+}
+
 /******************************
 *  Digital clock styling 
 *******************************/
@@ -188,4 +200,29 @@
   padding: 10px;
   width: 60%;
   border-radius: 10px;
+}
+
+
+/**************************************
+Modal Styling
+****************************************/
+/* Add a dark gray background color to the modal header and center text */
+.modal-header, h4, .close {
+  background-color: rgb(38, 196, 224);
+  color: #fff !important;
+  text-align: center;
+  font-size: 30px;
+}
+
+.modal-header, .modal-body {
+  padding: 15px 25px;
+}
+
+/**************************************
+* User details page
+****************************************/
+.user-det {
+  min-height: 450px;
+  overflow: scroll;
+  max-height: 470px;
 }

@@ -5,23 +5,24 @@
   <%- include('../../includes/header.ejs') %>
   <link rel="stylesheet" type="text/css" href="/stylesheets/dash.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-  <script src="/scripts/front.js"></script>
 </head>
 
 <body>
   <%- include('../../includes/nav.ejs') %>
-  <main class="centered">
-    <h2><%= dUser.name %></h2>
-    <p><%= dUser.email %></p>
-    <% if (dUser.myHours.hours.length > 0) { %>
-        <% dUser.myHours.hours.forEach(h => { %>
-        <li><%= h.hourId.dateEntered %></li>
-        <li><%= h.hourId.hours %></li>
-        <li><%= h.hourId.minutes %></li>
-    <% }) %>
-  
-    <% } else { %>
-        <h4>No hours recorded!</h4>
-    <% } %>
-</main>
+  <main>
+    <div class="centered container user-det">
+      <h2><%= dUser.name %></h2>
+      <p><%= dUser.email %></p>
+      <% if (hrs.length > 0) { %>
+      <% hrs.forEach(h => { %>
+      <li><%= h.hourId.dateEntered %></li>
+      <li><%= h.hourId.hours %></li>
+      <li><%= h.hourId.minutes %></li>
+      <% }) %>
+
+      <% } else { %>
+      <h4>No hours recorded!</h4>
+      <% } %>
+    </div>
+  </main>
   <%- include('../../includes/end.ejs') %>

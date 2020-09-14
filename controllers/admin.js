@@ -158,12 +158,31 @@ exports.postDeleteActivity = (req, res, next) => {
     });
 };
 
+// exports.getUser = (req, res, next) => {
+//   const userId = req.params.userId;
+//   User.findById(userId).populate('myHours.hours.hourId')
+//     .then(dUser => {
+//       res.render('pages/admin/user-detail', {
+//         user: req.user,
+//         dUser: dUser,
+//         title: req.user.name,
+//         hrs: dUser.myHours.hours,
+//         path: '/users'
+//       });
+//     })
+//     .catch(err => {
+//       const error = new Error(err);
+//       error.httpStatusCode = 500;
+//       return next(error);
+//     });
+//   console.log('User Id: ' + userId)
+// };
+
+
 exports.postUser = (req, res, next) => {
   const userId = req.params.userId;
-  User.findById(userId)
+  User.findById(userId).populate('myHours.hours.hourId')
     .then(dUser => {
-      dUser.populate('myHours.hours.hourId')
-      .execPopulate();
       res.status(200).send(dUser);
       dUser.myHours.hours.forEach(element => {
         console.log('Hour Id: ' + element._id);
