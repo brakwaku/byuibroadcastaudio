@@ -24,7 +24,7 @@
   </div>
   <div class="jumbotron grid-container">
     <div class="grid-item animate__animated animate__backInLeft">
-      <h3>ENTER HOURS</h3>
+      <h3><i class="fas fa-clock"></i> ENTER HOURS</h3>
       <hr>
       <div class="container" id="clock"></div><br>
       <div class="container next-con-left">
@@ -42,12 +42,12 @@
           <label for="comments">Comments</label>
           <textarea name="comments" class="form-control" id="comments" cols="15" rows="5"></textarea><br>
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <button id="btnn" class="btn-success sss" type="submit">Submit</button>
+          <button class="btn btn-success " type="submit">Submit</button>
         </form>
       </div>
     </div>
     <div class="grid-item animate__animated animate__bounceInDown">
-      <h3>HOURS WORKED</h3>
+      <h3><i class="fas fa-history"></i> HOURS WORKED</h3>
       <hr>
       <div class="container next-con-mid">
         <% if (hrs.length > 0) { %>

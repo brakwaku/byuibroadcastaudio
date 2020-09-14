@@ -184,9 +184,6 @@ exports.postUser = (req, res, next) => {
   User.findById(userId).populate('myHours.hours.hourId')
     .then(dUser => {
       res.status(200).send(dUser);
-      dUser.myHours.hours.forEach(element => {
-        console.log('Hour Id: ' + element._id);
-      });
       //console.log(dUser);
     })
     .catch(err => {
@@ -194,20 +191,5 @@ exports.postUser = (req, res, next) => {
       error.httpStatusCode = 500;
       return next(error);
     });
-  // User.findById(userId)
-  //   .then(dUser => {
-  //     console.log(dUser)
-  //     res.render('pages/admin/user-detail', {
-  //       user: req.user,
-  //       dUser: dUser,
-  //       title: req.user.name,
-  //       path: '/users'
-  //     });
-  //   })
-  //   .catch(err => {
-  //     const error = new Error(err);
-  //     error.httpStatusCode = 500;
-  //     return next(error);
-  //   });
   console.log('User Id: ' + userId)
 };

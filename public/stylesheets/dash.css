@@ -143,9 +143,9 @@
   color: #128fa5;
 }
 
-.sss {
+/* .sss {
   color: #128fa5;
-}
+} */
 
 .toDo {
   margin-bottom: 8px;
@@ -186,6 +186,15 @@
 
 .time-details {
   margin-top: 100px;
+}
+
+.fa-history, .fa-clipboard, .fa-comment {
+  opacity: .5;
+}
+
+.admin-user-details {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.062), 0 6px 20px 0 rgba(0, 0, 0, 0.068);
+  border-radius: 5px;
 }
 
 /******************************
