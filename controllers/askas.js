@@ -273,7 +273,7 @@ exports.postUserArchives = (req, res, next) => {
 
 exports.postHours = (req, res, next) => {
     const startTime = req.body.startTime;
-    const manDate = req.body.manDate;
+    const manDate = moment(req.body.manDate, "YYYY-MM-DD", true).toDate();
     const endTime = req.body.endTime;
     const taskDescription = req.body.taskDescription;
     const comments = req.body.comments;
@@ -341,11 +341,12 @@ exports.postHours = (req, res, next) => {
             return next(error);
         });
 
-    console.log(startTime + ' ' + endTime)
+    console.log('Start time: ' + startTime + ' ' + 'End time: ' + endTime)
     console.log('Hours: ' + hour)
     console.log('Minutes: ' + minute)
     console.log('Total minutes: ' + totalMinutes)
     console.log('Start of week: ' + startOfWeek)
     console.log('End of week: ' + endOfWeek)
-    console.log(now)
+    console.log('Date now: ' + now)
+    console.log('Manual date now: ' + manDate.toString())
 }

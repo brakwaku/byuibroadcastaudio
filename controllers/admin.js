@@ -191,5 +191,5 @@ exports.postUser = (req, res, next) => {
       error.httpStatusCode = 500;
       return next(error);
     });
-  console.log('User Id: ' + userId)
+  //console.log('User Id: ' + userId)
 };
