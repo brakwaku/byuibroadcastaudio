@@ -227,13 +227,13 @@ exports.postUserIdea = (req, res, next) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'myc9forlife@gmail.com',
+            user: 'byuiaudio@gmail.com',
             pass: 'CnineForLife'
         }
     });
     const mailOptions = {
         from: req.body.userEmail,
-        to: 'myc9forlife@gmail.com',
+        to: 'byuiaudio@gmail.com',
         subject: 'Activity idea',
         html: `
             <h5>Hello, can you please add this activity to the list?</5>
@@ -324,7 +324,7 @@ exports.postHours = (req, res, next) => {
         //         console.log('Date entered: ' + thisHour);
 
         //         //weekTotal += thisHour._Id.totalMinutes;
-                
+
         //         // if (startOfWeek.isSameOrAfter(thisHour._Id.dateEntered.toDate()) || endOfWeek.isSame(thisHour._Id.dateEntered.toDate())) {
 
         //         // }
@@ -350,3 +350,65 @@ exports.postHours = (req, res, next) => {
     console.log('Date now: ' + now)
     console.log('Manual date now: ' + manDate.toString())
 }
+
+exports.getEditTime = (req, res, next) => {
+    const timeId = req.params.timeId;
+    console.log('Time Id here: ' + timeId)
+    MyTime.findById(timeId)
+        .then(thisTime => {
+            console.log('Time object: ' + thisTime)
+            res.status(200).send(thisTime);
+        })
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
+};
+
+
+exports.postEditTime = (req, res, next) => {
+    const timeId = req.body.timeId;
+    const updatedManDate = req.body.manDate;
+    const updatedStartTime = req.body.startTime;
+    const updatedEndTime = req.body.endTime;
+    const updatedTaskDescription = req.body.taskDescription;
+    const updatedComments = req.body.comments;
+
+    let timeStart = new Date("01/01/2007 " + updatedStartTime);
+    let timeEnd = new Date("01/01/2007 " + updatedEndTime);
+
+    let totalMinutes = (timeEnd - timeStart) / 60000; //dividing by seconds and milliseconds
+
+    let updatedMinute = totalMinutes % 60;
+    let updatedHour = (totalMinutes - updatedMinute) / 60;
+
+    let weekTotal = 0;
+
+    //const now = moment().toDate();
+
+    MyTime.findById(timeId)
+        .then(thisTime => {
+            if (thisTime.userId.toString() !== req.user._id.toString()) {
+                return res.redirect('/askas/dashboard');
+            }
+            thisTime.totalMinutes = totalMinutes;
+            thisTime.startTime = timeStart;
+            thisTime.endTime = timeEnd;
+            thisTime.minutes = updatedMinute;
+            thisTime.hours = updatedHour;
+            //thisTime.dateEntered = updatednow;
+            thisTime.manualDate = updatedManDate;
+            thisTime.taskDescription = updatedTaskDescription;
+            thisTime.comments = updatedComments;
+            return thisTime.save().then(result => {
+                console.log('UPDATED TIME!');
+                res.redirect('/askas/dashboard');
+            });
+        })
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
+};

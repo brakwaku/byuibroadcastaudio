@@ -52,10 +52,15 @@
       <div class="container next-con-mid">
         <% if (hrs.length > 0) { %>
         <% hrs.forEach(h => { %>
-        <div class="container hour-list-div" data-toggle="modal" data-target="#myModal">
-          <li class="hour-list-time"><%= h.hourId.manualDate.toDateString() %></li>
-          <li class="hour-list">Hours: <%= h.hourId.hours %></li>
-          <li class="hour-list">Minutes: <%= h.hourId.minutes %></li>
+        <div class="container hour-list-div" data-toggle="modal" data-target="#myModal" style="padding-bottom: 7px;">
+          <form>
+            <input type="hidden" value="<%= h.hourId._id %>" name="hourId" id="<%= h.hourId._id %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
+            <li class="hour-list-time"><%= h.hourId.manualDate.toDateString() %></li>
+            <li class="hour-list">Hours: <%= h.hourId.hours %></li>
+            <li class="hour-list">Minutes: <%= h.hourId.minutes %></li>
+            <button class="btn btn-success myBtn" type="button" onclick="getTimeId(event)">Edit</button>
+          </form>
         </div>
         <% }) %>
 
@@ -65,18 +70,18 @@
       </div>
     </div>
     <div class="grid-item animate__animated animate__backInRight">
-      <h3>COMING SOON!</h3>
+      <h3>EDIT TIME</h3>
       <hr>
-      <div class="container next-con-right"></div>
+      <div class="container next-con-right edit-time-con"></div>
     </div>
     <!-- <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Submit idea</button> -->
 
-        <!-- Modal -->
-        <!-- <div class="modal fade" id="myModal" role="dialog">
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="myModal" role="dialog">
           <div class="modal-dialog"> -->
 
-              <!-- Modal content-->
-              <!-- <div class="modal-content">
+    <!-- Modal content-->
+    <!-- <div class="modal-content">
                   <div class="modal-header">
                       <h4>Edit Time</h4>
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
