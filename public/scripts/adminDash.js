@@ -14,14 +14,14 @@ function getId (event) {
         success: function(user) {
             if (user.myHours.hours.length > 0) {
                 user.myHours.hours.forEach(hr => {
-                    let timeDate = hr.hourId.manualDate.split('T')[0];
-                    $('#student_details').html(
-                        '<div class="admin-user-details"><p><b>' + timeDate + '</b><br>' 
+                    $('#student_details').append(
+                        '<div class="admin-user-details"><p><b>' + hr.hourId.manualDate.split('T')[0] + '</b><br>' 
                         + '<i class="fas fa-history"></i> <i>Hours:</i> ' + hr.hourId.hours + '<br>'
                         + '<i class="fas fa-history"></i> <i>Minutes:</i> ' + hr.hourId.minutes + '<br>'
                         + '<i class="fas fa-clipboard"></i> <i>Task Description:</i> ' + hr.hourId.taskDescription + '<br>'
                         + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hr.hourId.comments + '</p></div><hr>');
                 });
+                console.log(user.myHours.hours.length);
             } else {
                 $('#student_details').html('<div class="container"><h6>Sorry! No data to display for this user</h6></div>')
             }

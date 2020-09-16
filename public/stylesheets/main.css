@@ -93,7 +93,7 @@ body {
   font-size: 9rem;
 }
 
-.profile-image {
+/* .profile-image {
   display: inline;
   margin: 0 auto;
   margin-left: -25%;
@@ -117,7 +117,7 @@ body {
 .author-text {
   width: 80%;
   margin-left: 20px;
-}
+} */
 
 .main-header-user {
   color: white;
@@ -145,10 +145,6 @@ body {
   outline: none;
   border-radius: 10px;
   color: white;
-}
-
-.get-help {
-  margin-left: 68vw;
 }
 
 /******************************
@@ -190,7 +186,7 @@ body {
 * User activities Styling
 ****************************************/
 .actBack {
-  background-image: url('/images/loginii.jpg');
+  background-image: url('/images/1aii.jpg');
   background-attachment: fixed;
   /* Full height */
   height: auto;
@@ -200,7 +196,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
-  padding-bottom: 80px;
+  padding-bottom: 360px;
 }
 
 .activity-title {

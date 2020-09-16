@@ -130,7 +130,7 @@ exports.postEditActivity = (req, res, next) => {
 exports.getDashboard = (req, res, next) => {
   User.find()
     .then(users => {
-      console.log(users);
+      //console.log(users);
       res.render('pages/admin/dashboard', {
         users: users,
         title: 'ASKAS | DASHBOARD',
@@ -184,7 +184,6 @@ exports.postUser = (req, res, next) => {
   User.findById(userId).populate('myHours.hours.hourId')
     .then(dUser => {
       res.status(200).send(dUser);
-      //console.log(dUser);
     })
     .catch(err => {
       const error = new Error(err);

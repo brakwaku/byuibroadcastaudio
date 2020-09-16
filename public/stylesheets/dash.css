@@ -135,6 +135,11 @@
   max-height: 400px;
 }
 
+.edit-time-con {
+  background-color: #e8e9e87c;
+  border-radius: 10px;
+}
+
 .action-btn {
   display: flex;
 }

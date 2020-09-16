@@ -28,14 +28,14 @@ exports.getMotivation = (req, res, next) => {
     });
 };
 
-exports.getActivities = (req, res, next) => {
+exports.getTasks = (req, res, next) => {
     Activity.find()
         .then(activities => {
             console.log('Activitiess: ' + activities);
-            res.render('pages/askas/activities', {
+            res.render('pages/askas/tasks', {
                 acts: activities,
-                title: 'ASKAS | Activities',
-                path: '/activities'
+                title: 'ASKAS | Tasks',
+                path: '/tasks'
             });
         })
         .catch(err => {
@@ -333,7 +333,6 @@ exports.postHours = (req, res, next) => {
         // })
         .then(result => {
             res.redirect('/askas/dashboard');
-            //console.log(hourId);
         })
         .catch(err => {
             const error = new Error(err);
@@ -368,12 +367,12 @@ exports.getEditTime = (req, res, next) => {
 
 
 exports.postEditTime = (req, res, next) => {
-    const timeId = req.body.timeId;
-    const updatedManDate = req.body.manDate;
     const updatedStartTime = req.body.startTime;
+    const updatedManDate = req.body.manDate;
     const updatedEndTime = req.body.endTime;
     const updatedTaskDescription = req.body.taskDescription;
     const updatedComments = req.body.comments;
+    const timeId = req.body.timeId;
 
     let timeStart = new Date("01/01/2007 " + updatedStartTime);
     let timeEnd = new Date("01/01/2007 " + updatedEndTime);
@@ -393,8 +392,8 @@ exports.postEditTime = (req, res, next) => {
                 return res.redirect('/askas/dashboard');
             }
             thisTime.totalMinutes = totalMinutes;
-            thisTime.startTime = timeStart;
-            thisTime.endTime = timeEnd;
+            thisTime.startTime = updatedStartTime;
+            thisTime.endTime = updatedEndTime;
             thisTime.minutes = updatedMinute;
             thisTime.hours = updatedHour;
             //thisTime.dateEntered = updatednow;
