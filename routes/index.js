@@ -22,13 +22,13 @@ routes
         })
     })
 
-    // //500 Page for technical errors
-    // .use((error, req, res, next) => {
-    //     res.status(500).render('pages/500', {
-    //         title: 'ASKAS | Minor Issue',
-    //         path: '/500',
-    //         isAuthenticated: req.session.isLoggedIn
-    //     });
-    // });
+    //500 Page for technical errors
+    .use((error, req, res, next) => {
+        res.status(500).render('pages/500', {
+            title: 'ASKAS | Minor Issue',
+            path: '/500',
+            isAuthenticated: req.session.isLoggedIn
+        });
+    });
 
 module.exports = routes;
