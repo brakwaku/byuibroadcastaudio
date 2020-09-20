@@ -58,14 +58,15 @@
   margin: 15px;
 }
 
-.pro-logs img:hover {
-  width: 120px;
-}
-
-
 .pro-logs img {
   width: 110px;
+  transition: all 1.4s;
 }
+
+.pro-logs img:hover {
+  transform: scale(1.4);
+}
+
 body {
   padding: 0;
   margin: 0;
