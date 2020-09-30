@@ -11,6 +11,48 @@
   position: relative;
 }
 
+.admin-dash-image {
+  /* Linear-gradient to add a darken background effect to the image. This will make the text easier to read */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/1ai.jpg');
+  /* Set a specific height */
+  max-height: 200px;
+  min-height: 150px;
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.admin-dash-image h1 {
+  /*text-align: center;*/
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 6vw;
+  font-weight: bolder;
+  color: rgb(230, 158, 23);
+}
+
+.total-week-hour h2 {
+  position: absolute;
+  top: 70%;
+  left: 70%;
+}
+
+/* .admin-dash-image h3 {
+  margin: 0;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bolder;
+  color: orange;
+} */
+
 .dashboard-image h1 {
   /*text-align: center;*/
   margin: 0;

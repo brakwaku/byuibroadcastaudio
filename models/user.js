@@ -245,27 +245,27 @@ userSchema.methods.addToMyHours = function (hour) {
   return this.save();
 };
 
-// userSchema.methods.addToWeekly = function (aWeek) {
-//   const weeklyWeekIndex = this.weeklyHours.weekHours.findIndex(cp => {
-//     return cp.activityId.toString() === activity._id.toString();
-//   });
-//   let newQuantity = 1;
-//   const updatedBucketItems = [...this.weeklyHours.weekHours];
+userSchema.methods.addToWeeklyHours = function (weekId) {
+  const weekTimeIndex = this.weeklyHours.weekHours.findIndex(cp => {
+    return cp.weekHourId.toString() === weekId.toString();
+  });
+  let newQuantity = 1;
+  const updatedWeekHourItems = [...this.weeklyHours.weekHours];
 
-//   if (weeklyWeekIndex >= 0) {
-//     newQuantity = this.weeklyHours.weekHours[weeklyWeekIndex].quantity + 1;
-//     updatedBucketItems[weeklyWeekIndex].quantity = newQuantity;
-//   } else {
-//     updatedBucketItems.push({
-//       activityId: activity._id,
-//       quantity: newQuantity
-//     });
-//   }
-//   const updatedBucket = {
-//     weekHours: updatedBucketItems
-//   };
-//   this.weeklyHours = updatedBucket;
-//   return this.save();
-// };
+  if (weekTimeIndex >= 0) {
+    newQuantity = this.weeklyHours.weekHours[weekTimeIndex].quantity + 1;
+    updatedWeekHourItems[weekTimeIndex].quantity = newQuantity;
+  } else {
+    updatedWeekHourItems.push({
+      weekHourId: weekId
+    });
+    //this.myHours.hours = [];
+  }
+  const updatedWeekHour = {
+    weekHours: updatedWeekHourItems
+  };
+  this.weeklyHours = updatedWeekHour;
+  return this.save();
+};
 
 module.exports = mongoose.model('User', userSchema);

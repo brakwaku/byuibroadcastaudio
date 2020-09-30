@@ -1,4 +1,4 @@
-function getId (event) {
+function getId(event) {
     const userId = event.path[1].childNodes[1].defaultValue;
     let myToken = $('#myToken').val();
     let myUrl = "/admin/users/" + userId;
@@ -11,61 +11,39 @@ function getId (event) {
             userId: userId,
             _csrf: myToken
         }),
-        success: function(user) {
+        success: function (user) {
+            let tMin = 0; //initialize variable for total minutes
+            let weekHrs = 0;
+            let weekMins = 0;
+            if (user.myHours.hours.length > 0) {
+                user.myHours.hours.forEach(wH => {
+                    tMin += wH.hourId.totalMinutes;
+                })
+                weekMins = tMin % 60; //Calculate number of minutes after hours
+                weekHrs = tMin / 60; //Convert total minutes to hours
+            }
+
             if (user.myHours.hours.length > 0) {
                 user.myHours.hours.forEach(hr => {
+                    let manDate = new Date(hr.hourId.manualDate);
                     $('#student_details').append(
-                        '<div class="admin-user-details"><p><b>' + hr.hourId.manualDate.split('T')[0] + '</b><br>' 
+                        '<div class="admin-user-details"><p><b>' + manDate.toDateString() + '</b><br>'
                         + '<i class="fas fa-history"></i> <i>Hours:</i> ' + hr.hourId.hours + '<br>'
                         + '<i class="fas fa-history"></i> <i>Minutes:</i> ' + hr.hourId.minutes + '<br>'
                         + '<i class="fas fa-clipboard"></i> <i>Task Description:</i> ' + hr.hourId.taskDescription + '<br>'
                         + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hr.hourId.comments + '</p></div><hr>');
                 });
+                $('#studentWeekHour').html(weekHrs + ' Hours');
                 console.log(user.myHours.hours.length);
+                console.log(weekHrs);
+                console.log(weekMins);
             } else {
                 $('#student_details').html('<div class="container"><h6>Sorry! No data to display for this user</h6></div>')
+                $('#studentWeekHour').html(weekHrs + ' Hours');
             }
-        }, error: function(err) {
+        }, error: function (err) {
             console.log(err);
         }
     });
     //console.log(event.path[1].childNodes[1].defaultValue)
 };
-
-
-// $(function () {
-
-//     $('.view-user-details').on('submit', function(event){
-//         event.preventDefault();
-//         event.stopPropagation();
-//         let myToken = $('#myToken').val();
-//         let userId = $('#student').val();
-//         let myUrl = "/admin/users/" + userId;
-
-//         $.ajax({
-//             url: myUrl,
-//             type: 'POST',
-//             contentType: "application/json",
-//             data: JSON.stringify({
-//                 userId: userId,
-//                 _csrf: myToken
-//             }),
-//             success: function(user) {
-//                 if (user.myHours.hours.length > 0) {
-//                     user.myHours.hours.forEach(hr => {
-//                         $('#student_details').html(
-//                             '<p>Date: ' + hr.hourId.manualDate + '</p>' 
-//                             + '<p>Hours: ' + hr.hourId.hours + '</p>'
-//                             + '<p>Minutes: ' + hr.hourId.minutes + '</p>'
-//                             + '<p>Name: ' + user.name + '</p>'
-//                             + '<p>Task Description: ' + hr.hourId.minutes + '</p>');
-//                     });
-//                 } else {
-//                     $('#student_details').html('<p>No data to display</p>')
-//                 }
-//             }, error: function(err) {
-//                 console.log(err);
-//             }
-//         });
-//     });
-// });

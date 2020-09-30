@@ -44,6 +44,13 @@
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button class="btn btn-success " type="submit">Submit</button>
         </form>
+
+        <!-- Hidden form to be called to make calculation of weekly hours -->
+        <form>
+          <input type="hidden" value="<%= user._id %>" name="theUserId" id="theUser">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="thisToken">
+          <button id="theUserBtn" style="visibility: hidden; display: none;" class="btn btn-success" type="button"><%= user.firstName.toUpperCase() %></button>
+        </form>
       </div>
     </div>
     <div class="grid-item animate__animated animate__bounceInDown">
@@ -75,5 +82,6 @@
       <div class="container next-con-right edit-time-con"></div>
     </div>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="/scripts/front.js"></script>
   <%- include('../../includes/end.ejs') %>

@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+//const userObj = require('user');
+const User = require('./user');
 
 const Schema = mongoose.Schema;
 
@@ -19,6 +21,34 @@ const weekTimeSchema = new Schema({
     type: Number,
     required: true
   },
+  totalMinutes: {
+    type: Number,
+    required: true
+  },
+  timeArray: [
+    {
+      weekTimeId: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'MyTime',
+          required: true
+        }
+      ]
+    }
+  ],
+  // timeArray: {
+  //   times: [
+  //     {
+  //       weekTimeId: [
+  //         {
+  //           type: Schema.Types.ObjectId,
+  //           ref: 'MyTime',
+  //           required: true
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',

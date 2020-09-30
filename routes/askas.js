@@ -23,5 +23,6 @@ router.post('/archives', isAuth, askasController.postUserArchives)
 router.post('/user-idea', isAuth, askasController.postUserIdea)
 router.post('/myHours', isAuth, askasController.postHours)
 router.post('/update-time', isAuth, askasController.postEditTime)
+router.post('/calculateWeek', isAuth, askasController.postCalculateWeek)
 
 module.exports = router;

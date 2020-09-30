@@ -67,8 +67,34 @@ function getTimeId(event) {
             console.log(err);
         }
     });
-    //console.log(time.manualDate);
-    // console.log(event.path[1].childNodes[0].nextElementSibling.defaultValue)
     console.log(event.path[1].childNodes[1].defaultValue)
-    //console.log(event.path[1].childNodes[1])
 };
+
+/***
+ * Checking for and creating user weekly hours
+ */
+// function checkWeek() {
+//     const theUserBtn = $('#theUserBtn').trigger("click");
+//     //const userId = $('#theUser').val();
+//     let myToken = $('#thisToken').val();
+//     let myUrl = "/askas/calculateWeek";
+
+//     $.ajax({
+//         url: myUrl,
+//         type: 'POST',
+//         contentType: "application/json",
+//         data: JSON.stringify({
+//             //userId: userId,
+//             _csrf: myToken
+//         }),
+//         success: function (newWeek) {
+//             console.log('Week Number: ' + newWeek.weekNumber);
+//         }, error: function (err) {
+//             console.log('Your error: ' + err);
+//         }
+//     });
+// }
+
+// setInterval(checkWeek, 10000); //Update every 1 minute
+
+// checkWeek();

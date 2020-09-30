@@ -1,8 +1,10 @@
 const Activity = require('../models/activity');
 const User = require('../models/user');
 const MyTime = require('../models/myTime');
+const WeekTime = require('../models/weekTime');
 const nodemailer = require('nodemailer');
 const moment = require('moment');
+const currentWeekNumber = require('current-week-number');
 const { min } = require('moment');
 const { validationResult } = require('express-validator/check');
 
@@ -278,8 +280,6 @@ exports.postHours = (req, res, next) => {
     const taskDescription = req.body.taskDescription;
     const comments = req.body.comments;
     const errors = validationResult(req);
-    const startOfWeek = moment().startOf('week').toDate();
-    const endOfWeek = moment().endOf('week').toDate();
 
 
     if (!errors.isEmpty()) {
@@ -340,14 +340,15 @@ exports.postHours = (req, res, next) => {
             return next(error);
         });
 
-    console.log('Start time: ' + startTime + ' ' + 'End time: ' + endTime)
-    console.log('Hours: ' + hour)
-    console.log('Minutes: ' + minute)
-    console.log('Total minutes: ' + totalMinutes)
-    console.log('Start of week: ' + startOfWeek)
-    console.log('End of week: ' + endOfWeek)
-    console.log('Date now: ' + now)
-    console.log('Manual date now: ' + manDate.toString())
+    // console.log('Start time: ' + startTime + ' ' + 'End time: ' + endTime)
+    // console.log('Hours: ' + hour)
+    // console.log('Minutes: ' + minute)
+    // console.log('Total minutes: ' + totalMinutes)
+    // console.log('Start of week: ' + startOfWeek)
+    // console.log('End of week: ' + endOfWeek)
+    // console.log('Date now: ' + now)
+    // console.log('Manual date now: ' + manDate.toString())
+    console.log('Time Created')
 }
 
 exports.getEditTime = (req, res, next) => {
@@ -410,4 +411,48 @@ exports.postEditTime = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         });
+};
+
+exports.postCalculateWeek = (req, res, next) => {
+    const userId = req.user._id;
+    const startOfWeek = moment().startOf('week').toDate();
+    const endOfWeek = moment().endOf('week').toDate();
+    const dateEntered = moment().toDate();
+    const weekNumber = currentWeekNumber(dateEntered);
+    const myNow = moment().toDate();
+    const recordedHours = [...req.user.myHours.hours];
+    
+
+    if (endOfWeek) {
+        const myWeek = new WeekTime({
+            dateEntered: dateEntered,
+            weekStart: startOfWeek,
+            weekEnd: endOfWeek,
+            weekNumber: weekNumber,
+            userId: userId
+        });
+        myWeek.timeArray.push({
+            weekTimeId: recordedHours
+        });
+        // myWeek.timeArray.times.push({
+        //     weekTimeId: recordedHours
+        // });
+        myWeek
+            .save()
+            .then(result => {
+                res.status(200).send(result);
+                req.user.myHours.hours = [];
+                return req.user.addToWeeklyHours(result._id);
+            })
+            .catch(err => {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            });
+        console.log('Week created');
+        // console.log('End of week: ' + endOfWeek);
+        // console.log('Time now: ' + moment().toDate());
+    }
+
+    console.log('From: ' + userId);
 };
