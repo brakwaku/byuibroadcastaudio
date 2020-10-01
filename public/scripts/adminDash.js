@@ -34,7 +34,7 @@ function getId(event) {
                         + '<i class="fas fa-clipboard"></i> <i>Task Description:</i> ' + hr.hourId.taskDescription + '<br>'
                         + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hr.hourId.comments + '</p></div><hr>');
                 });
-                $('#studentWeekHour').html(weekHrs + ' Hrs');
+                $('#studentWeekHour').html(weekHrs.toFixed(3) + ' Hrs');
                 console.log(user.myHours.hours.length);
             } else {
                 $('#student_details').html('<div class="container"><h6>Sorry! No data to display for this user</h6></div>')
