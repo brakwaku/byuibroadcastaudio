@@ -38,7 +38,7 @@ function getId(event) {
                 console.log(user.myHours.hours.length);
             } else {
                 $('#student_details').html('<div class="container"><h6>Sorry! No data to display for this user</h6></div>')
-                $('#studentWeekHour').html(weekHrs + ' Hrs');
+                $('#studentWeekHour').html(weekHrs.toFixed(3) + ' Hrs');
             }
         }, error: function (err) {
             console.log(err);
