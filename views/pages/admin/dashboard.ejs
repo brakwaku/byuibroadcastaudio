@@ -13,9 +13,15 @@
   <div class="admin-dash-image">
     <h1 class="animate__animated animate__zoomIn">DASHBOARD</h1>
     <!-- <h3 class="animate__animated animate__zoomIn">All sounds of the earth are like music.</h3> -->
-    <div class="total-week-hour">
-      <h2 id="studentWeekHour"></h2>
+    <div class="all-student-hours">
+      <h6 id="allStudentHoursLabel">Week Total</h6>
+      <h5 id="studentTotalHour"><%= weekTotal.toFixed(3) %> Hrs</h5>
       <!-- <span id="studentWeekHour"></span> -->
+    </div>
+
+    <div class="studentWeekHour">
+      <h6 id="studentWeekHourLabel">Student Total</h6>
+      <h5 id="studentWeekHour"></h5>
     </div>
     <!-- <div class="total-year-hour">
       <h2>Hours</h2>

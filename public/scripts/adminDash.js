@@ -24,6 +24,7 @@ function getId(event) {
             }
 
             if (user.myHours.hours.length > 0) {
+                $('#student_details').html(''); // First clear what is in the div
                 user.myHours.hours.forEach(hr => {
                     let manDate = new Date(hr.hourId.manualDate);
                     $('#student_details').append(
@@ -33,13 +34,11 @@ function getId(event) {
                         + '<i class="fas fa-clipboard"></i> <i>Task Description:</i> ' + hr.hourId.taskDescription + '<br>'
                         + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hr.hourId.comments + '</p></div><hr>');
                 });
-                $('#studentWeekHour').html(weekHrs + ' Hours');
+                $('#studentWeekHour').html(weekHrs + ' Hrs');
                 console.log(user.myHours.hours.length);
-                console.log(weekHrs);
-                console.log(weekMins);
             } else {
                 $('#student_details').html('<div class="container"><h6>Sorry! No data to display for this user</h6></div>')
-                $('#studentWeekHour').html(weekHrs + ' Hours');
+                $('#studentWeekHour').html(weekHrs + ' Hrs');
             }
         }, error: function (err) {
             console.log(err);

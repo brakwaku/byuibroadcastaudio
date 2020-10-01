@@ -23,13 +23,6 @@ exports.getAbout = (req, res, next) => {
     });
 };
 
-exports.getMotivation = (req, res, next) => {
-    return res.render('pages/askas/motivation', {
-        title: 'ASKAS | Motivation',
-        path: '/motivation'
-    });
-};
-
 exports.getTasks = (req, res, next) => {
     Activity.find()
         .then(activities => {
@@ -39,84 +32,6 @@ exports.getTasks = (req, res, next) => {
                 title: 'ASKAS | Tasks',
                 path: '/tasks'
             });
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-};
-
-exports.getActivity = (req, res, next) => {
-    const actId = req.params.activityId;
-    Activity.findById(actId)
-        .then(activity => {
-            res.render('pages/askas/activity-detail', {
-                activity: activity,
-                title: 'ASKAS | ' + activity.title,
-                path: '/activities'
-            });
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-};
-
-exports.getIndex = (req, res, next) => {
-    Activity.find()
-        .then(activities => {
-            res.render('pages/askas/activities', {
-                title: 'ASKAS | Activities',
-                acts: activities,
-                path: '/activities'
-            });
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-};
-
-exports.postBucket = (req, res, next) => {
-    const actId = req.body.activityId;
-    Activity.findById(actId)
-        .then(activity => {
-            return req.user.addToBucket(activity);
-        })
-        .then(result => {
-            console.log('Postbucket result: ' + result);
-            res.redirect('activities');
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-};
-
-exports.postBucketDeleteActivity = (req, res, next) => {
-    const actId = req.body.activityId;
-    req.user
-        .removeFromBucket(actId)
-        .then(result => {
-            res.redirect('dashboard');
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-};
-
-exports.postToDoDeleteActivity = (req, res, next) => {
-    const actId = req.body.activityId;
-    req.user
-        .removeFromBucket(actId)
-        .then(result => {
-            res.redirect('dashboard');
         })
         .catch(err => {
             const error = new Error(err);
@@ -160,118 +75,6 @@ exports.getDashboard = (req, res, next) => {
             return next(error);
         });
 };
-
-exports.postToDo = (req, res, next) => {
-    const toDoId = req.body.activityId;
-    req.user.addToToDo(toDoId)
-        .then(() => {
-            return req.user.removeFromBucket(toDoId);
-        })
-        .then(() => {
-            res.redirect('dashboard');
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-};
-
-exports.postToDoDelete = (req, res, next) => {
-    const toDoId = req.body.toDoId;
-    req.user.removeFromToDo(toDoId)
-        .then(result => {
-            res.redirect('dashboard');
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-}
-
-exports.postCompleted = (req, res, next) => {
-    const compId = req.body.toDoId;
-    req.user.addToCompleted(compId)
-        .then(() => {
-            return req.user.removeFromToDo(compId);
-        })
-        .then(() => {
-            res.redirect('dashboard');
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-};
-
-exports.postArchive = (req, res, next) => {
-    const archId = req.body.compId;
-    req.user.addToArchive(archId)
-        .then(() => {
-            return req.user.removeFromCompleted(archId);
-        })
-        .then(() => {
-            res.redirect('dashboard');
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-};
-
-exports.postUserIdea = (req, res, next) => {
-    const ideaName = req.body.ideaName;
-    const ideaDesc = req.body.ideaDesc;
-
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'byuiaudio@gmail.com',
-            pass: 'CnineForLife'
-        }
-    });
-    const mailOptions = {
-        from: req.body.userEmail,
-        to: 'byuiaudio@gmail.com',
-        subject: 'Activity idea',
-        html: `
-            <h5>Hello, can you please add this activity to the list?</5>
-            <p>Name: ${ideaName}</p>
-            <p>Description: ${ideaDesc}</p>
-          `
-    };
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-
-    return res.redirect('activities');
-    console.log(ideaDesc + ' ' + ideaName)
-}
-
-exports.postUserArchives = (req, res, next) => {
-    req.user
-        .populate('archive.archs.archId')
-        .execPopulate()
-        .then(user => {
-            res.render('pages/askas/archives', {
-                path: '/archives',
-                title: 'ASKAS | Archives',
-                archs: user.archive.archs
-            });
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-}
 
 exports.postHours = (req, res, next) => {
     const startTime = req.body.startTime;
@@ -420,39 +223,53 @@ exports.postCalculateWeek = (req, res, next) => {
     const dateEntered = moment().toDate();
     const weekNumber = currentWeekNumber(dateEntered);
     const myNow = moment().toDate();
-    const recordedHours = [...req.user.myHours.hours];
-    
-
-    if (endOfWeek) {
-        const myWeek = new WeekTime({
-            dateEntered: dateEntered,
-            weekStart: startOfWeek,
-            weekEnd: endOfWeek,
-            weekNumber: weekNumber,
-            userId: userId
-        });
-        myWeek.timeArray.push({
-            weekTimeId: recordedHours
-        });
-        // myWeek.timeArray.times.push({
-        //     weekTimeId: recordedHours
-        // });
-        myWeek
-            .save()
-            .then(result => {
-                res.status(200).send(result);
-                req.user.myHours.hours = [];
-                return req.user.addToWeeklyHours(result._id);
+    let tempHours = [];
+    let tMinutes = 0;
+    req.user
+        .populate('myHours.hours.hourId')
+        .execPopulate()
+        .then(user => {
+            tempHours = [...user.myHours.hours];
+            user.myHours.hours.forEach(h => {
+                console.log('Single Mins: ' + h.hourId.totalMinutes);
+                tMinutes += h.hourId.totalMinutes;
             })
-            .catch(err => {
-                const error = new Error(err);
-                error.httpStatusCode = 500;
-                return next(error);
-            });
-        console.log('Week created');
-        // console.log('End of week: ' + endOfWeek);
-        // console.log('Time now: ' + moment().toDate());
-    }
+            console.log('Temp: ' + tempHours);
+            const recordedHours = tempHours;
+            const totalMinutes = tMinutes;
 
-    console.log('From: ' + userId);
+            console.log('Total Mins: ' + totalMinutes);
+
+
+            if (myNow != endOfWeek) {
+                const myWeek = new WeekTime({
+                    dateEntered: dateEntered,
+                    weekStart: startOfWeek,
+                    weekEnd: endOfWeek,
+                    weekNumber: weekNumber,
+                    totalMinutes: totalMinutes,
+                    userId: userId
+                });
+                myWeek.timeArray.push({
+                    weekTimeId: recordedHours
+                });
+                myWeek
+                    .save()
+                    .then(result => {
+                        res.status(200).send(result);
+                        req.user.myHours.hours = [];
+                        return req.user.addToWeeklyHours(result._id);
+                    })
+                    .catch(err => {
+                        const error = new Error(err);
+                        error.httpStatusCode = 500;
+                        return next(error);
+                    });
+                console.log('Week created');
+                // console.log('End of week: ' + endOfWeek);
+                // console.log('Time now: ' + moment().toDate());
+            }
+        })
+
+    console.log('User Id (Calc week): ' + userId);
 };

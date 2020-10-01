@@ -3,51 +3,38 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const weekTimeSchema = new Schema({
+const yearTimeSchema = new Schema({
   dateEntered: {
     type: Date,
     required: true
   },
-  weekStart: {
+  dayStart: {
     type: Date,
     required: true
   },
-  weekEnd: {
+  dayEnd: {
     type: Date,
     required: true
   },
-  weekNumber: {
-    type: Number,
-    required: true
-  },
+//   weekNumber: {
+//     type: Number,
+//     required: true
+//   },
   totalMinutes: {
     type: Number,
     required: true
   },
-  timeArray: [
+  weekArray: [
     {
-      weekTimeId: [
+      yearTimeId: [
         {
           type: Schema.Types.ObjectId,
-          ref: 'MyTime',
+          ref: 'WeekTime',
           required: true
         }
       ]
     }
   ],
-  // timeArray: {
-  //   times: [
-  //     {
-  //       weekTimeId: [
-  //         {
-  //           type: Schema.Types.ObjectId,
-  //           ref: 'MyTime',
-  //           required: true
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -55,4 +42,4 @@ const weekTimeSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('WeekTime', weekTimeSchema);
+module.exports = mongoose.model('YearTime', yaerTimeSchema);

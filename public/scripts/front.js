@@ -95,6 +95,6 @@ function getTimeId(event) {
 //     });
 // }
 
-// setInterval(checkWeek, 10000); //Update every 1 minute
+// setInterval(checkWeek, 60000); //Update every 1 minute
 
 // checkWeek();
