@@ -15,19 +15,19 @@ exports.getDashboard = (req, res, next) => {
       let totalMinutes = 0;
       if (users.length > 0) {
         users.forEach(user => {
-          console.log(user);
+          //console.log(user);
           user
             .populate('myHours.hours.hourId')
             .execPopulate()
-            // .then(usss => {
-            //   //console.log('Thing Up: ' + usss.myHours.hours.hourId);
-            // })
-            // .catch(err => {
-            //   const error = new Error(err);
-            //   error.httpStatusCode = 500;
-            //   return next(error);
-            // });
-            //console.log('Thing: ' + user.myHours.hours);
+          .then(usss => {
+            console.log('Thing Up: ' + usss.myHours.hours.hourId);
+          })
+          .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+          });
+          console.log('Thing: ' + user.myHours.hours);
           user.myHours.hours.forEach(u => {
             //console.log('Thing: ' + user.myHours);
             totalMin += u.hourId.totalMinutes;

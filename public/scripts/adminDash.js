@@ -29,8 +29,8 @@ function getId(event) {
                     let manDate = new Date(hr.hourId.manualDate);
                     $('#student_details').append(
                         '<div class="admin-user-details"><p><b>' + manDate.toDateString() + '</b><br>'
-                        + '<i class="fas fa-history"></i> <i>Hours:</i> ' + hr.hourId.hours + '<br>'
-                        + '<i class="fas fa-history"></i> <i>Minutes:</i> ' + hr.hourId.minutes + '<br>'
+                        + '<span><i class="fas fa-history"></i> <i>Hours:</i> ' + hr.hourId.hours + '</span>'
+                        + '<i class="fas fa-history min-admin"></i> <i>Minutes:</i> ' + hr.hourId.minutes + '<br>'
                         + '<i class="fas fa-clipboard"></i> <i>Task Description:</i> ' + hr.hourId.taskDescription + '<br>'
                         + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hr.hourId.comments + '</p></div><hr>');
                 });

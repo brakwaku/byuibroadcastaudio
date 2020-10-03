@@ -94,32 +94,6 @@ body {
   font-size: 9rem;
 }
 
-/* .profile-image {
-  display: inline;
-  margin: 0 auto;
-  margin-left: -25%;
-  height: 100%;
-  width: auto;
-}
-
-.image-cropper {
-  width: 160px;
-  height: 160px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 50%;
-}
-
-.about-author {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.author-text {
-  width: 80%;
-  margin-left: 20px;
-} */
-
 .main-header-user {
   color: white;
 }

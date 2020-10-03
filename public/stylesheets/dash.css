@@ -198,6 +198,17 @@
   color: #128fa5;
 }
 
+@media only screen and (max-width: 510px) {
+  .grid-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .grid-item {
+    width: 100%;
+  }
+}
+
 /* .sss {
   color: #128fa5;
 } */
@@ -250,6 +261,10 @@
 .admin-user-details {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.062), 0 6px 20px 0 rgba(0, 0, 0, 0.068);
   border-radius: 5px;
+}
+
+.min-admin {
+  padding-left: 30px;
 }
 
 /******************************
