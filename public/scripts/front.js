@@ -18,7 +18,8 @@ updateTime();
  * User editing time entered already
  */
 function getTimeId(event) {
-    const timeId = event.path[1].childNodes[1].defaultValue;
+    const timeId = event;
+    // const timeId = event.path[1].childNodes[1].defaultValue;
     let myToken = $('#myToken').val();
     let myUrl = "/askas/edit-time/" + timeId;
 
@@ -72,6 +73,31 @@ function getTimeId(event) {
 
 /***
  * Checking for and creating user weekly hours
+ */
+// function checkWeek() {
+//     //const userId = $('#theUser').val();
+//     let myToken = $('#thisToken').val();
+//     let myUrl = "/askas/calculateWeek";
+
+//     $.ajax({
+//         url: myUrl,
+//         type: 'POST',
+//         contentType: "application/json",
+//         data: JSON.stringify({
+//             //userId: userId,
+//             _csrf: myToken
+//         }),
+//         success: function (newWeek) {
+//             console.log('Week Number: ' + newWeek.weekNumber);
+//         }, error: function (err) {
+//             console.log('Your error: ' + err);
+//         }
+//     });
+// }
+
+
+/***
+ * Self-triggured Checking for and creating user weekly hours
  */
 // function checkWeek() {
 //     const theUserBtn = $('#theUserBtn').trigger("click");

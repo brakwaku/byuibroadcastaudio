@@ -78,7 +78,7 @@ exports.getDashboard = (req, res, next) => {
 
 exports.postHours = (req, res, next) => {
     const startTime = req.body.startTime;
-    const manDate = moment(req.body.manDate, "YYYY-MM-DD", true).toDate();
+    const manDate = moment(req.body.manDate, "YYYY-MM-DD", true).toDate(); //Does not work on Safari
     const endTime = req.body.endTime;
     const taskDescription = req.body.taskDescription;
     const comments = req.body.comments;
@@ -101,8 +101,6 @@ exports.postHours = (req, res, next) => {
     let minute = totalMinutes % 60;
     let hour = (totalMinutes - minute) / 60;
 
-    let weekTotal = 0;
-
     const now = moment().toDate();
 
     const myHours = new MyTime({
@@ -122,18 +120,6 @@ exports.postHours = (req, res, next) => {
         .then(result => {
             return req.user.addToMyHours(result._id);
         })
-        // .then(result => {
-        //     req.user.myHours.hours.forEach(thisHour => {
-        //         console.log('Date entered: ' + thisHour);
-
-        //         //weekTotal += thisHour._Id.totalMinutes;
-
-        //         // if (startOfWeek.isSameOrAfter(thisHour._Id.dateEntered.toDate()) || endOfWeek.isSame(thisHour._Id.dateEntered.toDate())) {
-
-        //         // }
-        //         //console.log('Week total: ' + weekTotal);
-        //     });
-        // })
         .then(result => {
             res.redirect('/askas/dashboard');
         })
@@ -222,26 +208,26 @@ exports.postCalculateWeek = (req, res, next) => {
     const endOfWeek = moment().endOf('week').toDate();
     const dateEntered = moment().toDate();
     const weekNumber = currentWeekNumber(dateEntered);
-    const myNow = moment().toDate();
+    // const myNow = moment().toDate();
     let tempHours = [];
     let tMinutes = 0;
     req.user
         .populate('myHours.hours.hourId')
         .execPopulate()
         .then(user => {
-            tempHours = [...user.myHours.hours];
-            user.myHours.hours.forEach(h => {
-                console.log('Single Mins: ' + h.hourId.totalMinutes);
-                tMinutes += h.hourId.totalMinutes;
-            })
-            console.log('Temp: ' + tempHours);
-            const recordedHours = tempHours;
-            const totalMinutes = tMinutes;
+            if (user.myHours.hours.length > 0) {
+                tempHours = [...user.myHours.hours];
+                user.myHours.hours.forEach(h => {
+                    console.log('Single Mins: ' + h.hourId.totalMinutes);
+                    tMinutes += h.hourId.totalMinutes;
+                })
+                console.log('Temp: ' + tempHours);
+                const recordedHours = tempHours;
+                const totalMinutes = tMinutes;
 
-            console.log('Total Mins: ' + totalMinutes);
+                console.log('Total Mins: ' + totalMinutes);
 
 
-            if (myNow != endOfWeek) {
                 const myWeek = new WeekTime({
                     dateEntered: dateEntered,
                     weekStart: startOfWeek,
@@ -256,9 +242,12 @@ exports.postCalculateWeek = (req, res, next) => {
                 myWeek
                     .save()
                     .then(result => {
-                        res.status(200).send(result);
+                        // res.status(200).send(result);
                         req.user.myHours.hours = [];
                         return req.user.addToWeeklyHours(result._id);
+                    })
+                    .then(result => {
+                        return res.redirect('/askas/dashboard');
                     })
                     .catch(err => {
                         const error = new Error(err);
@@ -268,8 +257,51 @@ exports.postCalculateWeek = (req, res, next) => {
                 console.log('Week created');
                 // console.log('End of week: ' + endOfWeek);
                 // console.log('Time now: ' + moment().toDate());
+
+            } else {
+                console.log('No week created')
+                return res.redirect('/askas/dashboard');
             }
+
+
+
+            /*************************************************************
+            * Self-triggured Checking
+            **************************************************************/
+            // if (myNow != endOfWeek) {
+            //     const myWeek = new WeekTime({
+            //         dateEntered: dateEntered,
+            //         weekStart: startOfWeek,
+            //         weekEnd: endOfWeek,
+            //         weekNumber: weekNumber,
+            //         totalMinutes: totalMinutes,
+            //         userId: userId
+            //     });
+            //     myWeek.timeArray.push({
+            //         weekTimeId: recordedHours
+            //     });
+            //     myWeek
+            //         .save()
+            //         .then(result => {
+            //             res.status(200).send(result);
+            //             req.user.myHours.hours = [];
+            //             return req.user.addToWeeklyHours(result._id);
+            //         })
+            //         .catch(err => {
+            //             const error = new Error(err);
+            //             error.httpStatusCode = 500;
+            //             return next(error);
+            //         });
+            //     console.log('Week created');
+            //     // console.log('End of week: ' + endOfWeek);
+            //     // console.log('Time now: ' + moment().toDate());
+            // }
         })
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 
     console.log('User Id (Calc week): ' + userId);
 };

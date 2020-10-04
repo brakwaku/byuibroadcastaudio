@@ -46,16 +46,26 @@
         </form>
 
         <!-- Hidden form to be called to make calculation of weekly hours -->
-        <form>
+        <!-- <form>
           <input type="hidden" value="<%= user._id %>" name="theUserId" id="theUser">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="thisToken">
-          <button id="theUserBtn" style="visibility: hidden; display: none;" class="btn btn-success" type="button"><%= user.firstName.toUpperCase() %></button>
-        </form>
+          <button id="theUserBtn" style="visibility: hidden; display: none;" class="btn btn-success"
+            type="button"><%= user.firstName.toUpperCase() %></button>
+        </form> -->
       </div>
     </div>
     <div class="grid-item animate__animated animate__bounceInDown">
       <h3><i class="fas fa-history"></i> HOURS WORKED</h3>
       <hr>
+      <!-- Form to be called to make calculation of weekly hours -->
+      <div>
+        <form action="/askas/calculateWeek" method="POST" class="submit-time">
+          <input type="hidden" value="<%= user._id %>" name="theUserId" id="theUser">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="thisToken">
+          <button id="theUserBtn" class="btn btn-danger" type="submit">Submit time</button>
+          <!-- <button id="theUserBtn" class="btn btn-danger" type="button" onclick="checkWeek()">Submit time</button> -->
+        </form>
+      </div><br>
       <div class="container next-con-mid">
         <% if (hrs.length > 0) { %>
         <% hrs.forEach(h => { %>
@@ -66,7 +76,8 @@
             <li class="hour-list-time"><%= h.hourId.manualDate.toDateString() %></li>
             <li class="hour-list">Hours: <%= h.hourId.hours %></li>
             <li class="hour-list">Minutes: <%= h.hourId.minutes %></li>
-            <button class="btn btn-success myBtn" type="button" onclick="getTimeId(event)">Edit</button>
+            <button class="btn btn-success myBtn" type="button" onclick="getTimeId('<%= h.hourId._id %>')">Edit</button>
+            <!-- <button class="btn btn-success myBtn" type="button" onclick="getTimeId(event)">Edit</button> -->
           </form>
         </div>
         <% }) %>

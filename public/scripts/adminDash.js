@@ -1,5 +1,6 @@
 function getId(event) {
-    const userId = event.path[1].childNodes[1].defaultValue;
+    const userId = event;
+    // const userId = event.path[1].childNodes[1].defaultValue;
     let myToken = $('#myToken').val();
     let myUrl = "/admin/users/" + userId;
 

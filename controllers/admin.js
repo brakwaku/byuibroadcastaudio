@@ -8,30 +8,25 @@ const MyTime = require('../models/myTime');
 const { use } = require('../routes/admin');
 
 exports.getDashboard = (req, res, next) => {
+  //Fetch all the users registered in the application.
   User.find()
     .then(users => {
       //console.log(users);
       let totalMin = 0;
       let totalMinutes = 0;
+      let totalUserMinutes = 0;
       if (users.length > 0) {
         users.forEach(user => {
-          //console.log(user);
-          user
-            .populate('myHours.hours.hourId')
+          user.populate('myHours.hours.hourId')
             .execPopulate()
-          .then(usss => {
-            console.log('Thing Up: ' + usss.myHours.hours.hourId);
-          })
-          .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-          });
-          console.log('Thing: ' + user.myHours.hours);
-          user.myHours.hours.forEach(u => {
-            //console.log('Thing: ' + user.myHours);
-            totalMin += u.hourId.totalMinutes;
-          });
+            .then(u => {
+              u.myHours.hours.forEach(hr => {
+                totalUserMinutes += hr.hourId.totalMinutes;
+              })
+              console.log('There: ' + totalUserMinutes);
+            });
+          totalMin += totalUserMinutes;
+          console.log('Some: ' + totalMin);
         });
         totalMinutes = totalMin / 60;
         res.render('pages/admin/dashboard', {

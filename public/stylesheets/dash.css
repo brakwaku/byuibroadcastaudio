@@ -263,6 +263,10 @@
   border-radius: 5px;
 }
 
+.hide {
+  visibility: hidden;
+}
+
 .min-admin {
   padding-left: 30px;
 }
@@ -278,6 +282,10 @@
   padding: 10px;
   width: 60%;
   border-radius: 10px;
+}
+
+.submit-time {
+  margin: auto;
 }
 
 
