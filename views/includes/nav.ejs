@@ -12,8 +12,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ml-auto">
-        <a class="nav-item nav-link <%= path === '/' ? 'active' : ''%>" href="/">HOME <span
-            class="sr-only">(current)</span></a>
+        <!-- <a class="nav-item nav-link <%= path === '/' ? 'active' : ''%>" href="/">HOME <span
+            class="sr-only">(current)</span></a> -->
         <% if (isAuthenticated) { %>
           <% if (user.role != 'admin') { %>
             <a class="nav-item nav-link <%= path === '/dashboard' ? 'active' : ''%>" href="/askas/dashboard">DASHBOARD</a>

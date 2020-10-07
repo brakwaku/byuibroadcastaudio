@@ -45,11 +45,12 @@ exports.getDashboard = (req, res, next) => {
     let uMin = 0; //initialize variable for user minutes
     let uHrs = 0; //initialize variable for user hours
     req.user
-        .populate('bucket.items.activityId')
-        .populate('toDoList.toDos.toDoId')
-        .populate('completed.comps.compId')
-        .populate('archive.archs.archId')
+        // .populate('bucket.items.activityId')
+        // .populate('toDoList.toDos.toDoId')
+        // .populate('completed.comps.compId')
+        // .populate('archive.archs.archId')
         .populate('myHours.hours.hourId')
+        .populate('weeklyHours.weekHours.weekHourId')
         .execPopulate()
         .then(user => {
             user.myHours.hours.forEach(h => {
@@ -65,6 +66,7 @@ exports.getDashboard = (req, res, next) => {
                 comps: user.completed.comps,
                 archs: user.archive.archs,
                 hrs: user.myHours.hours,
+                weekHrs: user.weeklyHours.weekHours,
                 uHrs: uHrs
             });
             console.log('Total mins: ' + tMin);
@@ -218,10 +220,10 @@ exports.postCalculateWeek = (req, res, next) => {
             if (user.myHours.hours.length > 0) {
                 tempHours = [...user.myHours.hours];
                 user.myHours.hours.forEach(h => {
-                    console.log('Single Mins: ' + h.hourId.totalMinutes);
+                    //console.log('Single Mins: ' + h.hourId.totalMinutes);
                     tMinutes += h.hourId.totalMinutes;
                 })
-                console.log('Temp: ' + tempHours);
+                //console.log('Temp: ' + tempHours);
                 const recordedHours = tempHours;
                 const totalMinutes = tMinutes;
 
@@ -247,6 +249,7 @@ exports.postCalculateWeek = (req, res, next) => {
                         return req.user.addToWeeklyHours(result._id);
                     })
                     .then(result => {
+                        res.status(200).send(result);
                         return res.redirect('/askas/dashboard');
                     })
                     .catch(err => {
@@ -259,8 +262,10 @@ exports.postCalculateWeek = (req, res, next) => {
                 // console.log('Time now: ' + moment().toDate());
 
             } else {
+                //const data = ["Saab", "Volvo", "BMW"];
                 console.log('No week created')
-                return res.redirect('/askas/dashboard');
+                res.redirect('/askas/dashboard');
+                return res.status(200).send();
             }
 
 
@@ -303,5 +308,5 @@ exports.postCalculateWeek = (req, res, next) => {
             return next(error);
         });
 
-    console.log('User Id (Calc week): ' + userId);
+    //console.log('User Id (Calc week): ' + userId);
 };

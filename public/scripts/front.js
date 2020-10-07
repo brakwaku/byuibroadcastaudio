@@ -13,6 +13,60 @@ setInterval(updateTime, 1000); //Update every second
 
 updateTime();
 
+/***************************************************
+ * Submitting time
+ ****************************************************/
+$('#theUserBtn').on('click', function (event) {
+    //First prevent it from doing what it normally does (submit)
+    event.preventDefault();
+    let myToken = $('#thisToken').val();
+    //Then show popup to get user confirmation
+    swal({
+        title: "Confirm?",
+        text: "This action can't be undone. If you are not done working this week, please submit your time later. Thank you!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, submit!",
+        cancelButtonText: "No, cancel!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then(
+        //If user confirms action
+        function (isConfirm) {
+            if (isConfirm) {
+                //Make an ajax request to the server to create the week object
+                $.ajax({
+                    url: "/askas/calculateWeek",
+                    type: 'POST',
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        _csrf: myToken
+                    }),
+                    success: function (data) {
+                        //console.log(data);
+                        if (data === 'Saab') {
+                            //Show this if there are no user hours currently recorded
+                            swal("Sorry!", "You dont have any recorded time to submit.", "success");
+                        } else {
+                            //Show this if the week object has been created
+                            swal("Submited!", "Your time has been submited.", "success");
+                        }
+                    },
+                    error: function (data) {
+                        //Show this if there is an error
+                        swal("NOT Submited!", "Something blew up.", "error");
+                    }
+                });
+            } else {
+                //Show this if the user withdraws
+                swal("Cancelled", "Your time was not submitted.", "error");
+            }
+        });
+    return false
+
+});
+
 
 /***
  * User editing time entered already
@@ -45,6 +99,8 @@ function getTimeId(event) {
 
                 return month + '/' + day + '/' + year;
             }
+
+            $('.week-col').html('<i class="fas fa-edit"></i> EDIT TIME');
             //alert(((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear());
             $('.edit-time-con').html(
                 '<form action="/askas/update-time" method="POST">'
@@ -68,7 +124,7 @@ function getTimeId(event) {
             console.log(err);
         }
     });
-    console.log(event.path[1].childNodes[1].defaultValue)
+    //console.log(event.path[1].childNodes[1].defaultValue)
 };
 
 /***

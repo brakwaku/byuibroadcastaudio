@@ -14,7 +14,7 @@
     <h3>All sounds of the earth are like music.</h3>
     <div class="user-hours">
       <h5>Hours</h5>
-      <h2><%= uHrs.toFixed(3) %></h2>
+      <h2><%= uHrs.toFixed(2) %></h2>
     </div>
     <!-- <span class="fa fa-star <%= comps.length >= 1 || archs.length >= 1 || (comps.length + archs.length >=1) ? 'checked' : ''%>"></span>
       <span class="fa fa-star <%= comps.length >= 4 || archs.length >= 4 || (comps.length + archs.length >= 4) ? 'checked' : ''%>"></span>
@@ -59,7 +59,8 @@
       <hr>
       <!-- Form to be called to make calculation of weekly hours -->
       <div>
-        <form action="/askas/calculateWeek" method="POST" class="submit-time">
+        <!-- <form action="/askas/calculateWeek" method="POST" class="submit-time"> -->
+        <form class="submit-time">
           <input type="hidden" value="<%= user._id %>" name="theUserId" id="theUser">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="thisToken">
           <button id="theUserBtn" class="btn btn-danger" type="submit">Submit time</button>
@@ -88,11 +89,27 @@
       </div>
     </div>
     <div class="grid-item animate__animated animate__backInRight">
-      <h3>EDIT TIME</h3>
+      <h3 class="week-col"><i class="fas fa-calendar"></i> WEEKS</h3>
       <hr>
-      <div class="container next-con-right edit-time-con"></div>
+      <div class="container next-con-right edit-time-con">
+        <% if (weekHrs.length > 0) { %>
+          <% weekHrs.forEach(whr => { %>
+          <div class="container week-list-div" style="padding-bottom: 7px;">
+            <span><b>Week ending <%= whr.weekHourId.weekEnd.toDateString() %></b><br>
+              Week <%= whr.weekHourId.weekNumber %> of the year<br>
+              Hours worked: <%= (whr.weekHourId.totalMinutes / 60).toFixed(2)%></span>
+            <!-- <p>Week Number <%= whr.weekHourId.weekNumber %></p>
+            <p>Hours worked <%= (whr.weekHourId.totalMinutes / 60).toFixed(3)%></p> -->
+          </div>
+          <% }) %>
+  
+          <% } else { %>
+          <h4>No hours recorded!</h4>
+          <% } %>
+      </div>
     </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="/scripts/front.js"></script>
   <%- include('../../includes/end.ejs') %>
