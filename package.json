@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A web application to help the workflow of the AV - Audio in BYUI",
   "main": "index.js",
+  "engines": {
+    "node": "14.8.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
@@ -14,6 +17,7 @@
     "animate.css": "^4.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.4.1",
     "cors": "^2.8.5",

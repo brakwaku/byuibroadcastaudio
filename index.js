@@ -10,6 +10,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const User = require('./models/user');
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const compression = require('compression');
 require('dotenv').config();
 
 const MONGODB_URL = process.env.MONGODB_URL;
@@ -38,6 +39,8 @@ const options = {
 };
 
 const routes = require('./routes');
+
+app.use(compression());
 
 app.use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
