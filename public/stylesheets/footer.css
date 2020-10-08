@@ -27,6 +27,17 @@
   opacity: 1;
 }
 
+.my-sign {
+  color: rgb(185, 185, 185);
+  font-weight: lighter;
+  font-size: .7rem;
+  opacity: .5;
+}
+
+.phone-number {
+  color: rgb(185, 185, 185);
+}
+
 /* .footer-left, .footer-center, .footer-right {
   display: inline-block;
   vertical-align: top;
