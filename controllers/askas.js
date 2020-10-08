@@ -80,7 +80,7 @@ exports.getDashboard = (req, res, next) => {
 
 exports.postHours = (req, res, next) => {
     const startTime = req.body.startTime;
-    const manDate = moment(req.body.manDate, "YYYY-MM-DD", true).toDate(); //Does not work on Safari
+    const manDate = moment(req.body.manDate, "YYYY-MM-DD", true).toDate(); //Does not work on Safari on mac currently 09/07/2020
     const endTime = req.body.endTime;
     const taskDescription = req.body.taskDescription;
     const comments = req.body.comments;
