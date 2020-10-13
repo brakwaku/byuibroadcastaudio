@@ -14,5 +14,7 @@ router.get('/dashboard', isAuth, adminController.getDashboard);
 //router.get('/users/:userId', isAuth, adminController.getUser);
 router.post('/users/:userId', isAuth, adminController.postUser);
 
+router.post('/week/:weekId', isAuth, adminController.postWeek);
+
 
 module.exports = router;

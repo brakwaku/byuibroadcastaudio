@@ -115,6 +115,7 @@
   grid-template-columns: auto auto auto;
   background-color: #E9E9E9;
   padding: 10px;
+  height: 60vh;
 }
 
 .grid-item {
@@ -172,17 +173,17 @@
 
 .next-con-left {
   overflow: scroll;
-  max-height: 300px;
+  max-height: 50vh;
 }
 
 .next-con-mid {
   overflow: scroll;
-  max-height: 400px;
+  max-height: 50vh;
 }
 
 .next-con-right {
   overflow: scroll;
-  max-height: 400px;
+  max-height: 50vh;
 }
 
 .edit-time-con {
@@ -202,6 +203,8 @@
   .grid-container {
     display: flex;
     flex-wrap: wrap;
+    max-height: 100vh;
+    overflow: scroll;
   }
 
   .grid-item {
@@ -254,14 +257,20 @@
 }
 
 .view-user-details {
-  margin-top: 15px;
+  float: right;
+  display: inline;
+  position: relative;
+}
+
+.user-detail-button {
+  margin-right: 10px;
 }
 
 .time-details {
   margin-top: 100px;
 }
 
-.fa-history, .fa-clipboard, .fa-comment {
+.fa-history, .fa-clipboard, .fa-comment, .fa-user-circle {
   opacity: .5;
 }
 
@@ -279,7 +288,7 @@
 }
 
 /******************************
-*  Digital clock styling 
+* Digital clock styling 
 *******************************/
 #clock {
   color: yellowgreen;
@@ -297,7 +306,7 @@
 
 
 /**************************************
-Modal Styling
+* Modal Styling
 ****************************************/
 /* Add a dark gray background color to the modal header and center text */
 .modal-header, h4, .close {

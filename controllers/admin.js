@@ -55,9 +55,27 @@ exports.getDashboard = (req, res, next) => {
 
 exports.postUser = (req, res, next) => {
   const userId = req.params.userId;
-  User.findById(userId).populate('myHours.hours.hourId')
+  User.findById(userId)
+    .populate('myHours.hours.hourId')
+    .populate('weeklyHours.weekHours.weekHourId')
     .then(dUser => {
       res.status(200).send(dUser);
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+  //console.log('User Id: ' + userId)
+};
+
+exports.postWeek = (req, res, next) => {
+  const userId = req.params.weekId;
+  User.findById(weekId)
+    // .populate('myHours.hours.hourId')
+    .populate('timeArray.weekTimeId')
+    .then(dWeek => {
+      res.status(200).send(dWeek);
     })
     .catch(err => {
       const error = new Error(err);

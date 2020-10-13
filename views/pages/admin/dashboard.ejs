@@ -34,12 +34,15 @@
       <div class="container next-con-left">
         <% if (users.length > 0) { %>
         <% users.forEach(u => { %>
-        <form class="view-user-details <%= u._id === user._id ? 'hide' : ''%>">
-          <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
-          <button class="btn btn-success myBtn" type="button" onclick="getId('<%= u._id %>')"><%= u.name %></button>
-          <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
-        </form>
+        <div >
+          <span><i class="fas fa-user-circle"></i> <%= u.name %></span>
+            <form class="view-user-details <%= u._id === user._id ? 'hide' : ''%>">
+              <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
+              <button class="btn btn-success user-detail-button" type="button" onclick="getId('<%= u._id %>')">View</button>
+              <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
+            </form>
+        </div><hr style="width: 80%;">
         <!-- <li id="student-list" class="student-list"><a href="/admin/users/<%= u._id %>" id="student"><%= u.name %></a></li>  -->
         <% }) %>
 
@@ -58,9 +61,11 @@
 
     </div>
     <div class="grid-item animate__animated animate__backInRight">
-      <h3>COMING SOON!</h3>
+      <h3><i class="fas fa-calendar"></i> USER WEEKS</h3>
       <hr>
-      <div class="container next-con-right"></div>
+      <div class="container next-con-right">
+        <div id="student_weeks"></div>
+      </div>
     </div>
   </div>
   <%- include('../../includes/end.ejs') %>
