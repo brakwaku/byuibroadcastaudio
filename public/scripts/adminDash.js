@@ -27,7 +27,7 @@ function getId(event) {
                 weekHrs = tMin / 60; //Convert total minutes to hours
             }
 
-            if (user.myHours.hours.length > 0) {
+            if (user.myHours.hours.length || user.weeklyHours.weekHours.length > 0) {
                 $('#student_details').html(''); // First clear what is in the div
                 user.myHours.hours.forEach(hr => {
                     let manDate = new Date(hr.hourId.manualDate);
