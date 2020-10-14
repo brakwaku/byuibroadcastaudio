@@ -3,7 +3,7 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/1ai.jpg');
   /* Set a specific height */
   max-height: 400px;
-  min-height: 350px;
+  min-height: 250px;
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
   background-repeat: no-repeat;
@@ -65,7 +65,7 @@
   /*text-align: center;*/
   margin: 0;
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -77,7 +77,7 @@
 .dashboard-image h3 {
   margin: 0;
   position: absolute;
-  top: 70%;
+  top: 58%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-weight: bolder;
@@ -116,6 +116,14 @@
   background-color: #E9E9E9;
   padding: 10px;
   height: 60vh;
+}
+
+.students-grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #E9E9E9;
+  padding: 10px;
+  height: 80vh;
 }
 
 .grid-item {
@@ -182,6 +190,21 @@
 }
 
 .next-con-right {
+  overflow: scroll;
+  max-height: 50vh;
+}
+
+.student-next-con-left {
+  overflow: scroll;
+  max-height: 50vh;
+}
+
+.student-next-con-mid {
+  overflow: scroll;
+  max-height: 50vh;
+}
+
+.student-next-con-right {
   overflow: scroll;
   max-height: 50vh;
 }

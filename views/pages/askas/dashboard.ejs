@@ -22,12 +22,12 @@
       <span class="fa fa-star <%= comps.length >= 12 || archs.length >= 12 || (comps.length + archs.length >= 12) ? 'checked' : ''%>"></span>
       <span class="fa fa-star <%= comps.length >= 16 || archs.length >= 16 || (comps.length + archs.length >= 16) ? 'checked' : ''%>"></span> -->
   </div>
-  <div class="jumbotron grid-container">
+  <div class="jumbotron students-grid-container">
     <div class="grid-item animate__animated animate__backInLeft">
       <h3><i class="fas fa-clock"></i> ENTER HOURS</h3>
       <hr>
       <div class="container" id="clock"></div><br>
-      <div class="container next-con-left">
+      <div class="container student-next-con-left">
         <form action="/askas/myHours" method="POST">
           <label for="date">Date</label>
           <input name="manDate" type="date" class="form-control" id="manDate" required placeholder="mm/dd/yyyy"><br>
@@ -67,7 +67,7 @@
           <!-- <button id="theUserBtn" class="btn btn-danger" type="button" onclick="checkWeek()">Submit time</button> -->
         </form>
       </div><br>
-      <div class="container next-con-mid">
+      <div class="container student-next-con-mid">
         <% if (hrs.length > 0) { %>
         <% hrs.forEach(h => { %>
         <div class="container hour-list-div" style="padding-bottom: 7px;">
@@ -91,7 +91,7 @@
     <div class="grid-item animate__animated animate__backInRight">
       <h3 class="week-col"><i class="fas fa-calendar"></i> WEEKS</h3>
       <hr>
-      <div class="container next-con-right edit-time-con">
+      <div class="container student-next-con-right edit-time-con">
         <% if (weekHrs.length > 0) { %>
           <% weekHrs.forEach(whr => { %>
           <div class="container week-list-div" style="padding-bottom: 7px;">
