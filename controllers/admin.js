@@ -71,6 +71,7 @@ exports.postUser = (req, res, next) => {
 
 exports.postWeek = (req, res, next) => {
   const userId = req.params.weekId;
+  console.log(weekId);
   User.findById(weekId)
     // .populate('myHours.hours.hourId')
     .populate('timeArray.weekTimeId')
@@ -78,6 +79,7 @@ exports.postWeek = (req, res, next) => {
       res.status(200).send(dWeek);
     })
     .catch(err => {
+      console.log(err);
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
