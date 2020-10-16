@@ -13,6 +13,34 @@ setInterval(updateTime, 1000); //Update every second
 
 updateTime();
 
+
+/***************************************************
+ * Reminder to submit time for the week
+ ****************************************************/
+window.onload = function () {
+    let dayOfTheWeek = new Date();
+    if (dayOfTheWeek.getDay() === 5 || dayOfTheWeek === 6) {
+        $('#submit-reminder').css('visibility', 'visible')
+        $('#submit-reminder').html('Remember to submit your hours for the week')
+    }
+
+    $('#submit-reminder').on('click', function () {
+        $('#submit-reminder').css('visibility', 'hidden')
+    });
+}
+//let $div2blink = $("#submit-reminder"); // Save reference for better performance
+// function backgroundInterval() {
+//     $("#submit-reminder").css("background-color", function () {
+//         this.switch = !this.switch
+//         return this.switch ? "red" : ""
+//     });
+//     // $div2blink.toggleClass("submit-reminder");
+//     // $div2blink.css("background-color", "pink");
+// }
+// setInterval(backgroundInterval, 1000);
+
+// backgroundInterval();
+
 /***************************************************
  * Submitting time
  ****************************************************/
