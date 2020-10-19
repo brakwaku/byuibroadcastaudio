@@ -54,8 +54,8 @@ app.use(express.static(path.join(__dirname, 'public')))
       store: store
     })
   )
-  .use(csrfProtection)
-  .use(flash())
+  .use(csrfProtection) //To protect users from unauthorized access
+  .use(flash()) //For flashing error messages
 
   .use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;

@@ -93,7 +93,10 @@ exports.postLogin = (req, res, next) => {
             req.session.user = user;
             return req.session.save(err => {
               console.log(err);
-              res.redirect('/');
+              if(user.role === 'admin') {
+                res.redirect('/admin/dashboard');
+              } else {
+                res.redirect('/askas/dashboard');}
             });
           }
           return res.status(422).render('pages/auth/login', {
@@ -237,7 +240,7 @@ exports.postReset = (req, res, next) => {
         subject: 'Password Reset!',
         html: `
             <h5>Hello, you requested a password reset</5>
-            <p>Click this <a href="http://auth/reset/${token}">link</a> to set a new password.</p>
+            <p>Click this <a href="https://askas.herokuapp.com/auth/reset/${token}">link</a> to set a new password.</p>
             <p>PS: This link is only valid for an hour</p>
           `
         };

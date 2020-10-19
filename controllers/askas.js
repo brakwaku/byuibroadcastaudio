@@ -9,6 +9,9 @@ const { min } = require('moment');
 const { validationResult } = require('express-validator/check');
 
 
+/********************************************************
+ * Endpoint function for request to contact page
+ ********************************************************/
 exports.getContact = (req, res, next) => {
     return res.render('pages/askas/contact', {
         title: 'ASKAS | Contact',
@@ -16,6 +19,10 @@ exports.getContact = (req, res, next) => {
     });
 };
 
+
+/********************************************************
+ * Endpoint function for request to About page
+ ********************************************************/
 exports.getAbout = (req, res, next) => {
     return res.render('pages/askas/about', {
         title: 'ASKAS | About Us',
@@ -23,6 +30,10 @@ exports.getAbout = (req, res, next) => {
     });
 };
 
+
+/********************************************************
+ * Endpoint function for request to Tasks page
+ ********************************************************/
 exports.getTasks = (req, res, next) => {
     Activity.find()
         .then(activities => {
@@ -40,44 +51,49 @@ exports.getTasks = (req, res, next) => {
         });
 };
 
+
+/********************************************************
+ * Endpoint function for request to regular user's dashboard
+ ********************************************************/
 exports.getDashboard = (req, res, next) => {
-    let tMin = 0; //initialize variable for total minutes
-    let uMin = 0; //initialize variable for user minutes
-    let uHrs = 0; //initialize variable for user hours
-    req.user
-        // .populate('bucket.items.activityId')
-        // .populate('toDoList.toDos.toDoId')
-        // .populate('completed.comps.compId')
-        // .populate('archive.archs.archId')
-        .populate('myHours.hours.hourId')
-        .populate('weeklyHours.weekHours.weekHourId')
-        .execPopulate()
-        .then(user => {
-            user.myHours.hours.forEach(h => {
-                tMin += h.hourId.totalMinutes;
+    
+    if (req.user.role === 'admin') {
+        res.redirect('/admin/dashboard');
+    } else {
+        let tMin = 0; //initialize variable for total minutes
+        let uMin = 0; //initialize variable for user minutes
+        let uHrs = 0; //initialize variable for user hours
+        req.user
+            .populate('myHours.hours.hourId')
+            .populate('weeklyHours.weekHours.weekHourId')
+            .execPopulate()
+            .then(user => {
+                user.myHours.hours.forEach(h => {
+                    tMin += h.hourId.totalMinutes;
+                })
+                uMin = tMin % 60; //Calculate number of minutes after hours
+                uHrs = tMin / 60; //Convert total minutes to hours
+                res.render('pages/askas/dashboard', {
+                    path: '/dashboard',
+                    title: 'ASKAS | Dashboard',
+                    hrs: user.myHours.hours,
+                    weekHrs: user.weeklyHours.weekHours,
+                    uHrs: uHrs
+                });
+                console.log('Total mins: ' + tMin);
             })
-            uMin = tMin % 60; //Calculate number of minutes after hours
-            uHrs = tMin / 60; //Convert total minutes to hours
-            res.render('pages/askas/dashboard', {
-                path: '/dashboard',
-                title: 'ASKAS | Dashboard',
-                toDos: user.toDoList.toDos,
-                activities: user.bucket.items,
-                comps: user.completed.comps,
-                archs: user.archive.archs,
-                hrs: user.myHours.hours,
-                weekHrs: user.weeklyHours.weekHours,
-                uHrs: uHrs
+            .catch(err => {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
             });
-            console.log('Total mins: ' + tMin);
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
+    }
 };
 
+
+/********************************************************
+ * Endpoint function for request to record user's time
+ ********************************************************/
 exports.postHours = (req, res, next) => {
     const startTime = req.body.startTime;
     const manDate = moment(req.body.manDate, "YYYY-MM-DD", true).toDate(); //Does not work on Safari on mac currently 09/07/2020
@@ -105,6 +121,7 @@ exports.postHours = (req, res, next) => {
 
     const now = moment().toDate();
 
+    //Create new time object
     const myHours = new MyTime({
         totalMinutes: totalMinutes,
         startTime: startTime,
@@ -118,7 +135,7 @@ exports.postHours = (req, res, next) => {
         userId: req.user
     });
     myHours
-        .save()
+        .save() //Save new time object as document in DB
         .then(result => {
             return req.user.addToMyHours(result._id);
         })
@@ -131,23 +148,19 @@ exports.postHours = (req, res, next) => {
             return next(error);
         });
 
-    // console.log('Start time: ' + startTime + ' ' + 'End time: ' + endTime)
-    // console.log('Hours: ' + hour)
-    // console.log('Minutes: ' + minute)
-    // console.log('Total minutes: ' + totalMinutes)
-    // console.log('Start of week: ' + startOfWeek)
-    // console.log('End of week: ' + endOfWeek)
-    // console.log('Date now: ' + now)
-    // console.log('Manual date now: ' + manDate.toString())
     console.log('Time Created')
 }
 
+
+/*****************************************************************
+ * Endpoint function for ajax request to edit selected time object
+ * It finds the document by its ID and sends it back to user
+ *****************************************************************/
 exports.getEditTime = (req, res, next) => {
     const timeId = req.params.timeId;
-    console.log('Time Id here: ' + timeId)
+
     MyTime.findById(timeId)
         .then(thisTime => {
-            console.log('Time object: ' + thisTime)
             res.status(200).send(thisTime);
         })
         .catch(err => {
@@ -158,6 +171,10 @@ exports.getEditTime = (req, res, next) => {
 };
 
 
+/**********************************************************
+ * Endpoint function for request to save changes to user's
+ * edited time
+ **********************************************************/
 exports.postEditTime = (req, res, next) => {
     const updatedStartTime = req.body.startTime;
     const updatedManDate = req.body.manDate;
@@ -174,10 +191,6 @@ exports.postEditTime = (req, res, next) => {
     let updatedMinute = totalMinutes % 60;
     let updatedHour = (totalMinutes - updatedMinute) / 60;
 
-    let weekTotal = 0;
-
-    //const now = moment().toDate();
-
     MyTime.findById(timeId)
         .then(thisTime => {
             if (thisTime.userId.toString() !== req.user._id.toString()) {
@@ -188,12 +201,11 @@ exports.postEditTime = (req, res, next) => {
             thisTime.endTime = updatedEndTime;
             thisTime.minutes = updatedMinute;
             thisTime.hours = updatedHour;
-            //thisTime.dateEntered = updatednow;
             thisTime.manualDate = updatedManDate;
             thisTime.taskDescription = updatedTaskDescription;
             thisTime.comments = updatedComments;
             return thisTime.save().then(result => {
-                console.log('UPDATED TIME!');
+                //console.log('UPDATED TIME!');
                 res.redirect('/askas/dashboard');
             });
         })
@@ -204,52 +216,72 @@ exports.postEditTime = (req, res, next) => {
         });
 };
 
+
+/********************************************************
+ * Endpoint function for request to record user's time
+ ********************************************************/
 exports.postCalculateWeek = (req, res, next) => {
     const userId = req.user._id;
     const startOfWeek = moment().startOf('week').toDate();
     const endOfWeek = moment().endOf('week').toDate();
     const dateEntered = moment().toDate();
     const weekNumber = currentWeekNumber(dateEntered);
-    // const myNow = moment().toDate();
     let tempHours = [];
     let tMinutes = 0;
     req.user
-        .populate('myHours.hours.hourId')
+        .populate('myHours.hours.hourId') //Fetch atual object from the myTime model
         .execPopulate()
         .then(user => {
             if (user.myHours.hours.length > 0) {
-                tempHours = [...user.myHours.hours];
                 user.myHours.hours.forEach(h => {
-                    //console.log('Single Mins: ' + h.hourId.totalMinutes);
                     tMinutes += h.hourId.totalMinutes;
+
+                    //while looping add the _id property of the time object to the array
+                    tempHours.push({
+                        weekTimeId: h.hourId._id
+                    })
                 })
                 //console.log('Temp: ' + tempHours);
-                const recordedHours = tempHours;
+
+                //Assign total minutes value
                 const totalMinutes = tMinutes;
 
-                console.log('Total Mins: ' + totalMinutes);
+                //Assign this array to results from the loop
+                const tempTimeArray = tempHours;
 
+                //Assign variable to object
+                const updateTimeArray = {
+                    times: tempTimeArray
+                };
 
+                //console.log('Total Mins: ' + totalMinutes);
+
+                //Create new Week object
                 const myWeek = new WeekTime({
                     dateEntered: dateEntered,
                     weekStart: startOfWeek,
                     weekEnd: endOfWeek,
                     weekNumber: weekNumber,
                     totalMinutes: totalMinutes,
+                    timeArray: updateTimeArray,
                     userId: userId
                 });
-                myWeek.timeArray.push({
-                    weekTimeId: recordedHours
-                });
+
+                //Save new Week object as document in DB
                 myWeek
                     .save()
                     .then(result => {
                         // res.status(200).send(result);
+                        //console.log('WEEK CREATED!');
+
+                        //Empty user's hours array
                         req.user.myHours.hours = [];
+
+                        //Add the week's ID to the user model
                         return req.user.addToWeeklyHours(result._id);
                     })
                     .then(result => {
-                        res.status(200).send(result);
+                        //res.status(200).send(result);
                         return res.redirect('/askas/dashboard');
                     })
                     .catch(err => {
@@ -257,56 +289,39 @@ exports.postCalculateWeek = (req, res, next) => {
                         error.httpStatusCode = 500;
                         return next(error);
                     });
-                console.log('Week created');
                 // console.log('End of week: ' + endOfWeek);
                 // console.log('Time now: ' + moment().toDate());
 
             } else {
-                //const data = ["Saab", "Volvo", "BMW"];
                 console.log('No week created')
                 res.redirect('/askas/dashboard');
                 return res.status(200).send();
             }
 
-
-
-            /*************************************************************
-            * Self-triggured Checking
-            **************************************************************/
-            // if (myNow != endOfWeek) {
-            //     const myWeek = new WeekTime({
-            //         dateEntered: dateEntered,
-            //         weekStart: startOfWeek,
-            //         weekEnd: endOfWeek,
-            //         weekNumber: weekNumber,
-            //         totalMinutes: totalMinutes,
-            //         userId: userId
-            //     });
-            //     myWeek.timeArray.push({
-            //         weekTimeId: recordedHours
-            //     });
-            //     myWeek
-            //         .save()
-            //         .then(result => {
-            //             res.status(200).send(result);
-            //             req.user.myHours.hours = [];
-            //             return req.user.addToWeeklyHours(result._id);
-            //         })
-            //         .catch(err => {
-            //             const error = new Error(err);
-            //             error.httpStatusCode = 500;
-            //             return next(error);
-            //         });
-            //     console.log('Week created');
-            //     // console.log('End of week: ' + endOfWeek);
-            //     // console.log('Time now: ' + moment().toDate());
-            // }
         })
         .catch(err => {
             const error = new Error(err);
             error.httpStatusCode = 500;
             return next(error);
         });
+};
 
-    //console.log('User Id (Calc week): ' + userId);
+/********************************************************
+ * Endpoint for ajax request to fetch and send selected
+ * week's hours' details
+ ********************************************************/
+exports.postGetWeek = (req, res, next) => {
+    const weekId = req.params.weekId;
+    WeekTime.findById(weekId)
+        .populate('timeArray.times.weekTimeId')
+        .then(dWeek => {
+            //console.log(dWeek.timeArray.times);
+            res.status(200).send(dWeek);
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };

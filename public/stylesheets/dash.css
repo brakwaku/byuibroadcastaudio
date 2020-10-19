@@ -293,21 +293,30 @@
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.062), 0 6px 20px 0 rgba(0, 0, 0, 0.068);
 }
 
-.view-user-details {
+/* .view-user-details {
   float: right;
   display: inline;
   position: relative;
+} */
+
+/* .user-detail-button {
+  margin-right: 10px;
+} */
+
+.the-user-icon {
+width: 30rem;
 }
 
-.user-detail-button {
-  margin-right: 10px;
+.the-button form {
+  display: inline;
+  padding-right: 20px;
 }
 
 .time-details {
   margin-top: 100px;
 }
 
-.fa-history, .fa-clipboard, .fa-comment, .fa-user-circle {
+.fa-history, .fa-clipboard, .fa-comment, .fa-user-circle, .fa-user-cog, .fa-user-tie {
   opacity: .5;
 }
 

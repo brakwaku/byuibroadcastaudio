@@ -28,18 +28,7 @@ window.onload = function () {
         $('#submit-reminder').css('visibility', 'hidden')
     });
 }
-//let $div2blink = $("#submit-reminder"); // Save reference for better performance
-// function backgroundInterval() {
-//     $("#submit-reminder").css("background-color", function () {
-//         this.switch = !this.switch
-//         return this.switch ? "red" : ""
-//     });
-//     // $div2blink.toggleClass("submit-reminder");
-//     // $div2blink.css("background-color", "pink");
-// }
-// setInterval(backgroundInterval, 1000);
 
-// backgroundInterval();
 
 /***************************************************
  * Submitting time
@@ -48,6 +37,7 @@ $('#theUserBtn').on('click', function (event) {
     //First prevent it from doing what it normally does (submit)
     event.preventDefault();
     let myToken = $('#thisToken').val();
+
     //Then show popup to get user confirmation
     swal({
         title: "Confirm?",
@@ -79,6 +69,7 @@ $('#theUserBtn').on('click', function (event) {
                         } else {
                             //Show this if the week object has been created
                             swal("Submited!", "Your time has been submited.", "success");
+                            location.reload();
                         }
                     },
                     error: function (data) {
@@ -96,9 +87,9 @@ $('#theUserBtn').on('click', function (event) {
 });
 
 
-/***
+/***************************************
  * User editing time entered already
- */
+ ****************************************/
 function getTimeId(event) {
     const timeId = event;
     // const timeId = event.path[1].childNodes[1].defaultValue;
@@ -129,7 +120,7 @@ function getTimeId(event) {
             }
 
             $('.week-col').html('<i class="fas fa-edit"></i> EDIT TIME');
-            //alert(((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear());
+            
             $('.edit-time-con').html(
                 '<form action="/askas/update-time" method="POST">'
                 + '<label for="date">Date</label>'
@@ -155,56 +146,35 @@ function getTimeId(event) {
     //console.log(event.path[1].childNodes[1].defaultValue)
 };
 
-/***
- * Checking for and creating user weekly hours
- */
-// function checkWeek() {
-//     //const userId = $('#theUser').val();
-//     let myToken = $('#thisToken').val();
-//     let myUrl = "/askas/calculateWeek";
+function userDashGetWeek(weekId) {
+    let newToken = $('#my_Token').val();
+    let theUrl = "/askas/week/" + weekId;
 
-//     $.ajax({
-//         url: myUrl,
-//         type: 'POST',
-//         contentType: "application/json",
-//         data: JSON.stringify({
-//             //userId: userId,
-//             _csrf: myToken
-//         }),
-//         success: function (newWeek) {
-//             console.log('Week Number: ' + newWeek.weekNumber);
-//         }, error: function (err) {
-//             console.log('Your error: ' + err);
-//         }
-//     });
-// }
+    $.ajax({
+        url: theUrl,
+        type: 'POST',
+        contentType: "application/json",
+        data: JSON.stringify({
+            weekId: weekId,
+            _csrf: newToken
+        }),
+        success: function (week) {
+            /*********************************************************************
+            * Fill the Hours Worked part of the page with hours in the week object
+            **********************************************************************/
+            $('.student-next-con-mid').html(''); // First clear what is in the div
+            week.timeArray.times.forEach(hrs => {
 
-
-/***
- * Self-triggured Checking for and creating user weekly hours
- */
-// function checkWeek() {
-//     const theUserBtn = $('#theUserBtn').trigger("click");
-//     //const userId = $('#theUser').val();
-//     let myToken = $('#thisToken').val();
-//     let myUrl = "/askas/calculateWeek";
-
-//     $.ajax({
-//         url: myUrl,
-//         type: 'POST',
-//         contentType: "application/json",
-//         data: JSON.stringify({
-//             //userId: userId,
-//             _csrf: myToken
-//         }),
-//         success: function (newWeek) {
-//             console.log('Week Number: ' + newWeek.weekNumber);
-//         }, error: function (err) {
-//             console.log('Your error: ' + err);
-//         }
-//     });
-// }
-
-// setInterval(checkWeek, 60000); //Update every 1 minute
-
-// checkWeek();
+                let manDate = new Date(hrs.weekTimeId.manualDate);
+                $('.student-next-con-mid').append(
+                    '<div class="hour-list-div"><p><b>' + manDate.toDateString() + '</b><br>'
+                    + '<span><i class="fas fa-history"></i> <i>Hours:</i> ' + hrs.weekTimeId.hours + '</span>'
+                    + '<i class="fas fa-history min-admin"></i> <i>Minutes:</i> ' + hrs.weekTimeId.minutes + '<br>'
+                    + '<i class="fas fa-clipboard"></i> <i>Task Description:</i> ' + hrs.weekTimeId.taskDescription + '<br>'
+                    + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hrs.weekTimeId.comments + '</p></div>');
+            });
+        }, error: function (err) {
+            console.log(err);
+        }
+    });
+};

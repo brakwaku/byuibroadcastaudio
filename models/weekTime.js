@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-//const User = require('./user');
 
 const Schema = mongoose.Schema;
 
@@ -24,30 +23,17 @@ const weekTimeSchema = new Schema({
     type: Number,
     required: true
   },
-  timeArray: [
-    {
-      weekTimeId: [
-        {
+  timeArray: {
+    times: [
+      {
+        weekTimeId: {
           type: Schema.Types.ObjectId,
           ref: 'MyTime',
           required: true
         }
-      ]
-    }
-  ],
-  // timeArray: {
-  //   times: [
-  //     {
-  //       weekTimeId: [
-  //         {
-  //           type: Schema.Types.ObjectId,
-  //           ref: 'MyTime',
-  //           required: true
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
+      }
+    ]
+  },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',

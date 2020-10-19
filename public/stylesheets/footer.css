@@ -34,8 +34,17 @@
   opacity: .5;
 }
 
+.phone-number a {
+  color: rgb(185, 185, 185);
+  text-decoration: none;
+}
+
 .phone-number {
   color: rgb(185, 185, 185);
+}
+
+.phone-number a:hover {
+  color: #E49B14;
 }
 
 /* .footer-left, .footer-center, .footer-right {

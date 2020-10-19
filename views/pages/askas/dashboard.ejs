@@ -16,11 +16,6 @@
       <h5>Hours</h5>
       <h2><%= uHrs.toFixed(2) %></h2>
     </div>
-    <!-- <span class="fa fa-star <%= comps.length >= 1 || archs.length >= 1 || (comps.length + archs.length >=1) ? 'checked' : ''%>"></span>
-      <span class="fa fa-star <%= comps.length >= 4 || archs.length >= 4 || (comps.length + archs.length >= 4) ? 'checked' : ''%>"></span>
-      <span class="fa fa-star <%= comps.length >= 8 || archs.length >= 8 || (comps.length + archs.length >= 8) ? 'checked' : ''%>"></span>
-      <span class="fa fa-star <%= comps.length >= 12 || archs.length >= 12 || (comps.length + archs.length >= 12) ? 'checked' : ''%>"></span>
-      <span class="fa fa-star <%= comps.length >= 16 || archs.length >= 16 || (comps.length + archs.length >= 16) ? 'checked' : ''%>"></span> -->
   </div>
   <div id="submit-reminder"></div>
   <div class="jumbotron students-grid-container">
@@ -45,14 +40,6 @@
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button class="btn btn-success " type="submit">Submit</button>
         </form>
-
-        <!-- Hidden form to be called to make calculation of weekly hours -->
-        <!-- <form>
-          <input type="hidden" value="<%= user._id %>" name="theUserId" id="theUser">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="thisToken">
-          <button id="theUserBtn" style="visibility: hidden; display: none;" class="btn btn-success"
-            type="button"><%= user.firstName.toUpperCase() %></button>
-        </form> -->
       </div>
     </div>
     <div class="grid-item animate__animated animate__bounceInDown">
@@ -60,12 +47,10 @@
       <hr>
       <!-- Form to be called to make calculation of weekly hours -->
       <div>
-        <!-- <form action="/askas/calculateWeek" method="POST" class="submit-time"> -->
         <form class="submit-time">
           <input type="hidden" value="<%= user._id %>" name="theUserId" id="theUser">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="thisToken">
           <button id="theUserBtn" class="btn btn-danger" type="submit">Submit time</button>
-          <!-- <button id="theUserBtn" class="btn btn-danger" type="button" onclick="checkWeek()">Submit time</button> -->
         </form>
       </div><br>
       <div class="container student-next-con-mid">
@@ -79,7 +64,6 @@
             <li class="hour-list">Hours: <%= h.hourId.hours %></li>
             <li class="hour-list">Minutes: <%= h.hourId.minutes %></li>
             <button class="btn btn-success myBtn" type="button" onclick="getTimeId('<%= h.hourId._id %>')">Edit</button>
-            <!-- <button class="btn btn-success myBtn" type="button" onclick="getTimeId(event)">Edit</button> -->
           </form>
         </div>
         <% }) %>
@@ -98,9 +82,13 @@
           <div class="container week-list-div" style="padding-bottom: 7px;">
             <span><b>Week ending <%= whr.weekHourId.weekEnd.toDateString() %></b><br>
               Week <%= whr.weekHourId.weekNumber %> of the year<br>
-              Hours worked: <%= (whr.weekHourId.totalMinutes / 60).toFixed(2)%></span>
-            <!-- <p>Week Number <%= whr.weekHourId.weekNumber %></p>
-            <p>Hours worked <%= (whr.weekHourId.totalMinutes / 60).toFixed(3)%></p> -->
+              Hours worked: <b><%= (whr.weekHourId.totalMinutes / 60).toFixed(2)%></b></span>
+              <form>
+                <input type="hidden" value="<%= whr.weekHourId._id %>" name="week_id">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="my_Token">
+                <button class="btn btn-success" type="button" onclick="userDashGetWeek('<%= whr.weekHourId._id %>')">View</button>
+                <!-- <button class="btn btn-success" type="button" onclick="getWeek('+ week_Id +')">More</button>' -->
+                </form>
           </div>
           <% }) %>
   

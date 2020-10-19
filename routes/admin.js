@@ -8,13 +8,18 @@ const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-// /admin/dashboard => GET
+
+//POST dashboard endpoint => /admin/dashboard
 router.get('/dashboard', isAuth, adminController.getDashboard);
 
-//router.get('/users/:userId', isAuth, adminController.getUser);
+//POST users/:userId endpoint => /admin/users/:userId
 router.post('/users/:userId', isAuth, adminController.postUser);
 
+//POST week/:weekId endpoint => /admin/week/:weekId
 router.post('/week/:weekId', isAuth, adminController.postWeek);
+
+//POST deleteUser/:userId endpoint => /admin/week/:weekId
+router.post('/deleteUser/:userId', isAuth, adminController.deleteUser);
 
 
 module.exports = router;

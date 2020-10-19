@@ -19,7 +19,7 @@ function getId(event) {
             let tMin = 0; //initialize variable for total minutes
             let tWMin = 0; //initialize variable for total minutes
             let weekHrs = 0;
-            let overAllUserHrs = 0;
+            //let overAllUserHrs = 0;
             if (user.myHours.hours.length > 0) {
                 user.myHours.hours.forEach(wH => {
                     tMin += wH.hourId.totalMinutes;
@@ -54,7 +54,8 @@ function getId(event) {
                 * Fill the User Weeks part of the page
                 ****************************************/
                 $('#student_weeks').html(''); // First clear what is in the div
-                $('#over-all-user-hours').html('<br><br>Past weeks: <b>' + ((tWMin) / 60).toFixed(2) + '</b><br>Past weeks + this week: <b>' + ((tWMin + tMin) / 60).toFixed(2) + '</b>'); // First clear what is in the div
+                $('#over-all-user-hours').html(''); // First clear what is in the div
+                $('#over-all-user-hours').html('Past weeks: <b>' + ((tWMin) / 60).toFixed(2) + '</b> | Past weeks + this week: <b>' + ((tWMin + tMin) / 60).toFixed(2) + '</b>');
                 user.weeklyHours.weekHours.forEach(wHr => {
                     let weekEnd = new Date(wHr.weekHourId.weekEnd);
                     let week_Id = wHr.weekHourId._id;
@@ -63,21 +64,23 @@ function getId(event) {
                         + '<p>Week ending <b>' + weekEnd.toDateString() + '</b><br>'
                         + '<i>Total Hours worked:</i> ' + ((wHr.weekHourId.totalMinutes) / 60).toFixed(2) + '<br>'
                         + '<i>Week of the year:</i> ' + wHr.weekHourId.weekNumber + '</p>'
-                        // + '<form>'
-                        // + '<input type="hidden" value="' + week_Id + '" name="weekId">'
-                        // + '<input type="hidden" name="_csrf" value="' + myToken +'" id="nyToken">'
-                        // + '<button class="btn btn-success" type="button" onclick="getWeek(event)">More</button>'
-                        // // + '<button class="btn btn-success" type="button" onclick="getWeek('+ week_Id +')">More</button>'
-                        // + '</form>'
+                        + '<form>'
+                        + '<input type="hidden" value="' + week_Id + '" name="weekId">'
+                        + '<input type="hidden" name="_csrf" value="' + myToken + '" id="nyToken">'
+                        + '<button class="btn btn-success" type="button" onclick="getWeek(event)">More</button>'
+                        // + '<button class="btn btn-success" type="button" onclick="getWeek('+ week_Id +')">More</button>'
+                        + '</form>'
                         + '</div><hr>');
                 });
                 $('#studentWeekHour').html(weekHrs.toFixed(2) + ' Hrs'); //Show combined total number of hours for the week
-                console.log('Both Arrays are not empty');
+                //console.log('Both Arrays are not empty');
+                window.location.href = "#over-all-user-hours";
 
             } else {
                 $('#over-all-user-hours').html(''); // First clear what is in the div
                 $('#student_details').html('<div class="container"><h6>Sorry! No data to display for this user</h6></div>')
                 $('#student_weeks').html('<div class="container"><h6>Sorry! No data to display for this user</h6></div>')
+                $('#over-all-user-hours').html(''); // Clear what is in the div
                 $('#studentWeekHour').html(weekHrs.toFixed(2) + ' Hrs');
             }
 
@@ -161,10 +164,9 @@ function getId(event) {
  **********************************************************************/
 function getWeek(event) {
     const weekId = event.path[1].childNodes[0].defaultValue;
-    // console.log(event);
-    // console.log('Week Id: ' + weekId);
     let newToken = $('#nyToken').val();
     let theUrl = "/admin/week/" + weekId;
+    console.log('Token: ' + newToken);
 
     $.ajax({
         url: theUrl,
@@ -175,10 +177,71 @@ function getWeek(event) {
             _csrf: newToken
         }),
         success: function (week) {
-            console.log('Week' + week)
+            //console.log(week.timeArray.times)
+            /*********************************************************************
+            * Fill the User Hours part of the page with hours in the week object
+            **********************************************************************/
+            $('#student_details').html(''); // First clear what is in the div
+            week.timeArray.times.forEach(hrs => {
+                //console.log(hrs)
+                let manDate = new Date(hrs.weekTimeId.manualDate);
+                $('#student_details').append(
+                    '<div class="admin-user-details"><p><b>' + manDate.toDateString() + '</b><br>'
+                    + '<span><i class="fas fa-history"></i> <i>Hours:</i> ' + hrs.weekTimeId.hours + '</span>'
+                    + '<i class="fas fa-history min-admin"></i> <i>Minutes:</i> ' + hrs.weekTimeId.minutes + '<br>'
+                    + '<i class="fas fa-clipboard"></i> <i>Task Description:</i> ' + hrs.weekTimeId.taskDescription + '<br>'
+                    + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hrs.weekTimeId.comments + '</p></div><hr>');
+            });
         }, error: function (err) {
             console.log(err);
         }
     });
     //console.log(event.path[1].childNodes[1].defaultValue)
 };
+
+function deleteUser(theUserId) {
+    let myToken = $('#my_OldToken').val();
+    const userId = theUserId;
+
+    //Then show popup to get user confirmation
+    swal({
+        title: "Confirm?",
+        text: "This action can't be undone. Continue?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, submit!",
+        cancelButtonText: "No, cancel!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }).then(
+        //If user confirms action
+        function (isConfirm) {
+            if (isConfirm) {
+                //Make an ajax request to the server to create the week object
+                $.ajax({
+                    url: "/admin/deleteUser/" + userId,
+                    type: 'POST',
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        userId: userId,
+                        _csrf: myToken
+                    }),
+                    success: function (data) {
+                        //Show this if the week object has been created
+                        swal("Deleted!", "The user has been deleted.", "success");
+                        location.reload();
+
+                    },
+                    error: function (data) {
+                        //Show this if there is an error
+                        swal("NOT Deleted!", "Something blew up. Sorry", "error");
+                    }
+                });
+            } else {
+                //Show this if the user withdraws
+                swal("Cancelled", "The user was not deleted.", "error");
+            }
+        });
+    return false
+}
