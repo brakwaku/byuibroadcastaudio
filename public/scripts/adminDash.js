@@ -55,7 +55,7 @@ function getId(event) {
                 ****************************************/
                 $('#student_weeks').html(''); // First clear what is in the div
                 $('#over-all-user-hours').html(''); // First clear what is in the div
-                $('#over-all-user-hours').html('Past weeks: <b>' + ((tWMin) / 60).toFixed(2) + '</b> | Past weeks + this week: <b>' + ((tWMin + tMin) / 60).toFixed(2) + '</b>');
+                $('#over-all-user-hours').html('Past weeks: <b>' + ((tWMin) / 60).toFixed(2) + '</b><br>Past weeks + this week: <b>' + ((tWMin + tMin) / 60).toFixed(2) + '</b>');
                 user.weeklyHours.weekHours.forEach(wHr => {
                     let weekEnd = new Date(wHr.weekHourId.weekEnd);
                     let week_Id = wHr.weekHourId._id;

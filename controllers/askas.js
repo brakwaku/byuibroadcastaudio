@@ -80,7 +80,7 @@ exports.getDashboard = (req, res, next) => {
                     weekHrs: user.weeklyHours.weekHours,
                     uHrs: uHrs
                 });
-                console.log('Total mins: ' + tMin);
+                //console.log('Total mins: ' + tMin);
             })
             .catch(err => {
                 const error = new Error(err);
@@ -148,7 +148,7 @@ exports.postHours = (req, res, next) => {
             return next(error);
         });
 
-    console.log('Time Created')
+    //console.log('TIME CREATED')
 }
 
 
