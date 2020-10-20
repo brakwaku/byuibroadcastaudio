@@ -43,7 +43,7 @@ function getUserId(event) {
                 user.myHours.hours.forEach(hr => {
                     let manDate = new Date(hr.hourId.manualDate);
                     
-                    manDate.setDate(manDate.getDate() + 1) //Only because it displays a day off
+                    //manDate.setDate(manDate.getDate() + 1) //Only because it displays a day off
                     
                     $('#student_details').append(
                         '<div class="admin-user-details">'
