@@ -11,21 +11,16 @@
 <body>
   <%- include('../../includes/nav.ejs') %>
   <div class="admin-dash-image">
-    <h1 class="animate__animated animate__zoomIn">DASHBOARD</h1>
-    <!-- <h3 class="animate__animated animate__zoomIn">All sounds of the earth are like music.</h3> -->
     <div class="all-student-hours">
-      <h6 id="allStudentHoursLabel">Week Total</h6>
-      <h5 id="studentTotalHour"><%= weekTotal.toFixed(2) %> Hrs</h5>
-      <!-- <span id="studentWeekHour"></span> -->
+      <h6 id="allStudentHoursLabel">Week Total <br><%= weekTotal.toFixed(2) %> Hrs</h6>
+      <h6 id="allStudentHoursLabel">Year Total <br><%= (yearTotal + weekTotal).toFixed(2) %> Hrs</h6>
     </div>
 
+    <div class="admin-dash-image-div1 animate__animated animate__zoomIn">DASHBOARD</div>
+
     <div class="studentWeekHour">
-      <h6 id="studentWeekHourLabel">Student Total</h6>
-      <h5 id="studentWeekHour"></h5>
+      <h6 id="studentWeekHour"></h6>
     </div>
-    <!-- <div class="total-year-hour">
-      <h2>Hours</h2>
-    </div> -->
   </div>
   <div class="jumbotron grid-container">
     <div class="admin-grid-item animate__animated animate__backInLeft">
@@ -34,29 +29,37 @@
       <div class="container next-con-left">
         <% if (users.length > 0) { %>
         <% users.forEach(u => { %>
-        <div >
-          <!-- <center><h1><i class="fas fa-user-circle"></i></h1></center> -->
-          <div><i class="fas <%= u.role === 'admin' ? 'fa-user-cog' : 'fa-user-tie' %> fa-5x"></i></div>
+        <div>
+          <div class="user-time-info">
+            <div>
+              <i class="fas <%= u.role === 'admin' ? 'fa-user-cog' : 'fa-user-tie' %> fa-5x"></i>
+            </div>
+            <div>
+              <h6 id="over-all-user-hours"></h6>
+            </div>
+          </div>
           <span><%= u.name %></span>
           <div class="the-button">
             <form>
               <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="my_OldToken">
-              <button class="btn btn-success delete-user-button" type="button" onclick="deleteUser('<%= u._id %>')">Delete</button>
+              <button class="btn btn-success delete-user-button" type="button"
+                onclick="deleteUser('<%= u._id %>')">Delete</button>
               <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
             </form>
             <form class="view-user-details <%= u._id === user._id ? 'hide' : ''%>">
               <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
-              <button class="btn btn-success user-detail-button" type="button" onclick="getId('<%= u._id %>')">View</button>
+              <button class="btn btn-success user-detail-button" type="button"
+                onclick="getUserId('<%= u._id %>')">View</button>
               <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
             </form>
           </div>
-            
-        </div><hr style="width: 80%;">
+
+        </div>
+        <hr style="width: 80%;">
         <!-- <li id="student-list" class="student-list"><a href="/admin/users/<%= u._id %>" id="student"><%= u.name %></a></li>  -->
         <% }) %>
-        <h6 id="over-all-user-hours"></h6>
         <% } else { %>
         <h5>No student signed up yet!</h5>
         <% } %>
@@ -67,7 +70,7 @@
       <h3><i class="fas fa-user-clock"></i> USER HOURS</h3>
       <hr>
       <div class="container next-con-mid">
-        <div class="container" id="student_details"></div>
+        <div id="student_details"></div>
       </div>
 
     </div>
@@ -79,5 +82,6 @@
       </div>
     </div>
   </div>
+
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <%- include('../../includes/end.ejs') %>

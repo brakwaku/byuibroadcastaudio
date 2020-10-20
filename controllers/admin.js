@@ -15,15 +15,27 @@ const { use } = require('../routes/admin');
 exports.getDashboard = (req, res, next) => {
   //Fetch all the users registered in the application.
   var totalMinutes = 0;
+  var totalYearMinutes = 0;
   var tempTotalMinutes = 0;
+  var tempTotalYearMinutes = 0;
   User.find().sort([
     ['name', 'ascending']
   ])
     .then(users => {
+      WeekTime.find()
+      .then(weeks => {
+        if(weeks.length > 0) {
+          weeks.forEach(week => {
+            tempTotalYearMinutes += week.totalMinutes;
+          })
+        }
+      })
       //console.log(users);
       if (users.length > 0) {
         users.forEach(user => {
-          user.populate('myHours.hours.hourId')
+          user
+            .populate('myHours.hours.hourId')
+            .populate('weeklyHours.weekHours.weekHourId')
             .execPopulate()
             .then(u => {
               u.myHours.hours.forEach(hr => {
@@ -36,10 +48,12 @@ exports.getDashboard = (req, res, next) => {
         //Not ideal but this delays the rest of the code from running for 1sec
         setTimeout(function () {
           totalMinutes = tempTotalMinutes / 60;
+          totalYearMinutes = tempTotalYearMinutes / 60;
           console.log('Total Minutes: ' + totalMinutes);
           res.render('pages/admin/dashboard', {
             users: users,
             weekTotal: totalMinutes,
+            yearTotal: totalYearMinutes,
             title: 'ASKAS | DASHBOARD',
             path: '/adminDashboard'
           });
@@ -109,6 +123,10 @@ exports.deleteUser = (req, res, next) => {
 
   //Get the user Id from the request params
   const userId = req.params.userId;
+
+  if (req.user._id.toString() === userId.toString()) {
+    return res.redirect('/admin/dashboard')
+  }
 
   //Find user and elete from the data base
   User.findByIdAndDelete(userId)

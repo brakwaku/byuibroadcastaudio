@@ -15,51 +15,40 @@
   /* Linear-gradient to add a darken background effect to the image. This will make the text easier to read */
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/1ai.jpg');
   /* Set a specific height */
-  max-height: 200px;
-  min-height: 150px;
+  max-height: 25vh;
+  min-height: 20vh;
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  display: grid;
+  grid-template-columns: 18% auto 18%;
 }
 
-.admin-dash-image h1 {
-  /*text-align: center;*/
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  font-size: 6vw;
+.admin-dash-image-div1 {
+  font-size: 6rem;
   font-weight: bolder;
   color: rgb(230, 158, 23);
+  text-align: center;
 }
 
 .studentWeekHour {
-  position: absolute;
-  top: 60%;
-  left: 82%;
+  padding-top: 6rem;
   color: white;
+  text-align: center;
 }
 
 .all-student-hours {
-  position: absolute;
-  top: 60%;
-  left: 10%;
+  padding-top: 6rem;
+  padding-left: 1rem;
   color: white;
+  display: flex;
 }
 
-/* .admin-dash-image h3 {
-  margin: 0;
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: bolder;
-  color: orange;
-} */
+.all-student-hours h6 {
+  padding-left: 1rem;
+}
 
 .dashboard-image h1 {
   /*text-align: center;*/
@@ -112,10 +101,11 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 27% auto auto;
   background-color: #E9E9E9;
   padding: 10px;
-  height: 67vh;
+  max-height: 117vh;
+  min-height: 60vh;
 }
 
 .students-grid-container {
@@ -123,7 +113,8 @@
   grid-template-columns: auto auto auto;
   background-color: #E9E9E9;
   padding: 10px;
-  height: 80vh;
+  min-height: 90vh;
+  max-height: 120vh;
 }
 
 .admin-grid-item {
@@ -166,16 +157,16 @@
   width: 100%;
 }
 
-.bucket-item-list {
+/* .bucket-item-list {
   border: solid 2px #2EA8B8;
   height: auto;
   margin-bottom: 10px;
   border-radius: 7px;
-}
+} */
 
-.bucket-item-list:hover {
+/* .bucket-item-list:hover {
   background-color: #b4eaf3;
-}
+} */
 
 .col-sm {
   border-radius: 10px;
@@ -195,37 +186,41 @@
 
 .next-con-left {
   overflow: scroll;
-  max-height: 50vh;
+  max-height: 95vh;
 }
 
 .next-con-mid {
   overflow: scroll;
-  max-height: 50vh;
+  max-height: 95vh;
 }
 
 .next-con-right {
   overflow: scroll;
-  max-height: 50vh;
+  max-height: 95vh;
 }
 
 .student-next-con-left {
   overflow: scroll;
-  max-height: 50vh;
+  max-height: 80vh;
+  min-height: 50vh;
 }
 
 .student-next-con-mid {
   overflow: scroll;
-  max-height: 50vh;
+  max-height: 80vh;
+  min-height: 50vh;
 }
 
 .student-next-con-right {
   overflow: scroll;
-  max-height: 50vh;
+  max-height: 90vh;
+  min-height: 60vh;
 }
 
 .edit-time-con {
   background-color: #e8e9e87c;
   border-radius: 10px;
+  padding-bottom: 10px;
 }
 
 .action-btn {
@@ -243,7 +238,6 @@
     max-height: 100vh;
     overflow: scroll;
   }
-
   .grid-item {
     width: 100%;
   }
@@ -303,8 +297,9 @@
   margin-right: 10px;
 } */
 
-.the-user-icon {
-width: 30rem;
+.user-time-info {
+  display: grid;
+  grid-template-columns: auto auto;
 }
 
 .the-button form {
@@ -325,6 +320,32 @@ width: 30rem;
   border-radius: 5px;
 }
 
+.admin-user-details span {
+  padding-left: 1.3rem;
+}
+
+.admin-user-details-sub {
+  font-size: .7em;
+  margin-top: -.3rem;
+  opacity: .7;
+  /* padding-left: 1rem; */
+}
+
+.hori-line {
+  width: 50%;
+  margin-top: -.03rem;
+  margin-left: 1.3rem;
+}
+
+.desc-com {
+  margin-top: -.8rem;
+  padding-left: 1.3rem;
+}
+
+.past-week-details {
+  background-color: rgba(172, 241, 252, 0.24);
+}
+
 .hide {
   visibility: hidden;
 }
@@ -336,6 +357,7 @@ width: 30rem;
 /******************************
 * Digital clock styling 
 *******************************/
+
 #clock {
   color: yellowgreen;
   font-size: 1.7em;
@@ -350,11 +372,12 @@ width: 30rem;
   margin: auto;
 }
 
-
 /**************************************
 * Modal Styling
 ****************************************/
+
 /* Add a dark gray background color to the modal header and center text */
+
 .modal-header, h4, .close {
   background-color: rgb(38, 196, 224);
   color: #fff !important;
@@ -369,15 +392,17 @@ width: 30rem;
 /**************************************
 * User details page
 ****************************************/
-.user-det {
+
+/* .user-det {
   min-height: 450px;
   overflow: scroll;
   max-height: 470px;
-}
+} */
 
 /**************************************
 * Submit Remiber style
 ****************************************/
+
 #submit-reminder {
   background-color: red;
   border-radius: 5px;
