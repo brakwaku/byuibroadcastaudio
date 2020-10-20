@@ -1,8 +1,10 @@
 /*************************************************************
  * Function to get user details and display on the dashboard
  *************************************************************/
-function getUserId(event) {
+function getUserId(event, uni) {
     const userId = event;
+    const theUid = uni;
+
     // const userId = event.path[1].childNodes[1].defaultValue;
     let myToken = $('#myToken').val();
     let myUrl = "/admin/users/" + userId;
@@ -42,9 +44,9 @@ function getUserId(event) {
                 $('#student_details').html(''); // First clear what is in the div
                 user.myHours.hours.forEach(hr => {
                     let manDate = new Date(hr.hourId.manualDate);
-                    
+
                     //manDate.setDate(manDate.getDate() + 1) //Only because it displays a day off
-                    
+
                     $('#student_details').append(
                         '<div class="admin-user-details">'
                         + '<span><b>' + manDate.toDateString() + '</b></span>'
@@ -52,15 +54,16 @@ function getUserId(event) {
                         + hr.hourId.hours + ' Hr(s) | ' + hr.hourId.minutes + ' Min(s)</span></div><hr class="hori-line">'
                         + '<div class="desc-com"><i class="fas fa-clipboard"></i> <i>Task:</i> ' + hr.hourId.taskDescription + '<br>'
                         + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hr.hourId.comments + '</div></div><hr>');
-                    
+
                 });
 
                 /***************************************
                 * Fill the User Weeks part of the page
                 ****************************************/
+                //let thatCId = 0;
                 $('#student_weeks').html(''); // First clear what is in the div
-                $('#over-all-user-hours').html(''); // First clear what is in the div
-                $('#over-all-user-hours').html('Past weeks: <b>' + ((tWMin) / 60).toFixed(2) + '</b><br>Pasts + this week: <b>' + ((tWMin + tMin) / 60).toFixed(2) + '</b>');
+                $('#' + theUid).html(''); // First clear what is in the div
+                $('#' + theUid).html('Past weeks: <b>' + ((tWMin) / 60).toFixed(2) + '</b><br>Pasts + this week: <b>' + ((tWMin + tMin) / 60).toFixed(2) + '</b>');
                 user.weeklyHours.weekHours.forEach(wHr => {
                     let weekEnd = new Date(wHr.weekHourId.weekEnd);
                     let week_Id = wHr.weekHourId._id;
@@ -82,7 +85,7 @@ function getUserId(event) {
                 //window.location.href = "#over-all-user-hours";
 
             } else {
-                $('#over-all-user-hours').html(''); // First clear what is in the div
+                $('#' + theUid).html(''); // First clear what is in the div
                 $('#student_details').html('<div class="container"><h6>Sorry! No data to display for this user</h6></div>')
                 $('#student_weeks').html('<div class="container"><h6>Sorry! No data to display for this user</h6></div>')
                 $('#over-all-user-hours').html(''); // Clear what is in the div

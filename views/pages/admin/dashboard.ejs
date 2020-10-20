@@ -28,14 +28,14 @@
       <hr>
       <div class="container next-con-left">
         <% if (users.length > 0) { %>
-        <% users.forEach(u => { %>
+        <% users.forEach((u, index, arr) => { let uni = index + u._id %>
         <div>
           <div class="user-time-info">
             <div>
               <i class="fas <%= u.role === 'admin' ? 'fa-user-cog' : 'fa-user-tie' %> fa-5x"></i>
             </div>
             <div>
-              <h6 id="over-all-user-hours"></h6>
+              <h6 id="<%= uni %>"></h6>
             </div>
           </div>
           <span><%= u.name %></span>
@@ -51,7 +51,7 @@
               <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
               <button class="btn btn-success user-detail-button" type="button"
-                onclick="getUserId('<%= u._id %>')">View</button>
+                onclick="getUserId('<%= u._id%>','<%= uni %>')">View</button>
               <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
             </form>
           </div>
