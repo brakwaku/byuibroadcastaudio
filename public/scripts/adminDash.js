@@ -42,6 +42,9 @@ function getUserId(event) {
                 $('#student_details').html(''); // First clear what is in the div
                 user.myHours.hours.forEach(hr => {
                     let manDate = new Date(hr.hourId.manualDate);
+                    
+                    manDate.setDate(manDate.getDate() + 1) //Only because it displays a day off
+                    
                     $('#student_details').append(
                         '<div class="admin-user-details">'
                         + '<span><b>' + manDate.toDateString() + '</b></span>'
@@ -49,18 +52,6 @@ function getUserId(event) {
                         + hr.hourId.hours + ' Hr(s) | ' + hr.hourId.minutes + ' Min(s)</span></div><hr class="hori-line">'
                         + '<div class="desc-com"><i class="fas fa-clipboard"></i> <i>Task:</i> ' + hr.hourId.taskDescription + '<br>'
                         + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hr.hourId.comments + '</div></div><hr>');
-                    // $('#student_details').append(
-                    //     '<div class="time-con-base"><p><b>' + manDate.toDateString() + '</b><br>'
-                    //     + 'From: ' + hr.hourId.startTime + ' - ' + hr.hourId.endTime + '<br>'
-                    //     + '<span><i class="fas fa-history"></i> <i>Hours:</i> ' + hr.hourId.hours + '</span>'
-                    //     + '<i class="fas fa-history min-admin"></i> <i>Minutes:</i> ' + hr.hourId.minutes + '<br>'
-                    //     + '<i class="fas fa-clipboard"></i> <i>Task Description:</i> ' + hr.hourId.taskDescription + '<br>'
-                    //     + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hr.hourId.comments + '</p></div>'
-                    //     + '<div class="time-con-left">'
-                    //     + '<div class="num-date">27</div>'
-                    //     + '<div class="day">THURSDAY</div>'
-                    //     + '<div class="current-events">Current Events<br />'
-                    //     + '</div><hr>');
                     
                 });
 

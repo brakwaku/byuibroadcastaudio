@@ -17,7 +17,7 @@ router.get('/contact', askasController.getContact)
 router.get('/about', askasController.getAbout)
 
 //GET tasks endpoint => /askas/tasks
-router.get('/tasks', isAuth, askasController.getTasks)
+//router.get('/tasks', isAuth, askasController.getTasks)
 
 //GET edit-time endpoint => /askas/edit-time/:timeId
 router.get('/edit-time/:timeId', isAuth, askasController.getEditTime)

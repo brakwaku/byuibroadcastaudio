@@ -1,4 +1,4 @@
-const Activity = require('../models/activity');
+//const Activity = require('../models/activity');
 const User = require('../models/user');
 const MyTime = require('../models/myTime');
 const WeekTime = require('../models/weekTime');
@@ -34,22 +34,22 @@ exports.getAbout = (req, res, next) => {
 /********************************************************
  * Endpoint function for request to Tasks page
  ********************************************************/
-exports.getTasks = (req, res, next) => {
-    Activity.find()
-        .then(activities => {
-            console.log('Activitiess: ' + activities);
-            res.render('pages/askas/tasks', {
-                acts: activities,
-                title: 'ASKAS | Tasks',
-                path: '/tasks'
-            });
-        })
-        .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-};
+// exports.getTasks = (req, res, next) => {
+//     Activity.find()
+//         .then(activities => {
+//             console.log('Activitiess: ' + activities);
+//             res.render('pages/askas/tasks', {
+//                 acts: activities,
+//                 title: 'ASKAS | Tasks',
+//                 path: '/tasks'
+//             });
+//         })
+//         .catch(err => {
+//             const error = new Error(err);
+//             error.httpStatusCode = 500;
+//             return next(error);
+//         });
+// };
 
 
 /********************************************************
