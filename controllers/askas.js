@@ -74,9 +74,9 @@ exports.getDashboard = (req, res, next) => {
                 uMin = tMin % 60; //Calculate number of minutes after hours
                 uHrs = tMin / 60; //Convert total minutes to hours
 
-                /*****************************************
-                * Function to sort the week object array
-                *****************************************/
+                /*****************************************************
+                * Function as parameter to sort the week object array
+                ******************************************************/
                 function compareValues(key, order = 'asc') {
                     return function innerSort(a, b) {
                         // if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
@@ -97,7 +97,7 @@ exports.getDashboard = (req, res, next) => {
                             (order === 'desc') ? (comparison * -1) : comparison
                         );
                     };
-                }
+                } //End of CompareValues function
 
                 // Assign variable to week array
                 let theUserWeeksArray = user.weeklyHours.weekHours.sort(compareValues('_id', 'desc'));
