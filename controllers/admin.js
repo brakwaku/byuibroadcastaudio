@@ -85,6 +85,7 @@ exports.postUser = (req, res, next) => {
     .populate('myHours.hours.hourId')
     .populate('weeklyHours.weekHours.weekHourId')
     .then(dUser => {
+      //console.log('Week: ' + dUser.weeklyHours.weekHours);
       res.status(200).send(dUser);
     })
     .catch(err => {

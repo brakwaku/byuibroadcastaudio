@@ -18,9 +18,39 @@ function getUserId(event, uni) {
             _csrf: myToken
         }),
         success: function (user) {
+            //console.log('User: ' + user.weeklyHours.weekHours);
             let tMin = 0; //initialize variable for total minutes
             let tWMin = 0; //initialize variable for total minutes
             let weekHrs = 0;
+
+            /**
+             * Function to sort the week object array
+             */
+            function compareValues(key, order = 'asc') {
+                return function innerSort(a, b) {
+                    // if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                    //     // property doesn't exist on either object
+                    //     return 0;
+                    // }
+
+                    const varA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key];
+                    const varB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key];
+
+                    let comparison = 0;
+                    if (varA > varB) {
+                        comparison = 1;
+                    } else if (varA < varB) {
+                        comparison = -1;
+                    }
+                    return (
+                        (order === 'desc') ? (comparison * -1) : comparison
+                    );
+                };
+            }
+
+            let theUserWeeksArray = user.weeklyHours.weekHours;
+
+
             //let overAllUserHrs = 0;
             if (user.myHours.hours.length > 0) {
                 user.myHours.hours.forEach(wH => {
@@ -29,14 +59,17 @@ function getUserId(event, uni) {
                 weekHrs = tMin / 60; //Convert total minutes to hours
             }
 
-            if (user.weeklyHours.weekHours.length > 0) {
+            if (theUserWeeksArray.length > 0) {
                 user.weeklyHours.weekHours.forEach(wlyH => {
                     tWMin += wlyH.weekHourId.totalMinutes;
                 })
                 overAllUserHrs = tWMin / 60; //Convert total minutes to hours
             }
 
-            if (user.myHours.hours.length || user.weeklyHours.weekHours.length > 0) {
+            // DO the sorting here
+            let theUserWeeksArraySorted = theUserWeeksArray.sort(compareValues('_id', 'desc'))
+
+            if (user.myHours.hours.length || theUserWeeksArraySorted.length > 0) {
 
                 /***************************************
                 * Fill the User Hours part of the page
@@ -64,7 +97,7 @@ function getUserId(event, uni) {
                 $('#student_weeks').html(''); // First clear what is in the div
                 $('#' + theUid).html(''); // First clear what is in the div
                 $('#' + theUid).html('Past weeks: <b>' + ((tWMin) / 60).toFixed(2) + '</b><br>Pasts + this week: <b>' + ((tWMin + tMin) / 60).toFixed(2) + '</b>');
-                user.weeklyHours.weekHours.forEach(wHr => {
+                theUserWeeksArraySorted.forEach(wHr => {
                     let weekEnd = new Date(wHr.weekHourId.weekEnd);
                     let week_Id = wHr.weekHourId._id;
                     $('#student_weeks').append(
