@@ -23,9 +23,9 @@ function getUserId(event, uni) {
             let tWMin = 0; //initialize variable for total minutes
             let weekHrs = 0;
 
-            /**
+            /*****************************************
              * Function to sort the week object array
-             */
+             *****************************************/
             function compareValues(key, order = 'asc') {
                 return function innerSort(a, b) {
                     // if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
@@ -48,6 +48,7 @@ function getUserId(event, uni) {
                 };
             }
 
+            // Assign variable to week array
             let theUserWeeksArray = user.weeklyHours.weekHours;
 
 
@@ -66,7 +67,7 @@ function getUserId(event, uni) {
                 overAllUserHrs = tWMin / 60; //Convert total minutes to hours
             }
 
-            // DO the sorting here
+            // Sort week array by '_id' and assign to new variable
             let theUserWeeksArraySorted = theUserWeeksArray.sort(compareValues('_id', 'desc'))
 
             if (user.myHours.hours.length || theUserWeeksArraySorted.length > 0) {
