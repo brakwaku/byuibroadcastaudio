@@ -1,6 +1,6 @@
-/*********
+/******************************
  * Clock on user dashboard
- */
+ ******************************/
 const clock = document.getElementById('clock');
 
 function updateTime() {
@@ -18,10 +18,12 @@ updateTime();
  * Reminder to submit time for the week
  ****************************************************/
 window.onload = function () {
+    let theHours4Week = $('#theHours4Week').val();
     let dayOfTheWeek = new Date();
-    if (dayOfTheWeek.getDay() === 5 || dayOfTheWeek === 6) {
+
+    if ((dayOfTheWeek.getDay() == 5 || dayOfTheWeek.getDay() == 6) && theHours4Week > 0) {
         $('#submit-reminder').css('visibility', 'visible')
-        $('#submit-reminder').html('Remember to submit your hours for the week')
+        $('#submit-reminder').html('Remember to submit your hours for the week');
     }
 
     $('#submit-reminder').on('click', function () {
