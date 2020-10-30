@@ -181,11 +181,11 @@ function userDashGetWeek(weekId) {
 
                 let manDate = new Date(hrs.weekTimeId.manualDate);
                 $('.student-next-con-mid').append(
-                    '<div class="hour-list-div"><p><b>' + manDate.toDateString() + '</b><br>'
-                    + '<span><i class="fas fa-history"></i> <i>Hours:</i> ' + hrs.weekTimeId.hours + '</span>'
-                    + '<i class="fas fa-history min-admin"></i> <i>Minutes:</i> ' + hrs.weekTimeId.minutes + '<br>'
-                    + '<i class="fas fa-clipboard"></i> <i>Task Description:</i> ' + hrs.weekTimeId.taskDescription + '<br>'
-                    + '<i class="fas fa-comment"></i> <i>Comments:</i> ' + hrs.weekTimeId.comments + '</p></div>');
+                    '<div class="hour-list-div"><span><b>' + manDate.toDateString() + '</b><span>'
+                    + '<div class="admin-user-details-sub">' + hrs.weekTimeId.startTime + ' - ' + hrs.weekTimeId.endTime
+                    + ' | ' + hrs.weekTimeId.hours + ' Hr(s) | ' + hrs.weekTimeId.minutes + ' Min(s)</div>'
+                    + '<i class="fas fa-clipboard"></i> <i> : </i> ' + hrs.weekTimeId.taskDescription + '<br>'
+                    + '<i class="fas fa-comment"></i> <i> : </i> ' + hrs.weekTimeId.comments + '</div></div>');
             });
         }, error: function (err) {
             console.log(err);

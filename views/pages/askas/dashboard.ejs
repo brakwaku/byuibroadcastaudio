@@ -61,9 +61,9 @@
           <form>
             <input type="hidden" value="<%= h.hourId._id %>" name="hourId" id="<%= h.hourId._id %>">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken">
-            <li class="hour-list-time"><%= h.hourId.manualDate.toDateString() %></li>
-            <li class="hour-list">Hours: <%= h.hourId.hours %></li>
-            <li class="hour-list">Minutes: <%= h.hourId.minutes %></li>
+            <span class="hour-list-time"><%= h.hourId.manualDate.toDateString() %></span>
+            <div class="admin-user-details-sub"><%= h.hourId.startTime %> - <%= h.hourId.endTime %> | <%= h.hourId.hours %> hr(s) | <%= h.hourId.minutes %> min(s)</div>
+            <div class="hour-list"><%= h.hourId.taskDescription %></div>
             <button class="btn btn-success myBtn" type="button" onclick="getTimeId('<%= h.hourId._id %>')">Edit</button>
           </form>
         </div>
