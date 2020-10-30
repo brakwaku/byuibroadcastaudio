@@ -22,8 +22,20 @@ window.onload = function () {
     let dayOfTheWeek = new Date();
 
     if ((dayOfTheWeek.getDay() == 5 || dayOfTheWeek.getDay() == 6) && theHours4Week > 0) {
-        $('#submit-reminder').css('visibility', 'visible')
-        $('#submit-reminder').html('Remember to submit your hours for the week');
+        $('#submit-reminder-container').css('height', '55px');
+        $('#submit-reminder-container').css('padding-top', '7px');
+        function submitWarning() {
+            $('#submit-reminder').css('visibility', 'visible')
+            $('#submit-reminder').toggle();
+            $('#submit-reminder').html('Please remember to submit your hours for the week');
+        }
+
+        setInterval(submitWarning, 2000);
+
+        submitWarning();
+
+        //$('#submit-reminder').css('visibility', 'visible')
+        //$('#submit-reminder').html('Remember to submit your hours for the week');
     }
 
     $('#submit-reminder').on('click', function () {
@@ -122,7 +134,7 @@ function getTimeId(event) {
             }
 
             $('.week-col').html('<i class="fas fa-edit"></i> EDIT TIME');
-            
+
             $('.edit-time-con').html(
                 '<form action="/askas/update-time" method="POST">'
                 + '<label for="date">Date</label>'

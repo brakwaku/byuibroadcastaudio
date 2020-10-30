@@ -18,7 +18,7 @@
       <input type="hidden" name="theHours4Week" id="theHours4Week" value="<%= uHrs.toFixed(2) %>">
     </div>
   </div>
-  <div id="submit-reminder"></div>
+  <div id="submit-reminder-container"><div id="submit-reminder"></div></div>
   <div class="jumbotron students-grid-container">
     <div class="grid-item animate__animated animate__backInLeft">
       <h3><i class="fas fa-clock"></i> ENTER HOURS</h3>
@@ -51,7 +51,7 @@
         <form class="submit-time">
           <input type="hidden" value="<%= user._id %>" name="theUserId" id="theUser">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="thisToken">
-          <button id="theUserBtn" class="btn btn-danger" type="submit">Submit time</button>
+          <button id="theUserBtn" class="btn btn-danger" type="submit">Submit hours</button>
         </form>
       </div><br>
       <div class="container student-next-con-mid">
