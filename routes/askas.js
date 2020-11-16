@@ -34,4 +34,7 @@ router.post('/calculateWeek', isAuth, askasController.postCalculateWeek)
 //POST week/:weekId endpoint => /askas/week/:weekId
 router.post('/week/:weekId', isAuth, askasController.postGetWeek)
 
+// //POST delete-time endpoint => /askas/delete-time/:timeId
+// router.post('/delete-time/:timeId', isAuth, askasController.postDeleteTime)
+
 module.exports = router;

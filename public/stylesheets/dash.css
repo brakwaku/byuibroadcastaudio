@@ -101,7 +101,7 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: 27% auto auto;
+  grid-template-columns: 25% auto auto;
   background-color: #E9E9E9;
   padding: 10px;
   max-height: 117vh;
@@ -303,9 +303,9 @@
   grid-template-columns: auto auto;
 }
 
-.the-button form {
-  display: inline;
-  padding-right: 20px;
+.the-button {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .time-details {
@@ -412,4 +412,28 @@
   color: white;
   visibility: hidden;
   transition: backgroundColor 0.05s ease-in-out;
+}
+
+/**************************************
+* Submit Year Remiber style
+****************************************/
+
+#submit-year-reminder {
+  background-color: rgb(168, 168, 168);
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+  visibility: hidden;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  transition: backgroundColor 0.05s ease-in-out;
+}
+
+#submit-year-reminder:hover {
+  cursor: zoom-out;
+}
+
+.sub-button {
+  position: relative;
+  margin-right: 0px;
 }

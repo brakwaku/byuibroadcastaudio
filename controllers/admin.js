@@ -139,3 +139,14 @@ exports.deleteUser = (req, res, next) => {
       console.log(err);
     });
 }
+
+/*******************************************************
+ * Endpoint function for creating year document
+ *******************************************************/
+exports.completeYear = (req, res, next) => {
+
+  //Get the user Id from the request params
+  const userId = req.body.userId;
+  res.redirect('/admin/dashboard')
+
+}

@@ -126,6 +126,7 @@ exports.getDashboard = (req, res, next) => {
  ********************************************************/
 exports.postHours = (req, res, next) => {
     const startTime = req.body.startTime;
+    console.log('Mandate: ' + req.body.manDate);
     const manDate = moment(req.body.manDate, "YYYY-MM-DD", true).toDate(); //Does not work on Safari on mac currently 09/07/2020
     const endTime = req.body.endTime;
     const taskDescription = req.body.taskDescription;
@@ -355,3 +356,20 @@ exports.postGetWeek = (req, res, next) => {
             return next(error);
         });
 };
+
+// /********************************************************
+//  * Endpoint for ajax request to delete time
+//  ********************************************************/
+// exports.postDeleteTime = (req, res, next) => {
+//     const timeId = req.params.timeId;
+//     MyTime.deleteOne({ _id: timeId, userId: req.user._id })
+//         .then(() => {
+//             console.log('DESTROYED TIME');
+//             res.status(200).send(dWeek);
+//         })
+//         .catch(err => {
+//             const error = new Error(err);
+//             error.httpStatusCode = 500;
+//             return next(error);
+//         });
+// }

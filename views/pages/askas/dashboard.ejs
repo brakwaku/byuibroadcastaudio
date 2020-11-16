@@ -26,12 +26,12 @@
       <div class="container" id="clock"></div><br>
       <div class="container student-next-con-left">
         <form action="/askas/myHours" method="POST">
-          <label for="date">Date</label>
-          <input name="manDate" type="date" class="form-control" id="manDate" required placeholder="mm/dd/yyyy"><br>
-          <label for="startTime">Start time (00:00 AM)</label>
+          <label for="date">Date <i style="opacity: .7;">(Safari: yyy-mm-dd)</i></label>
+          <input name="manDate" type="date" class="form-control" id="manDate" required placeholder="yyy-mm-dd"><br>
+          <label for="startTime">Start time <i style="opacity: .7;">(00:00 AM)</i></label>
           <input name="startTime" type="time" class="form-control" id="startTime" required
             placeholder="hh:mm AM/PM"><br>
-          <label for="endTime">End time (00:00 PM)</label>
+          <label for="endTime">End time <i style="opacity: .7;">(00:00 PM)</i></label>
           <input name="endTime" type="time" class="form-control" id="endTime" required placeholder="hh:mm AM/PM"><br>
           <label for="taskDescription">Task Description</label>
           <textarea name="taskDescription" class="form-control" id="taskDescription" cols="15" rows="3"
@@ -65,6 +65,7 @@
             <div class="admin-user-details-sub"><%= h.hourId.startTime %> - <%= h.hourId.endTime %> | <%= h.hourId.hours %> hr(s) | <%= h.hourId.minutes %> min(s)</div>
             <div class="hour-list"><%= h.hourId.taskDescription %></div>
             <button class="btn btn-success myBtn" type="button" onclick="getTimeId('<%= h.hourId._id %>')">Edit</button>
+            <!-- <button class="btn btn-success myBtn" type="button" onclick="deleteTime('<%= h.hourId._id %>')">Delete</button> -->
           </form>
         </div>
         <% }) %>

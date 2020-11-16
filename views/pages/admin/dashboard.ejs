@@ -4,6 +4,7 @@
 <head>
   <%- include('../../includes/header.ejs') %>
   <link rel="stylesheet" type="text/css" href="/stylesheets/dash.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="/scripts/adminDash.js"></script>
 </head>
@@ -14,6 +15,7 @@
     <div class="all-student-hours">
       <h6 id="allStudentHoursLabel">Week Total <br><%= weekTotal.toFixed(2) %> Hrs</h6>
       <h6 id="allStudentHoursLabel">Year Total <br><%= (yearTotal + weekTotal).toFixed(2) %> Hrs</h6>
+      <input type="hidden" id="yr-total" name="yr-total" value="<%= yearTotal + weekTotal %>">
     </div>
 
     <div class="admin-dash-image-div1 animate__animated animate__zoomIn">DASHBOARD</div>
@@ -22,9 +24,13 @@
       <h6 id="studentWeekHour"></h6>
     </div>
   </div>
+  <!-- Reminder to submit time to create year document -->
+  <div id="submit-year-reminder-container"><div id="submit-year-reminder"></div></div>
+
   <div class="jumbotron grid-container">
     <div class="admin-grid-item animate__animated animate__backInLeft">
-      <h3><i class="fas fa-users"></i></i> USERS</h3>
+      <!-- <span id="user-in-focus"></span> -->
+      <h3 id="user-in-focus"><i class="fas fa-users"></i></i> USERS</h3>
       <hr>
       <div class="container next-con-left">
         <% if (users.length > 0) { %>
@@ -54,6 +60,13 @@
                 onclick="getUserId('<%= u._id%>','<%= uni %>')">View</button>
               <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
             </form>
+            <form class="view-user-details <%= u._id === user._id ? 'hide' : ''%>">
+              <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="myToken2">
+              <button class="btn btn-success user-detail-button" type="button"
+                onclick="getWeeks('<%= u._id%>','<%= uni %>')">Weeks</button>
+              <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
+            </form>
           </div>
 
         </div>
@@ -67,7 +80,7 @@
 
     </div>
     <div class="admin-grid-item animate__animated animate__bounceInDown">
-      <h3><i class="fas fa-user-clock"></i> USER HOURS</h3>
+      <h3 id="week-in-focus"><i class="fas fa-user-clock"></i> USER HOURS</h3>
       <hr>
       <div class="container next-con-mid">
         <div id="student_details"></div>

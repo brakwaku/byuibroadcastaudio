@@ -35,6 +35,7 @@
           <a class="nav-item" href="#">
             <form action="/auth/logout" method="post">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" id="loggedin-userId" name="loggedin-userId" value="<%= user._id %>">
               <button class="btn bttn btn-sm navbar-btn" type="submit">LOGOUT</button>
             </form>
           </a>

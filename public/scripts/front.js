@@ -26,6 +26,7 @@ window.onload = function () {
         $('#submit-reminder-container').css('padding-top', '7px');
         function submitWarning() {
             $('#submit-reminder').css('visibility', 'visible')
+            //$('#submit-reminder').css('display', 'block')
             $('#submit-reminder').toggle();
             $('#submit-reminder').html('Please remember to submit your hours for the week');
         }
@@ -39,7 +40,7 @@ window.onload = function () {
     }
 
     $('#submit-reminder').on('click', function () {
-        $('#submit-reminder').css('visibility', 'hidden')
+        $('#submit-reminder').css({"visibility": "hidden", "display": "none"});
     });
 }
 
@@ -160,6 +161,9 @@ function getTimeId(event) {
     //console.log(event.path[1].childNodes[1].defaultValue)
 };
 
+/***************************************
+ * User viewing week times
+ ****************************************/
 function userDashGetWeek(weekId) {
     let newToken = $('#my_Token').val();
     let theUrl = "/askas/week/" + weekId;
@@ -192,3 +196,55 @@ function userDashGetWeek(weekId) {
         }
     });
 };
+
+
+// /***************************************
+//  * User deleting time entered already
+//  ****************************************/
+// function deleteTime(event) {
+//     const timeId = event;
+//     // const timeId = event.path[1].childNodes[1].defaultValue;
+//     let myToken = $('#myToken').val();
+//     let myUrl = "/askas/delete-time/" + timeId;
+
+//     swal({
+//         title: "Confirm?",
+//         text: "This action can't be undone. Continue?",
+//         type: "warning",
+//         showCancelButton: true,
+//         confirmButtonColor: "#DD6B55",
+//         confirmButtonText: "Yes, submit!",
+//         cancelButtonText: "No, cancel!",
+//         closeOnConfirm: false,
+//         closeOnCancel: false
+//     }).then(
+//         //If user confirms action
+//         function (isConfirm) {
+//             if (isConfirm) {
+//                 //Make an ajax request to the server to create the week object
+//                 $.ajax({
+//                     url: myUrl,
+//                     type: 'POST',
+//                     contentType: "application/json",
+//                     data: JSON.stringify({
+//                         timeId: timeId,
+//                         _csrf: myToken
+//                     }),
+//                     success: function (data) {
+//                         //Show this if the week object has been created
+//                         swal("Deleted!", "Hour(s) deleted.", "success");
+//                         location.reload();
+
+//                     },
+//                     error: function (data) {
+//                         //Show this if there is an error
+//                         swal("NOT Deleted!", "Something blew up. Sorry", "error");
+//                     }
+//                 });
+//             } else {
+//                 //Show this if the user withdraws
+//                 swal("Cancelled", "Hour(s) not deleted.", "error");
+//             }
+//         });
+//     return false
+// }
