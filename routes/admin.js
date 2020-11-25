@@ -18,11 +18,14 @@ router.post('/users/:userId', isAuth, adminController.postUser);
 //POST week/:weekId endpoint => /admin/week/:weekId
 router.post('/week/:weekId', isAuth, adminController.postWeek);
 
+//POST year/:yearId endpoint => /admin/year/:yearId
+router.post('/year/:yearId', isAuth, adminController.postYear);
+
 //POST deleteUser/:userId endpoint => /admin/deleteUser/:userId
-router.post('/deleteUser/:userId', isAuth, adminController.deleteUser);
+router.post('/deleteUser/:userId', isAuth, adminController.postDeleteUser);
 
 //POST complete-year endpoint => /admin/week/:weekId
-router.post('/complete-year', isAuth, adminController.completeYear);
+router.post('/complete-year', isAuth, adminController.postCompleteYear);
 
 
 module.exports = router;

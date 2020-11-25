@@ -9,6 +9,38 @@ const { min } = require('moment');
 const { validationResult } = require('express-validator/check');
 
 
+
+
+/*****************************************************************************************************************************
+* Function as parameter to sort the week object array
+******************************************************/
+function compareValues(key, order = 'asc') {
+    return function innerSort(a, b) {
+        // if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+        //     // property doesn't exist on either object
+        //     return 0;
+        // }
+
+        const varA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key];
+        const varB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key];
+
+        let comparison = 0;
+        if (varA > varB) {
+            comparison = 1;
+        } else if (varA < varB) {
+            comparison = -1;
+        }
+        return (
+            (order === 'desc') ? (comparison * -1) : comparison
+        );
+    };
+} //End of CompareValues function
+
+/*****************************************************************************************************************************/
+
+
+
+
 /********************************************************
  * Endpoint function for request to contact page
  ********************************************************/
@@ -74,31 +106,6 @@ exports.getDashboard = (req, res, next) => {
                 uMin = tMin % 60; //Calculate number of minutes after hours
                 uHrs = tMin / 60; //Convert total minutes to hours
 
-                /*****************************************************
-                * Function as parameter to sort the week object array
-                ******************************************************/
-                function compareValues(key, order = 'asc') {
-                    return function innerSort(a, b) {
-                        // if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-                        //     // property doesn't exist on either object
-                        //     return 0;
-                        // }
-
-                        const varA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key];
-                        const varB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key];
-
-                        let comparison = 0;
-                        if (varA > varB) {
-                            comparison = 1;
-                        } else if (varA < varB) {
-                            comparison = -1;
-                        }
-                        return (
-                            (order === 'desc') ? (comparison * -1) : comparison
-                        );
-                    };
-                } //End of CompareValues function
-
                 // Assign variable to week array
                 let theUserWeeksArray = user.weeklyHours.weekHours.sort(compareValues('_id', 'desc'));
                 let theUserHoursArray = user.myHours.hours.sort(compareValues('_id', 'desc'));
@@ -126,7 +133,6 @@ exports.getDashboard = (req, res, next) => {
  ********************************************************/
 exports.postHours = (req, res, next) => {
     const startTime = req.body.startTime;
-    console.log('Mandate: ' + req.body.manDate);
     const manDate = moment(req.body.manDate, "YYYY-MM-DD", true).toDate(); //Does not work on Safari on mac currently 09/07/2020
     const endTime = req.body.endTime;
     const taskDescription = req.body.taskDescription;
@@ -171,6 +177,7 @@ exports.postHours = (req, res, next) => {
             return req.user.addToMyHours(result._id);
         })
         .then(result => {
+            console.log('TIME CREATED');
             res.redirect('/askas/dashboard');
         })
         .catch(err => {
@@ -178,8 +185,6 @@ exports.postHours = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         });
-
-    //console.log('TIME CREATED')
 }
 
 
@@ -260,34 +265,36 @@ exports.postCalculateWeek = (req, res, next) => {
     let tempHours = [];
     let tMinutes = 0;
     req.user
-        .populate('myHours.hours.hourId') //Fetch atual object from the myTime model
+        .populate('myHours.hours.hourId') //Fetch actual object from the myTime model
         .execPopulate()
         .then(user => {
             if (user.myHours.hours.length > 0) {
+
+                // Add all the total minutes of those hours
                 user.myHours.hours.forEach(h => {
                     tMinutes += h.hourId.totalMinutes;
 
-                    //while looping add the _id property of the time object to the array
+                    // While looping, add the _id property of the time object to the array
                     tempHours.push({
                         weekTimeId: h.hourId._id
                     })
                 })
                 //console.log('Temp: ' + tempHours);
 
-                //Assign total minutes value
+                // Assign total minutes value to result from loop
                 const totalMinutes = tMinutes;
 
-                //Assign this array to results from the loop
+                // Assign this array to results from the loop
                 const tempTimeArray = tempHours;
 
-                //Assign variable to object
+                // Assign variable to object containing array
                 const updateTimeArray = {
                     times: tempTimeArray
                 };
 
                 //console.log('Total Mins: ' + totalMinutes);
 
-                //Create new Week object
+                // Create new Week object
                 const myWeek = new WeekTime({
                     dateEntered: dateEntered,
                     weekStart: startOfWeek,
@@ -298,7 +305,7 @@ exports.postCalculateWeek = (req, res, next) => {
                     userId: userId
                 });
 
-                //Save new Week object as document in DB
+                // Save new Week object as object in DB
                 myWeek
                     .save()
                     .then(result => {

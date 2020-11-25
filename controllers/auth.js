@@ -176,7 +176,7 @@ exports.postSignup = (req, res, next) => {
         subject: 'Signup succeeded!',
         html: `
             <h1>Hurray!!!</h1> <br><h2>You successfully signed up. Congratulations!</h2>
-            <p>Now go ahead and get used to the website to record your hours. Have fun!!</p>
+            <p>Now, go ahead and get used to the website to record your hours. Have fun!!</p>
           `
       };
       return transporter.sendMail(mailOptions, function (error, info) {

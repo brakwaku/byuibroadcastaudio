@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-//const User = require('./user');
 
 const Schema = mongoose.Schema;
 
@@ -8,33 +7,33 @@ const yearTimeSchema = new Schema({
     type: Date,
     required: true
   },
-  dayStart: {
+  yearStart: {
     type: Date,
     required: true
   },
-  dayEnd: {
+  yearEnd: {
     type: Date,
     required: true
   },
-//   weekNumber: {
-//     type: Number,
-//     required: true
-//   },
+  yearNumber: {
+    type: Number,
+    required: true
+  },
   totalMinutes: {
     type: Number,
     required: true
   },
-  weekArray: [
-    {
-      yearTimeId: [
-        {
+  weekArray: {
+    weeks: [
+      {
+        yearTimeId: {
           type: Schema.Types.ObjectId,
           ref: 'WeekTime',
           required: true
         }
-      ]
-    }
-  ],
+      }
+    ]
+  },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -42,4 +41,4 @@ const yearTimeSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('YearTime', yaerTimeSchema);
+module.exports = mongoose.model('YearTime', yearTimeSchema);

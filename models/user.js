@@ -55,6 +55,17 @@ const userSchema = new Schema({
       }
     ]
   },
+  yearlyHours: {
+    yearHours: [
+      {
+        yearHourId: {
+          type: Schema.Types.ObjectId,
+          ref: 'YearTime',
+          required: true
+        }
+      }
+    ]
+  },
   bucket: {
     items: [
       {
@@ -125,6 +136,19 @@ userSchema.methods.addToWeeklyHours = function (weekId) {
     weekHours: updatedWeekHourItems
   };
   this.weeklyHours = updatedWeekHour;
+  return this.save();
+};
+
+userSchema.methods.addToYearlyHours = function (yearId) {
+  const updatedYearHourItems = [...this.yearlyHours.yearHours];
+
+  updatedYearHourItems.push({
+      yearHourId: yearId
+    });
+  const updatedYearHour = {
+    yearHours: updatedYearHourItems
+  };
+  this.yearlyHours = updatedYearHour;
   return this.save();
 };
 
