@@ -163,6 +163,7 @@ exports.postSignup = (req, res, next) => {
         email: email,
         password: hashedPassword,
         role: role,
+        status: "active",
         bucket: { items: [] }
       });
       return user.save();

@@ -120,7 +120,7 @@ function getUserId(event, uni) {
             let theUserYearsArraySorted = theUserYearsArray.sort(compareValues('_id', 'desc'))
 
             if ((user.myHours.hours.length || theUserWeeksArraySorted.length || theUserYearsArraySorted.length) > 0) {
-                console.log('Hours: ' + user.myHours.hours.length + ' Weeks: ' + theUserWeeksArraySorted.length + ' Years: ' + theUserYearsArraySorted.length)
+                //console.log('Hours: ' + user.myHours.hours.length + ' Weeks: ' + theUserWeeksArraySorted.length + ' Years: ' + theUserYearsArraySorted.length)
 
                 /***************************************
                 * Fill the User Hours part of the page
@@ -161,7 +161,7 @@ function getUserId(event, uni) {
                     let year_Id = yHr.yearHourId._id;
                     $('#student_weeks').append(
                         '<div class="admin-user-details">'
-                        + '<span>Ending <b>' + yearEnd.toDateString() + '</b></span>'
+                        + '<span>Year End <b>' + yearEnd.toDateString() + '</b></span>'
                         + '<div class="admin-user-details-sub"><span>' + ((yHr.yearHourId.totalMinutes) / 60).toFixed(2) + ' Hrs | '
                         + 'Year: ' + yHr.yearHourId.yearNumber + '</span></div><hr class="hori-line">'
                         + '<form>'
@@ -485,7 +485,7 @@ function deleteUser(theUserId) {
         //If user confirms action
         function (isConfirm) {
             if (isConfirm) {
-                //Make an ajax request to the server to create the week object
+                //Make an ajax request to the server to delete the user object
                 $.ajax({
                     url: "/admin/deleteUser/" + userId,
                     type: 'POST',
@@ -495,19 +495,21 @@ function deleteUser(theUserId) {
                         _csrf: myToken
                     }),
                     success: function (data) {
-                        //Show this if the week object has been created
-                        swal("Deleted!", "The user has been deleted.", "success");
-                        location.reload();
+                        //Show this if the week object has been deleted
+                        swal(data.name, "Was successfully archived.", "success");
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000);
 
                     },
                     error: function (data) {
                         //Show this if there is an error
-                        swal("NOT Deleted!", "Something blew up. Sorry", "error");
+                        swal("NOT Archived!", "Something blew up. Sorry", "error");
                     }
                 });
             } else {
                 //Show this if the user withdraws
-                swal("Cancelled", "The user was not deleted.", "error");
+                swal("Cancelled", "The user was not archived.", "error");
             }
         });
     return false

@@ -191,11 +191,24 @@ exports.postDeleteUser = (req, res, next) => {
     return res.redirect('/admin/dashboard')
   }
 
-  //Find user and elete from the data base
-  User.findByIdAndDelete(userId)
-    .then(deletedUser => {
-      console.log('USER DELETED!');
-      res.redirect('/admin/dashboard')
+  // // Find user and delete from the data base
+  // User.findByIdAndDelete(userId)
+  //   .then(deletedUser => {
+  //     console.log('USER DELETED!');
+  //     res.redirect('/admin/dashboard')
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
+
+  // Find user and change status to archived
+  User.findById(userId)
+    .then(archivedUser => {
+      archivedUser.status = "archived";
+      archivedUser.save();
+      console.log(archivedUser.name + ' ARCHIVED!');
+      res.status(200).send(archivedUser);
+      //res.redirect('/admin/dashboard')
     })
     .catch(err => {
       console.log(err);

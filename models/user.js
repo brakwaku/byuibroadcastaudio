@@ -29,7 +29,7 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  position: {
+  status: {
     type: String,
     required: false
   },

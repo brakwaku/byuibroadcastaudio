@@ -305,7 +305,7 @@
 
 .the-button {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: auto auto auto;
 }
 
 .time-details {
@@ -436,4 +436,11 @@
 .sub-button {
   position: relative;
   margin-right: 0px;
+}
+
+/**************************************
+* Archived User style
+****************************************/
+.archived-user {
+  display: none;
 }

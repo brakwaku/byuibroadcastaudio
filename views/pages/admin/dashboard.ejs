@@ -25,7 +25,9 @@
     </div>
   </div>
   <!-- Reminder to submit time to create year document -->
-  <div id="submit-year-reminder-container"><div id="submit-year-reminder"></div></div>
+  <div id="submit-year-reminder-container">
+    <div id="submit-year-reminder"></div>
+  </div>
 
   <div class="jumbotron grid-container">
     <div class="admin-grid-item animate__animated animate__backInLeft">
@@ -35,7 +37,7 @@
       <div class="container next-con-left">
         <% if (users.length > 0) { %>
         <% users.forEach((u, index, arr) => { let uni = index + u._id %>
-        <div>
+        <div class="<%= u.status === 'archived' || u.role === 'admin' ? 'archived-user' : '' %>">
           <div class="user-time-info">
             <div>
               <i class="fas <%= u.role === 'admin' ? 'fa-user-cog' : 'fa-user-tie' %> fa-5x"></i>
@@ -49,8 +51,8 @@
             <form>
               <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="my_OldToken">
-              <button class="btn btn-success delete-user-button" type="button"
-                onclick="deleteUser('<%= u._id %>')">Delete</button>
+              <button class="btn btn-success delete-user-button" type="button" onclick="deleteUser('<%= u._id %>')">
+                <i class="fas fa-archive"></i></button>
               <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
             </form>
             <form class="view-user-details <%= u._id === user._id ? 'hide' : ''%>">
@@ -68,9 +70,9 @@
               <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
             </form>
           </div>
+          <hr style="width: 80%;">
 
         </div>
-        <hr style="width: 80%;">
         <!-- <li id="student-list" class="student-list"><a href="/admin/users/<%= u._id %>" id="student"><%= u.name %></a></li>  -->
         <% }) %>
         <% } else { %>
