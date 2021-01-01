@@ -10,7 +10,7 @@ window.onload = function () {
     const loggedInId = $('#loggedin-userId').val();
     //console.log(weekOfYear);
 
-    if ((weekOfYear >= 0) && yearTotal > 0) {
+    if ((weekOfYear >= 50) && yearTotal > 0) {
         $('#submit-year-reminder-container').css({ "height": "55px", "padding-top": "7px" });
         $('#submit-year-reminder').css({ "visibility": "visible", "display": "visible" });
         $('#submit-year-reminder').html('<div style="font-weight: bold; justify-self: center;">'
