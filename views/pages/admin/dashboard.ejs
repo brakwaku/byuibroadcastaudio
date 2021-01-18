@@ -37,7 +37,7 @@
       <div class="container next-con-left">
         <% if (users.length > 0) { %>
         <% users.forEach((u, index, arr) => { let uni = index + u._id %>
-        <div class="<%= u.status === 'archived' || u.name === user.name ? 'archived-' : '' %>">
+        <div class="<%= u.status === 'archived' || u.name === user.name ? 'archived-user' : '' %>">
           <div class="user-time-info">
             <div>
               <i class="fas <%= u.role === 'admin' ? 'fa-user-cog' : 'fa-user-tie' %> fa-5x"></i>
