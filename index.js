@@ -1,6 +1,6 @@
 const cors = require('cors') // Place this with other requires (like 'path' and 'express')
 const corsOptions = {
-  origin: "https://ASKAS.herokuapp.com/",
+  origin: "https://byuibroadcastaudio.herokuapp.com/",
   optionsSuccessStatus: 200
 };
 
