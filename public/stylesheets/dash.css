@@ -258,6 +258,9 @@
   .grid-item {
     width: 100%;
   }
+  .footer {
+    display: none;
+  }
 }
 
 /* .sss {

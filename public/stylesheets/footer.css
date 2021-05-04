@@ -1,7 +1,7 @@
 .footer {
   background-color: #414141;
   width: 100%;
-  text-align: left;
+  /* text-align: left; */
   font-family: sans-serif;
   font-weight: bold;
   font-size: 16px;
@@ -27,7 +27,7 @@
   opacity: 1;
 }
 
-.my-sign {
+.copyright {
   color: rgb(185, 185, 185);
   font-weight: lighter;
   font-size: .7rem;
