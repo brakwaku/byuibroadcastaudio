@@ -1,18 +1,11 @@
 const crypto = require('crypto');
 
 const bcrypt = require('bcryptjs');
-var nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 const { validationResult } = require('express-validator/check');
 
 const User = require('../models/user');
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.MAIL_USERNAME,
-    pass: process.env.MAIL_PASSWORD
-  }
-});
+const { getMaxListeners } = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
@@ -219,7 +212,7 @@ exports.getReset = (req, res, next) => {
 exports.postReset = (req, res, next) => {
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
-      console.log(err);
+      // console.log(err);
       return res.redirect('reset');
     }
     const token = buffer.toString('hex');
@@ -234,24 +227,34 @@ exports.postReset = (req, res, next) => {
         return user.save();
       })
       .then(result => {
-        res.redirect('/');
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: "byuiaskas@gmail.com",
+            pass: "sweetcarp"
+            // user: process.env.MAIL_USERNAME,
+            // pass: process.env.MAIL_PASSWORD
+          }
+        });
+
         const mailOptions = {
-        from: 'byuiaudio@gmail.com',
+        from: 'byuiaskas@gmail.com',
         to: req.body.email,
-        subject: 'Password Reset!',
+        subject: 'ASKAS Password Reset!',
         html: `
-            <h5>Hello, you requested a password reset</5>
-            <p>Click this <a href="https://askas.herokuapp.com/auth/reset/${token}">link</a> to set a new password.</p>
+            <h5>Hello, you requested a password reset</h5>
+            <p>Click this <a href="https://byuibroadcastaudio.herokuapp.com/auth/reset/${token}">link</a> to set a new password.</p>
             <p>PS: This link is only valid for an hour</p>
           `
         };
-        transporter.sendMail(mailOptions, function (error, info){
+        transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
-            console.log(error);
+            console.log('Email error: ', error);
           } else {
             console.log('Email sent: ' + info.response);
           }
         });
+        res.redirect('/');
       })
       .catch(err => {
         const error = new Error(err);
