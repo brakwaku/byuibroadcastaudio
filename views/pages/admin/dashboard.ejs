@@ -52,7 +52,9 @@
               <input type="hidden" value="<%= u._id %>" name="studentId" id="<%= u._id %>">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" id="my_OldToken">
               <button class="btn btn-success delete-user-button" type="button" onclick="deleteUser('<%= u._id %>')">
-                <i class="fas fa-archive"></i></button>
+                <!-- <i class="fas fa-archive"></i> -->
+                Archive
+              </button>
               <!-- <button class="btn btn-success myBtn" type="button" onclick="getId(event)"><%= u.name %></button> -->
             </form>
             <form class="view-user-details <%= u._id === user._id ? 'hide' : ''%>">
