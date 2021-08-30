@@ -1,7 +1,11 @@
 const crypto = require('crypto');
 
-const bcrypt = require('bcryptjs');
+require('dotenv').config();
 const nodemailer = require('nodemailer');
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+
+const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator/check');
 
 const User = require('../models/user');
@@ -86,10 +90,11 @@ exports.postLogin = (req, res, next) => {
             req.session.user = user;
             return req.session.save(err => {
               console.log(err);
-              if(user.role === 'admin') {
+              if (user.role === 'admin') {
                 res.redirect('/admin/dashboard');
               } else {
-                res.redirect('/askas/dashboard');}
+                res.redirect('/askas/dashboard');
+              }
             });
           }
           return res.status(422).render('pages/auth/login', {
@@ -164,22 +169,72 @@ exports.postSignup = (req, res, next) => {
     .then(result => {
       res.redirect('login');
 
-      const mailOptions = {
-        from: 'byuiaudio@gmail.com',
-        to: email,
+      const createTransporter = async () => {
+        const oauth2Client = new OAuth2(
+          process.env.CLIENT_ID,
+          process.env.CLIENT_SECRET,
+          "https://developers.google.com/oauthplayground"
+        );
+
+        oauth2Client.setCredentials({
+          refresh_token: process.env.REFRESH_TOKEN
+        });
+
+        const accessToken = await new Promise((resolve, reject) => {
+          oauth2Client.getAccessToken((err, token) => {
+            if (err) {
+              reject("Failed to create access token :(");
+            }
+            resolve(token);
+          });
+        });
+
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            type: "OAuth2",
+            user: process.env.MAIL_USERNAME,
+            accessToken,
+            clientId: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            refreshToken: process.env.REFRESH_TOKEN
+          }
+        });
+
+        return transporter;
+      };
+
+      const sendEmail = async (emailOptions) => {
+        let emailTransporter = await createTransporter();
+        await emailTransporter.sendMail(emailOptions);
+      };
+      
+      sendEmail({
         subject: 'Signup succeeded!',
         html: `
             <h1>Hurray!!!</h1> <br><h2>You successfully signed up. Congratulations!</h2>
             <p>Now, go ahead and get used to the website to record your hours. Have fun!!</p>
-          `
-      };
-      return transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
+          `,
+        to: email,
+        from: process.env.MAIL_USERNAME
       });
+
+      // const mailOptions = {
+      //   from: 'byuiaudio@gmail.com',
+      //   to: email,
+      //   subject: 'Signup succeeded!',
+      //   html: `
+      //       <h1>Hurray!!!</h1> <br><h2>You successfully signed up. Congratulations!</h2>
+      //       <p>Now, go ahead and get used to the website to record your hours. Have fun!!</p>
+      //     `
+      // };
+      // return transporter.sendMail(mailOptions, function (error, info) {
+      //   if (error) {
+      //     console.log(error);
+      //   } else {
+      //     console.log('Email sent: ' + info.response);
+      //   }
+      // });
     })
     .catch(err => {
       const error = new Error(err);
@@ -227,33 +282,85 @@ exports.postReset = (req, res, next) => {
         return user.save();
       })
       .then(result => {
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: "byuiaskas@gmail.com",
-            pass: "sweetcarp"
-            // user: process.env.MAIL_USERNAME,
-            // pass: process.env.MAIL_PASSWORD
-          }
-        });
-
-        const mailOptions = {
-        from: 'byuiaskas@gmail.com',
-        to: req.body.email,
-        subject: 'ASKAS Password Reset!',
-        html: `
+        const createTransporter = async () => {
+          const oauth2Client = new OAuth2(
+            process.env.CLIENT_ID,
+            process.env.CLIENT_SECRET,
+            "https://developers.google.com/oauthplayground"
+          );
+  
+          oauth2Client.setCredentials({
+            refresh_token: process.env.REFRESH_TOKEN
+          });
+  
+          const accessToken = await new Promise((resolve, reject) => {
+            oauth2Client.getAccessToken((err, token) => {
+              if (err) {
+                reject("Failed to create access token :(");
+              }
+              resolve(token);
+            });
+          });
+  
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              type: "OAuth2",
+              user: process.env.MAIL_USERNAME,
+              accessToken,
+              clientId: process.env.CLIENT_ID,
+              clientSecret: process.env.CLIENT_SECRET,
+              refreshToken: process.env.REFRESH_TOKEN
+            }
+          });
+  
+          return transporter;
+        };
+  
+        const sendEmail = async (emailOptions) => {
+          let emailTransporter = await createTransporter();
+          await emailTransporter.sendMail(emailOptions);
+        };
+        
+        sendEmail({
+          subject: 'ASKAS Password Reset!',
+          html: `
             <h5>Hello, you requested a password reset</h5>
             <p>Click this <a href="https://byuibroadcastaudio.herokuapp.com/auth/reset/${token}">link</a> to set a new password.</p>
             <p>PS: This link is only valid for an hour</p>
-          `
-        };
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.log('Email error: ', error);
-          } else {
-            console.log('Email sent: ' + info.response);
-          }
+          `,
+          to: req.body.email,
+          from: process.env.MAIL_USERNAME
         });
+
+
+        // const transporter = nodemailer.createTransport({
+        //   service: 'gmail',
+        //   auth: {
+        //     user: "byuiaskas@gmail.com",
+        //     pass: "sweetcarp"
+        //     // user: process.env.MAIL_USERNAME,
+        //     // pass: process.env.MAIL_PASSWORD
+        //   }
+        // });
+
+        // const mailOptions = {
+        //   from: 'byuiaskas@gmail.com',
+        //   to: req.body.email,
+        //   subject: 'ASKAS Password Reset!',
+        //   html: `
+        //     <h5>Hello, you requested a password reset</h5>
+        //     <p>Click this <a href="https://byuibroadcastaudio.herokuapp.com/auth/reset/${token}">link</a> to set a new password.</p>
+        //     <p>PS: This link is only valid for an hour</p>
+        //   `
+        // };
+        // transporter.sendMail(mailOptions, (error, info) => {
+        //   if (error) {
+        //     console.log('Email error: ', error);
+        //   } else {
+        //     console.log('Email sent: ' + info.response);
+        //   }
+        // });
         res.redirect('/');
       })
       .catch(err => {
