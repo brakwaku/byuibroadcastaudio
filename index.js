@@ -11,8 +11,7 @@ const User = require('./models/user');
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const compression = require('compression');
-// require('dotenv').config();
-require('dotenv-extended').load();
+require('dotenv').config();
 
 const MONGODB_URL = process.env.MONGODB_URL;
 const store = new MongoDBStore({
