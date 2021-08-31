@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js",
-    "start-server": "node index.js"
+    "start": "nodemon app.js",
+    "start-server": "node app.js"
   },
   "author": "Kwaku Appau-Nkansah",
   "license": "ISC",
