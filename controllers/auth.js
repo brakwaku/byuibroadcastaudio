@@ -1,7 +1,8 @@
 const crypto = require('crypto');
 
-if (process.env.NODE_ENV !== 'production') { 
-  require('dotenv').config() }
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const nodemailer = require('nodemailer');
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
@@ -209,7 +210,7 @@ exports.postSignup = (req, res, next) => {
         let emailTransporter = await createTransporter();
         await emailTransporter.sendMail(emailOptions);
       };
-      
+
       sendEmail({
         subject: 'Signup succeeded!',
         html: `
@@ -221,7 +222,7 @@ exports.postSignup = (req, res, next) => {
       });
 
       // const mailOptions = {
-      //   from: 'byuiaudio@gmail.com',
+      //   from: process.env.MAIL_USERNAME,
       //   to: email,
       //   subject: 'Signup succeeded!',
       //   html: `
@@ -289,11 +290,11 @@ exports.postReset = (req, res, next) => {
             process.env.CLIENT_SECRET,
             "https://developers.google.com/oauthplayground"
           );
-  
+
           oauth2Client.setCredentials({
             refresh_token: process.env.REFRESH_TOKEN
           });
-  
+
           const accessToken = await new Promise((resolve, reject) => {
             oauth2Client.getAccessToken((err, token) => {
               if (err) {
@@ -302,7 +303,7 @@ exports.postReset = (req, res, next) => {
               resolve(token);
             });
           });
-  
+
           const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -314,15 +315,15 @@ exports.postReset = (req, res, next) => {
               refreshToken: process.env.REFRESH_TOKEN
             }
           });
-  
+
           return transporter;
         };
-  
+
         const sendEmail = async (emailOptions) => {
           let emailTransporter = await createTransporter();
           await emailTransporter.sendMail(emailOptions);
         };
-        
+
         sendEmail({
           subject: 'ASKAS Password Reset!',
           html: `
@@ -338,15 +339,13 @@ exports.postReset = (req, res, next) => {
         // const transporter = nodemailer.createTransport({
         //   service: 'gmail',
         //   auth: {
-        //     user: "byuiaskas@gmail.com",
-        //     pass: "sweetcarp"
-        //     // user: process.env.MAIL_USERNAME,
-        //     // pass: process.env.MAIL_PASSWORD
+        //      user: process.env.MAIL_USERNAME,
+        //      pass: process.env.MAIL_PASSWORD
         //   }
         // });
 
         // const mailOptions = {
-        //   from: 'byuiaskas@gmail.com',
+        //   from: process.env.MAIL_USERNAME,
         //   to: req.body.email,
         //   subject: 'ASKAS Password Reset!',
         //   html: `
