@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 
 // require('dotenv').config();
+require('dotenv-extended').load();
 const nodemailer = require('nodemailer');
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
