@@ -283,6 +283,8 @@ exports.postReset = (req, res, next) => {
         return user.save();
       })
       .then(result => {
+        // https://dev.to/chandrapantachhetri/sending-emails-securely-using-node-js-nodemailer-smtp-gmail-and-oauth2-g3a
+        
         const createTransporter = async () => {
           const oauth2Client = new OAuth2(
             process.env.CLIENT_ID,
