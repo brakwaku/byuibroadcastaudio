@@ -40,7 +40,8 @@
         <div class="<%= u.status === 'archived' || u.name === user.name ? 'archived-user' : '' %>">
           <div class="user-time-info">
             <div>
-              <i class="fas <%= u.role === 'admin' ? 'fa-user-cog' : 'fa-user-tie' %> fa-5x"></i>
+              <i class="fas <%= u.role === 'admin' ? 'fa-user-cog' : 'fa-user-tie' %> fa-5x tooltip">
+                <span class="tooltiptext"><%= u.email %></span></i>
             </div>
             <div>
               <h6 id="<%= uni %>"></h6>
