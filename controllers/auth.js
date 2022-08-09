@@ -53,6 +53,7 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
+  console.log('**************************** REQ: ', req)
   const email = req.body.email;
   const password = req.body.password;
 
@@ -72,6 +73,19 @@ exports.postLogin = (req, res, next) => {
 
   User.findOne({ email: email })
     .then(user => {
+      if (user.status === 'archived') {
+        return res.status(422).render('pages/auth/login', {
+          path: '/login',
+          title: 'ASKAS | Login',
+          errorMessage: 'This user no longer works here. Please contact admin. Thank you!',
+          oldInput: {
+            email: email,
+            password: password
+          },
+          validationErrors: []
+        });
+      }
+
       if (!user) {
         return res.status(422).render('pages/auth/login', {
           path: '/login',
