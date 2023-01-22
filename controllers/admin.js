@@ -152,7 +152,7 @@ exports.postWeek = (req, res, next) => {
       res.status(200).send(dWeek);
     })
     .catch(err => {
-      console.log(err);
+      console.log('Post week error', err);
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -172,7 +172,7 @@ exports.postYear = (req, res, next) => {
       res.status(200).send(dYear);
     })
     .catch(err => {
-      console.log(err);
+      console.log('Post year error', err);
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -206,12 +206,12 @@ exports.postDeleteUser = (req, res, next) => {
     .then(archivedUser => {
       archivedUser.status = "archived";
       archivedUser.save();
-      console.log(archivedUser.name + ' ARCHIVED!');
+      console.log('User.findById: ', archivedUser.name + ' ARCHIVED!');
       res.status(200).send(archivedUser);
       //res.redirect('/admin/dashboard')
     })
     .catch(err => {
-      console.log(err);
+      console.log('User.findById error: ', err);
     });
 }
 

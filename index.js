@@ -24,7 +24,7 @@ const csrfProtection = csrf();
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const PORT = process.env.PORT || 8000 // So we can run on heroku || (OR) localhost:3000
+const PORT = process.env.PORT || 8000 // So we can run on heroku || (OR) localhost:8000
 
 const app = express();
 
@@ -87,10 +87,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 mongoose
   .connect(MONGODB_URL, options)
   .then(result => {
-    console.log("listening on port 3000");
+    console.log("listening on port 8000");
     app.listen(PORT);
   })
   .catch(err => {
-    console.log(err);
+    console.log('index connection erro: ', err);
   });
   

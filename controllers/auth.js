@@ -53,7 +53,7 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  console.log('**************************** REQ: ', req)
+  // console.log('**************************** REQ: ', req)
   const email = req.body.email;
   const password = req.body.password;
 

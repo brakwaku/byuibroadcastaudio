@@ -155,7 +155,7 @@ function getTimeId(event) {
 
             console.log('Comment: ' + description);
         }, error: function (err) {
-            console.log(err);
+            console.log('GetTimeId: ',err);
         }
     });
     //console.log(event.path[1].childNodes[1].defaultValue)
@@ -192,7 +192,7 @@ function userDashGetWeek(weekId) {
                     + '<i class="fas fa-comment"></i> <i> : </i> ' + hrs.weekTimeId.comments + '</div></div>');
             });
         }, error: function (err) {
-            console.log(err);
+            console.log('UserDashGetWeek error: ', err);
         }
     });
 };
