@@ -283,110 +283,73 @@ exports.getReset = (req, res, next) => {
 };
 
 exports.postReset = (req, res, next) => {
-  crypto.randomBytes(32, (err, buffer) => {
+  crypto.randomBytes(32, async (err, buffer) => {
     if (err) {
       return res.redirect('reset');
     }
     const token = buffer.toString('hex');
-    User.findOne({ email: req.body.email })
-      .then(user => {
-        if (!user) {
-          req.flash('error', 'No account with that email found.');
-          return res.redirect('reset');
-        }
-        user.resetToken = token;
-        user.resetTokenExpiration = Date.now() + 3600000;
-        return user.save();
-      })
-      .then(result => {
-        // https://dev.to/chandrapantachhetri/sending-emails-securely-using-node-js-nodemailer-smtp-gmail-and-oauth2-g3a
-        
-        const createTransporter = async () => {
-          const oauth2Client = new OAuth2(
-            process.env.CLIENT_ID,
-            process.env.CLIENT_SECRET,
-            "https://developers.google.com/oauthplayground"
-          );
+    const user = await User.findOne({ email: req.body.email });
+    if (user === null) {
+      req.flash('error', 'No account with that email found.');
+      console.log('******* No user found for the reset email address ', req.body.email);
+      return res.redirect('reset');
+    }
+    user.resetToken = token;
+    user.resetTokenExpiration = Date.now() + 3600000;
+    user.save();
 
-          oauth2Client.setCredentials({
-            refresh_token: process.env.REFRESH_TOKEN
-          });
+    const createTransporter = async () => {
+      const oauth2Client = new OAuth2(
+        process.env.CLIENT_ID,
+        process.env.CLIENT_SECRET,
+        "https://developers.google.com/oauthplayground"
+      );
 
-          const accessToken = await new Promise((resolve, reject) => {
-            oauth2Client.getAccessToken((err, token) => {
-              if (err) {
-                reject("Failed to create access token :(");
-              }
-              resolve(token);
-            });
-          });
-
-          const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-              type: "OAuth2",
-              user: process.env.MAIL_USERNAME,
-              accessToken,
-              clientId: process.env.CLIENT_ID,
-              clientSecret: process.env.CLIENT_SECRET,
-              refreshToken: process.env.REFRESH_TOKEN
-            }
-          });
-
-          return transporter;
-        };
-
-        const sendEmail = async (emailOptions) => {
-          let emailTransporter = await createTransporter();
-          await emailTransporter.sendMail(emailOptions);
-        };
-
-        sendEmail({
-          subject: 'ASKAS Password Reset!',
-          html: `
-            <h5>Hello, you requested a password reset</h5>
-            <p>Click this <a href="https://byuibroadcastaudio.cyclic.app/auth/reset/${token}">link</a> to set a new password.</p>
-            <p>PS: This link is only valid for an hour</p>
-          `,
-          to: req.body.email,
-          from: process.env.MAIL_USERNAME
-        });
-
-        console.log(`********* Email sent successfully to ${req.body.email} for a password reset`)
-
-
-        // const transporter = nodemailer.createTransport({
-        //   service: 'gmail',
-        //   auth: {
-        //      user: process.env.MAIL_USERNAME,
-        //      pass: process.env.MAIL_PASSWORD
-        //   }
-        // });
-
-        // const mailOptions = {
-        //   from: process.env.MAIL_USERNAME,
-        //   to: req.body.email,
-        //   subject: 'ASKAS Password Reset!',
-        //   html: `
-        //     <h5>Hello, you requested a password reset</h5>
-        //     <p>Click this <a href="https://byuibroadcastaudio.cyclic.app/auth/reset/${token}">link</a> to set a new password.</p>
-        //     <p>PS: This link is only valid for an hour</p>
-        //   `
-        // };
-        // transporter.sendMail(mailOptions, (error, info) => {
-        //   if (error) {
-        //     console.log('Email error: ', error);
-        //   } else {
-        //     console.log('Email sent: ' + info.response);
-        //   }
-        // });
-        res.redirect('/');
-      })
-      .catch(err => {
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
+      oauth2Client.setCredentials({
+        refresh_token: process.env.REFRESH_TOKEN
       });
+
+      const accessToken = await new Promise((resolve, reject) => {
+        oauth2Client.getAccessToken((err, token) => {
+          if (err) {
+            reject("Failed to create access token :(");
+          }
+          resolve(token);
+        });
+      });
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          type: "OAuth2",
+          user: process.env.MAIL_USERNAME,
+          accessToken,
+          clientId: process.env.CLIENT_ID,
+          clientSecret: process.env.CLIENT_SECRET,
+          refreshToken: process.env.REFRESH_TOKEN
+        }
+      });
+
+      return transporter;
+    };
+
+    const sendEmail = async (emailOptions) => {
+      let emailTransporter = await createTransporter();
+      await emailTransporter.sendMail(emailOptions);
+      console.log(`********* Email sent successfully to ${user.email} for a password reset`);
+    };
+
+    sendEmail({
+      subject: 'ASKAS Password Reset!',
+      html: `
+        <h5>Hello, you requested a password reset</h5>
+        <p>Click this <a href="https://byuibroadcastaudio.cyclic.app/auth/reset/${token}">link</a> to set a new password.</p>
+        <p>PS: This link is only valid for an hour</p>
+      `,
+      to: user.email,
+      from: process.env.MAIL_USERNAME
+    });
+    return res.redirect('/');
   });
 };
 
