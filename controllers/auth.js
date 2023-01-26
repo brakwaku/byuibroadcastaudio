@@ -235,6 +235,8 @@ exports.postSignup = (req, res, next) => {
         from: process.env.MAIL_USERNAME
       });
 
+      console.log(`********* Email sent successfully to ${email} for signing up`)
+
       // const mailOptions = {
       //   from: process.env.MAIL_USERNAME,
       //   to: email,
@@ -343,12 +345,14 @@ exports.postReset = (req, res, next) => {
           subject: 'ASKAS Password Reset!',
           html: `
             <h5>Hello, you requested a password reset</h5>
-            <p>Click this <a href="https://byuibroadcastaudio.herokuapp.com/auth/reset/${token}">link</a> to set a new password.</p>
+            <p>Click this <a href="https://byuibroadcastaudio.cyclic.app/auth/reset/${token}">link</a> to set a new password.</p>
             <p>PS: This link is only valid for an hour</p>
           `,
           to: req.body.email,
           from: process.env.MAIL_USERNAME
         });
+
+        console.log(`********* Email sent successfully to ${req.body.email} for a password reset`)
 
 
         // const transporter = nodemailer.createTransport({
@@ -365,7 +369,7 @@ exports.postReset = (req, res, next) => {
         //   subject: 'ASKAS Password Reset!',
         //   html: `
         //     <h5>Hello, you requested a password reset</h5>
-        //     <p>Click this <a href="https://byuibroadcastaudio.herokuapp.com/auth/reset/${token}">link</a> to set a new password.</p>
+        //     <p>Click this <a href="https://byuibroadcastaudio.cyclic.app/auth/reset/${token}">link</a> to set a new password.</p>
         //     <p>PS: This link is only valid for an hour</p>
         //   `
         // };

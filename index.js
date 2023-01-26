@@ -1,6 +1,6 @@
 const cors = require('cors') // Place this with other requires (like 'path' and 'express')
 const corsOptions = {
-  origin: "https://byuibroadcastaudio.herokuapp.com/",
+  origin: "https://byuibroadcastaudio.cyclic.app/",
   optionsSuccessStatus: 200
 };
 
@@ -24,7 +24,7 @@ const csrfProtection = csrf();
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const PORT = process.env.PORT || 8000 // So we can run on heroku || (OR) localhost:8000
+const PORT = process.env.PORT || 8000 // So we can run on cyclic || (OR) localhost:8000
 
 const app = express();
 
